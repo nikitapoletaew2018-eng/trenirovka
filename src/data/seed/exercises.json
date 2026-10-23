@@ -37,18 +37,29 @@
       "На выдохе поднимитесь в исходное положение, отталкиваясь от пола пяткой или серединой стопы, разгибая колени и тазобедренные суставы."
     ],
     "commonMistakes": [
-      "Округление поясницы в нижней точке",
-      "Отрыв пяток от пола",
-      "Сведение коленей внутрь при подъёме"
+      {
+        "text": "Округление поясницы в нижней точке",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Отрыв пяток от пола",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Сведение коленей внутрь при подъёме",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Full_Squat. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Full_Squat; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Barbell_Full_Squat",
     "reviewNotes": [
       "Глубина «бёдра касаются икр» — так в оригинале; приемлемая глубина индивидуальна — требует проверки",
-      "Альтернатива Hack_Squat сама структурная — требует проверки"
+      "Альтернатива «Гакк-присед в тренажёре» сама структурная (проходит как тренажёр) — требует проверки"
     ],
     "isCustom": false
   },
@@ -82,25 +93,35 @@
       "ec169e9b-8ed6-52fa-8a6f-376f69036d6d"
     ],
     "instructions": [
-      "Выполняйте в силовой раме. Подведите руки под гриф, локти высоко, плечи чуть выше параллели полу. Положите гриф на передние дельты и удерживайте его скрещёнными руками.",
+      "Выполняйте в силовой раме, гриф — на подходящей по росту высоте. Подведите руки под гриф, локти высоко, плечи чуть выше параллели полу. Положите гриф на передние дельты и удерживайте его скрещёнными руками.",
       "Снимите гриф со стоек, разгибая ноги и выпрямляя корпус.",
       "Отойдите от рамы, стопы на ширине плеч, носки слегка наружу. Голова поднята (взгляд вниз нарушает равновесие), спина прямая — это исходное положение.",
       "Медленно опускайтесь, сгибая колени и сохраняя прямую осанку, пока угол между бедром и голенью не станет чуть меньше 90° (бёдра ниже параллели). На опускании — вдох.",
       "На выдохе поднимитесь в исходное положение, отталкиваясь в основном серединой стопы."
     ],
     "commonMistakes": [
-      "Опускание локтей — гриф скатывается вперёд",
-      "Наклон корпуса вперёд",
-      "Округление верха спины"
+      {
+        "text": "Опускание локтей — гриф скатывается вперёд",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Наклон корпуса вперёд",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Округление верха спины",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Front_Barbell_Squat. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Front_Barbell_Squat; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Front_Barbell_Squat",
     "reviewNotes": [
-      "В оригинале есть совет «колени не должны выходить за носки, иначе лишняя нагрузка на колено» — утверждение спорное; в перевод не включено, решите: оставить или нет",
-      "Альтернатива Hack_Squat сама структурная — требует проверки"
+      "Альтернатива «Гакк-присед в тренажёре» сама структурная (проходит как тренажёр) — требует проверки"
     ],
     "isCustom": false
   },
@@ -140,14 +161,25 @@
       "Вернитесь в исходное положение. В оригинале — 10–20 повторений."
     ],
     "commonMistakes": [
-      "Округление спины",
-      "Отрыв пяток",
-      "Наклон корпуса вперёд вместе с весом"
+      {
+        "text": "Округление спины",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Отрыв пяток",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Наклон корпуса вперёд вместе с весом",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Goblet_Squat. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Goblet_Squat; лицензия The Unlicense (public domain); техника: перевод; мышцы изменены относительно базы.",
     "sourceId": "Goblet_Squat",
     "reviewNotes": [
       "База: вспомогательные включают shoulders — убраны (удержание веса, не рабочая мышца для подсчёта объёма)",
@@ -186,23 +218,33 @@
     "instructions": [
       "Прижмитесь спиной к спинке тренажёра и заведите плечи под упоры.",
       "Поставьте стопы на платформу на ширине плеч, носки слегка наружу. Голова поднята, спина всё время прижата к спинке.",
-      "Возьмитесь за боковые рукояти и снимите тренажёр со страховки. Выпрямите ноги, не блокируя колени, — это исходное положение.",
-      "Медленно опускайтесь, сгибая колени, пока угол между бедром и голенью не станет чуть меньше 90°. На опускании — вдох.",
+      "Возьмитесь за боковые рукояти и снимите тренажёр со страховки (на большинстве моделей — поворотом рукоятей из положения «вперёд» в диагональное). Выпрямите ноги, не блокируя колени, — это исходное положение.",
+      "Медленно опускайтесь, сгибая колени и сохраняя прямую осанку (спина на спинке, голова поднята), пока угол между бедром и голенью не станет чуть меньше 90°. На опускании — вдох.",
       "На выдохе вернитесь в исходное положение, отталкиваясь в основном пятками."
     ],
     "commonMistakes": [
-      "Отрыв поясницы от спинки в нижней точке",
-      "Блокировка коленей в верхней точке",
-      "Сведение коленей внутрь"
+      {
+        "text": "Отрыв поясницы от спинки в нижней точке",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Блокировка коленей в верхней точке",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Сведение коленей внутрь",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Hack_Squat. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Hack_Squat; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Hack_Squat",
     "reviewNotes": [
-      "Структурное: упоры на плечах дают осевую нагрузку на позвоночник — требует проверки",
-      "В оригинале есть совет про «колени за носками» — спорное утверждение, в перевод не включено"
+      "Структурное: упоры на плечах дают осевую нагрузку на позвоночник — требует проверки"
     ],
     "isCustom": false
   },
@@ -241,14 +283,25 @@
       "После подхода обязательно зафиксируйте страховку: платформа с весом не должна упасть на вас."
     ],
     "commonMistakes": [
-      "Отрыв таза от сиденья в нижней точке",
-      "Блокировка коленей",
-      "Сведение коленей внутрь"
+      {
+        "text": "Отрыв таза от сиденья в нижней точке",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Блокировка коленей",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Сведение коленей внутрь",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Leg_Press. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Leg_Press; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Leg_Press",
     "reviewNotes": [
       "Паттерн «присед» для тренажёра — по аналогии движения, требует проверки"
@@ -283,17 +336,22 @@
       "На вдохе медленно опустите вес, не заходя глубже угла 90°."
     ],
     "commonMistakes": [
-      "Рывок и раскачивание корпуса",
-      "Неполная амплитуда"
+      {
+        "text": "Рывок и раскачивание корпуса",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Неполная амплитуда",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Leg_Extensions. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Leg_Extensions; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Leg_Extensions",
-    "reviewNotes": [
-      "В оригинале: угол меньше 90° даёт «лишнюю нагрузку на колено» — спорное утверждение, в перевод не включено"
-    ],
+    "reviewNotes": [],
     "isCustom": false
   },
   {
@@ -324,13 +382,20 @@
       "На вдохе вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Отрыв таза от скамьи",
-      "Рывок и бросок веса вниз"
+      {
+        "text": "Отрыв таза от скамьи",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Рывок и бросок веса вниз",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Lying_Leg_Curls. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Lying_Leg_Curls; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Lying_Leg_Curls",
     "reviewNotes": [],
     "isCustom": false
@@ -363,13 +428,20 @@
       "На вдохе медленно вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Отклонение корпуса назад для рывка",
-      "Неполное разгибание в исходном положении"
+      {
+        "text": "Отклонение корпуса назад для рывка",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Неполное разгибание в исходном положении",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Seated_Leg_Curl. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Seated_Leg_Curl; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Seated_Leg_Curl",
     "reviewNotes": [],
     "isCustom": false
@@ -415,14 +487,25 @@
       "Вернитесь в исходное положение, сгибая колени и наклоняя корпус в тазобедренных суставах с прямой спиной, пока блины не коснутся пола."
     ],
     "commonMistakes": [
-      "Округление поясницы",
-      "Гриф уходит от ног",
-      "Таз поднимается раньше плеч"
+      {
+        "text": "Округление поясницы",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Гриф уходит от ног",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Таз поднимается раньше плеч",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Deadlift. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Deadlift; лицензия The Unlicense (public domain); техника: сокращённый перевод; мышцы изменены относительно базы.",
     "sourceId": "Barbell_Deadlift",
     "reviewNotes": [
       "База: основная — только lower back; добавлены glutes и hamstrings как основные (иначе тяга бедром и сгибания ног не подходят как альтернативы) — требует проверки"
@@ -464,14 +547,25 @@
       "Выпрямившись, опускайте штангу, отводя таз назад и лишь слегка сгибая колени (в отличие от приседа). Перед движением глубокий вдох, грудь вверх; на опускании задержка дыхания, на завершении — выдох."
     ],
     "commonMistakes": [
-      "Округление спины при опускании",
-      "Сгибание коленей как в приседе",
-      "Гриф уходит от ног"
+      {
+        "text": "Округление спины при опускании",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Сгибание коленей как в приседе",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Гриф уходит от ног",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Romanian_Deadlift. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Romanian_Deadlift; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Romanian_Deadlift",
     "reviewNotes": [],
     "isCustom": false
@@ -509,20 +603,31 @@
       "1baadfe8-b3e9-5107-bc13-411d3804f08e"
     ],
     "instructions": [
-      "Подойдите к штанге так, чтобы гриф проходил над серединой стоп. Стопы очень широко, почти у замков. Наклонитесь в тазобедренных суставах и возьмитесь за гриф: руки прямо под плечами, внутри ног; хват прямой, разнохват или «в замок». Расслабьте плечи.",
+      "Подойдите к штанге так, чтобы гриф проходил над серединой стоп. Стопы очень широко, почти у замков. Наклонитесь в тазобедренных суставах и возьмитесь за гриф: руки прямо под плечами, внутри ног; хват прямой, разнохват или «в замок». Расслабьте плечи — это как бы удлиняет руки.",
       "Сделайте вдох, опустите таз, взгляд вперёд, грудь вверх. Давите в пол, как бы раздвигая его стопами, вес на задней половине стопы. Разгибайте тазобедренные и коленные суставы.",
       "Когда гриф пройдёт колени, отклонитесь назад и подайте таз к грифу, сводя лопатки.",
       "Верните штангу на пол, сгибаясь в тазобедренных суставах и контролируя вес."
     ],
     "commonMistakes": [
-      "Колени уходят внутрь",
-      "Округление спины",
-      "Таз поднимается раньше груди"
+      {
+        "text": "Колени уходят внутрь",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Округление спины",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Таз поднимается раньше груди",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Sumo_Deadlift. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Sumo_Deadlift; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "Sumo_Deadlift",
     "reviewNotes": [],
     "isCustom": false
@@ -556,18 +661,25 @@
       "1baadfe8-b3e9-5107-bc13-411d3804f08e"
     ],
     "instructions": [
-      "Установите гриф в раме на уровне плеч. Положите его на заднюю часть плеч, как в силовом приседе. Спина напряжена, лопатки сведены, колени слегка согнуты. Отойдите от рамы.",
+      "Установите гриф в раме на уровне плеч. Положите его на заднюю часть плеч, как в силовом приседе (не на верх плеч). Спина напряжена, лопатки сведены, колени слегка согнуты. Отойдите от рамы.",
       "Наклоняйтесь в тазобедренных суставах, отводя таз назад, почти до параллели корпуса с полом. Сохраняйте прогиб в спине и нейтральное положение шеи.",
       "Вернитесь в исходное положение, разгибаясь в тазобедренных суставах за счёт ягодичных и задней поверхности бедра."
     ],
     "commonMistakes": [
-      "Округление спины",
-      "Слишком большой вес на старте освоения"
+      {
+        "text": "Округление спины",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Слишком большой вес на старте освоения",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Good_Morning. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Good_Morning; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "Good_Morning",
     "reviewNotes": [],
     "isCustom": false
@@ -607,18 +719,28 @@
       "Выполните нужное число повторений одной ногой, затем другой."
     ],
     "commonMistakes": [
-      "Колено передней ноги уходит внутрь",
-      "Наклон корпуса вперёд",
-      "Слишком короткий шаг"
+      {
+        "text": "Колено передней ноги уходит внутрь",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Наклон корпуса вперёд",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Слишком короткий шаг",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dumbbell_Lunges. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dumbbell_Lunges; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Dumbbell_Lunges",
     "reviewNotes": [
-      "Структурное: гантели в руках стоя — косвенная нагрузка на позвоночник — требует проверки",
-      "В оригинале совет «колено не должно выходить за носок» — спорное утверждение; оставлена только вертикальная голень"
+      "Структурное: гантели в руках стоя — косвенная нагрузка на позвоночник — требует проверки"
     ],
     "isCustom": false
   },
@@ -657,13 +779,20 @@
       "В нижней точке оттолкнитесь пяткой, разгибая колено и тазобедренный сустав, и вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Колено передней ноги уходит внутрь",
-      "Слишком близкая постановка передней стопы"
+      {
+        "text": "Колено передней ноги уходит внутрь",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Слишком близкая постановка передней стопы",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Split_Squat_with_Dumbbells. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Split_Squat_with_Dumbbells; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "Split_Squat_with_Dumbbells",
     "reviewNotes": [
       "Структурное — требует проверки (как и выпады)"
@@ -706,13 +835,20 @@
       "Выполните нужное число повторений правой ногой, затем левой."
     ],
     "commonMistakes": [
-      "Толчок задней ногой вместо работы передней",
-      "Колено уходит внутрь"
+      {
+        "text": "Толчок задней ногой вместо работы передней",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Колено уходит внутрь",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dumbbell_Step_Ups. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dumbbell_Step_Ups; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "Dumbbell_Step_Ups",
     "reviewNotes": [
       "Структурное — требует проверки (как и выпады)"
@@ -750,13 +886,20 @@
       "Давя стопами в пол, поднимите таз вертикально вверх, выталкивая штангу. Вес приходится на лопатки и стопы. Разогнитесь до конца, затем вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Переразгибание поясницы вместо разгибания в тазобедренных суставах",
-      "Стопы слишком далеко или близко"
+      {
+        "text": "Переразгибание поясницы вместо разгибания в тазобедренных суставах",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Стопы слишком далеко или близко",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Hip_Thrust. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Hip_Thrust; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "Barbell_Hip_Thrust",
     "reviewNotes": [
       "mechanic = compound, но движение в одном основном суставе (тазобедренный): по NSCA ближе к вспомогательным — оставлено «базовое» по mechanic, требует проверки",
@@ -793,15 +936,18 @@
     "instructions": [
       "Сядьте в тренажёр для приводящих мышц и выберите комфортный вес. Расположите ноги на упорах, возьмитесь за рукояти. Верх тела неподвижен — это исходное положение.",
       "На выдохе медленно сводите ноги, давя на упоры.",
-      "Задержитесь на секунду и на вдохе вернитесь в исходное положение. Корпус неподвижен, без резких рывков."
+      "Задержитесь на секунду и на вдохе вернитесь в исходное положение. Корпус неподвижен, без резких рывков — чтобы избежать травм."
     ],
     "commonMistakes": [
-      "Рывки и бросок веса в исходное положение"
+      {
+        "text": "Рывки и бросок веса в исходное положение",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Thigh_Adductor. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Thigh_Adductor; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Thigh_Adductor",
     "reviewNotes": [],
     "isCustom": false
@@ -832,15 +978,18 @@
     "instructions": [
       "Сядьте в тренажёр для отводящих мышц и выберите комфортный вес. Расположите ноги, возьмитесь за рукояти. Верх тела неподвижен — это исходное положение.",
       "На выдохе медленно разводите ноги, давя на упоры.",
-      "Задержитесь на секунду и на вдохе вернитесь в исходное положение. Корпус неподвижен."
+      "Задержитесь на секунду и на вдохе вернитесь в исходное положение. Корпус неподвижен — чтобы избежать травм."
     ],
     "commonMistakes": [
-      "Рывки и раскачивание корпуса"
+      {
+        "text": "Рывки и раскачивание корпуса",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Thigh_Abductor. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Thigh_Abductor; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Thigh_Abductor",
     "reviewNotes": [],
     "isCustom": false
@@ -873,13 +1022,20 @@
       "На вдохе медленно опустите пятки до растяжения икр."
     ],
     "commonMistakes": [
-      "Сгибание коленей для «пружины»",
-      "Неполная амплитуда"
+      {
+        "text": "Сгибание коленей для «пружины»",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Неполная амплитуда",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Standing_Calf_Raises. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Standing_Calf_Raises; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Standing_Calf_Raises",
     "reviewNotes": [
       "Нагрузка на позвоночник по оси есть, но по NSCA «структурными» называют только базовые упражнения; это вспомогательное — отмечено «нет»"
@@ -915,13 +1071,20 @@
       "На выдохе поднимитесь на носки как можно выше. Задержитесь на секунду в верхней точке."
     ],
     "commonMistakes": [
-      "Неполная амплитуда",
-      "Отбив в нижней точке"
+      {
+        "text": "Неполная амплитуда",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Отбив в нижней точке",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Seated_Calf_Raise. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Seated_Calf_Raise; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Seated_Calf_Raise",
     "reviewNotes": [],
     "isCustom": false
@@ -955,16 +1118,23 @@
       "Отрегулируйте верхнюю подушку так, чтобы верх бёдер лежал на ней и ничто не мешало наклону в поясе.",
       "Тело прямое, руки скрещены на груди или за головой — это исходное положение. Для усложнения можно держать блин у груди.",
       "На вдохе медленно наклоняйтесь вперёд, сохраняя спину ровной, пока не почувствуете растяжение задней поверхности бедра и пока можете не округлять спину. Не округляйте спину; глубина у всех разная.",
-      "Медленно поднимите корпус в исходное положение. Не прогибайтесь дальше прямой линии и не раскачивайтесь."
+      "Медленно поднимите корпус в исходное положение. Не прогибайтесь дальше прямой линии и не раскачивайтесь, чтобы беречь спину."
     ],
     "commonMistakes": [
-      "Переразгибание в верхней точке",
-      "Раскачивание и рывки"
+      {
+        "text": "Переразгибание в верхней точке",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Раскачивание и рывки",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Hyperextensions_Back_Extensions. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Hyperextensions_Back_Extensions; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Hyperextensions_Back_Extensions",
     "reviewNotes": [
       "В оригинале на подъёме указан «вдох» — вероятно, опечатка (на опускании тоже вдох); в переводе дыхание на подъёме не указано — требует проверки",
@@ -1005,18 +1175,29 @@
     "instructions": [
       "Лягте на горизонтальную скамью. Средним хватом (в середине движения предплечья и плечи образуют угол 90°) снимите штангу со стоек и удерживайте над собой на прямых руках — это исходное положение.",
       "На вдохе медленно опускайте штангу, пока она не коснётся середины груди.",
-      "После короткой паузы на выдохе выжмите штангу в исходное положение, концентрируясь на работе грудных мышц. Опускание — примерно вдвое дольше подъёма.",
+      "После короткой паузы на выдохе выжмите штангу в исходное положение, концентрируясь на работе грудных мышц. Вверху выпрямите руки, сократите грудные и задержитесь на секунду, затем снова медленно опускайте. Опускание — примерно вдвое дольше подъёма.",
       "По окончании подхода верните штангу на стойки."
     ],
     "commonMistakes": [
-      "Отбив штанги от груди",
-      "Отрыв таза от скамьи",
-      "Сильно разведённые локти"
+      {
+        "text": "Отбив штанги от груди",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Отрыв таза от скамьи",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Сильно разведённые локти",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Bench_Press_-_Medium_Grip. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Bench_Press_-_Medium_Grip; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Barbell_Bench_Press_-_Medium_Grip",
     "reviewNotes": [
       "База: shoulders → передние дельты"
@@ -1054,17 +1235,24 @@
     "instructions": [
       "Лягте на наклонную скамью. Средним хватом снимите штангу со стоек и удерживайте над собой на прямых руках — это исходное положение.",
       "На вдохе медленно опускайте штангу до верхней части груди.",
-      "После паузы на выдохе выжмите штангу в исходное положение за счёт грудных. Опускание — минимум вдвое дольше подъёма.",
+      "После секундной паузы на выдохе выжмите штангу в исходное положение за счёт грудных. Вверху выпрямите руки, сократите грудные, задержитесь на секунду и снова медленно опускайте. Опускание — минимум вдвое дольше подъёма.",
       "По окончании подхода верните штангу на стойки."
     ],
     "commonMistakes": [
-      "Отбив от груди",
-      "Отрыв таза от скамьи"
+      {
+        "text": "Отбив от груди",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Отрыв таза от скамьи",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Incline_Bench_Press_-_Medium_Grip. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Incline_Bench_Press_-_Medium_Grip; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Barbell_Incline_Bench_Press_-_Medium_Grip",
     "reviewNotes": [
       "Паттерн: наклонный жим отнесён к горизонтальному — требует проверки",
@@ -1101,19 +1289,26 @@
       "675b9582-4907-5548-9404-abcef2154fdc"
     ],
     "instructions": [
-      "Сядьте на край горизонтальной скамьи, гантели на бёдрах, ладони друг к другу.",
-      "Помогая бёдрами, поднимите гантели по одной и ложитесь, удерживая их перед собой на ширине плеч.",
+      "Лягте на горизонтальную скамью, гантели в руках лежат на бёдрах, ладони друг к другу.",
+      "Помогая бёдрами, поднимите гантели по одной и удерживайте перед собой на ширине плеч.",
       "Разверните кисти ладонями от себя. Гантели по бокам груди, угол между плечом и предплечьем 90°. Полностью контролируйте гантели — это исходное положение.",
-      "На выдохе выжмите гантели вверх за счёт грудных, задержитесь на секунду и медленно опустите. Опускание — примерно вдвое дольше подъёма."
+      "На выдохе выжмите гантели вверх за счёт грудных. Вверху выпрямите руки, сократите грудные, задержитесь на секунду и медленно опускайте. Опускание — примерно вдвое дольше подъёма."
     ],
     "commonMistakes": [
-      "Бросок гантелей вниз без контроля",
-      "Неполная амплитуда"
+      {
+        "text": "Бросок гантелей вниз без контроля",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Неполная амплитуда",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dumbbell_Bench_Press. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dumbbell_Bench_Press; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Dumbbell_Bench_Press",
     "reviewNotes": [
       "База: shoulders → передние дельты"
@@ -1148,20 +1343,27 @@
       "7c8f939c-efbf-5f9d-8584-9f969716c7ef"
     ],
     "instructions": [
-      "Сядьте на наклонную скамью, гантели на бёдрах, ладони друг к другу.",
+      "Лягте на наклонную скамью, гантели в руках на бёдрах, ладони друг к другу.",
       "Помогая бёдрами, поднимите гантели по одной до ширины плеч.",
       "Разверните кисти ладонями от себя — это исходное положение.",
-      "Контролируя гантели, на выдохе выжмите их вверх за счёт грудных. Задержитесь на секунду и медленно опустите — примерно вдвое дольше подъёма.",
+      "Контролируя гантели, на выдохе выжмите их вверх за счёт грудных. Вверху выпрямите руки, задержитесь на секунду и медленно опускайте — примерно вдвое дольше подъёма.",
       "После подхода опустите гантели на бёдра, а затем на пол — это самый безопасный способ."
     ],
     "commonMistakes": [
-      "Бросок гантелей в конце подхода",
-      "Слишком крутой наклон скамьи"
+      {
+        "text": "Бросок гантелей в конце подхода",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Слишком крутой наклон скамьи",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Incline_Dumbbell_Press. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Incline_Dumbbell_Press; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Incline_Dumbbell_Press",
     "reviewNotes": [
       "Паттерн: наклонный жим отнесён к горизонтальному — требует проверки"
@@ -1199,13 +1401,20 @@
       "После короткой паузы верните вес почти до исходного положения, не опуская его на упоры до конца подхода, чтобы мышцы оставались под нагрузкой."
     ],
     "commonMistakes": [
-      "Поднятые к ушам плечи",
-      "Рывок с отбивом от упоров"
+      {
+        "text": "Поднятые к ушам плечи",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Рывок с отбивом от упоров",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Leverage_Chest_Press. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Leverage_Chest_Press; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "Leverage_Chest_Press",
     "reviewNotes": [],
     "isCustom": false
@@ -1240,13 +1449,20 @@
       "После короткой паузы верните вес почти до исходного положения, не опуская на упоры до конца подхода."
     ],
     "commonMistakes": [
-      "Поднятые к ушам плечи",
-      "Отбив от упоров"
+      {
+        "text": "Поднятые к ушам плечи",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Отбив от упоров",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Leverage_Incline_Chest_Press. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Leverage_Incline_Chest_Press; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "Leverage_Incline_Chest_Press",
     "reviewNotes": [
       "Техника в оригинале — 3 пункта (минимум по ТЗ)"
@@ -1276,19 +1492,26 @@
     "movementPattern": "isolation",
     "lighterAlternatives": [],
     "instructions": [
-      "Сядьте на горизонтальную скамью, гантели на бёдрах, ладони друг к другу.",
-      "Помогая бёдрами, поднимите гантели и ложитесь, удерживая их над собой на ширине плеч ладонями друг к другу; руки почти выпрямлены — это исходное положение.",
+      "Лягте на горизонтальную скамью, гантели в руках на бёдрах, ладони друг к другу.",
+      "Помогая бёдрами, поднимите гантели по одной и удерживайте перед собой на ширине плеч ладонями друг к другу. Выжмите их вверх, как в жиме, но остановитесь чуть раньше полного выпрямления рук — это исходное положение.",
       "С небольшим сгибом в локтях (чтобы не нагружать сухожилие бицепса) на вдохе разведите руки в стороны по широкой дуге до растяжения в груди. Движение — только в плечевом суставе.",
       "На выдохе по той же дуге верните руки в исходное положение, сокращая грудные. Задержитесь на секунду."
     ],
     "commonMistakes": [
-      "Сгибание рук в локтях — превращение в жим",
-      "Чрезмерная амплитуда внизу"
+      {
+        "text": "Сгибание рук в локтях — превращение в жим",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Чрезмерная амплитуда внизу",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dumbbell_Flyes. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dumbbell_Flyes; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Dumbbell_Flyes",
     "reviewNotes": [],
     "isCustom": false
@@ -1323,13 +1546,20 @@
       "На выдохе по той же дуге верните руки в исходное положение. Задержитесь на секунду."
     ],
     "commonMistakes": [
-      "Работа корпусом",
-      "Сгибание локтей по ходу движения"
+      {
+        "text": "Работа корпусом",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Сгибание локтей по ходу движения",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Cable_Crossover. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Cable_Crossover; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Cable_Crossover",
     "reviewNotes": [
       "База: shoulders → передние дельты"
@@ -1364,13 +1594,20 @@
       "На вдохе медленно вернитесь в исходное положение до полного растяжения грудных."
     ],
     "commonMistakes": [
-      "Отрыв спины от спинки",
-      "Бросок веса в исходное положение"
+      {
+        "text": "Отрыв спины от спинки",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Бросок веса в исходное положение",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Butterfly. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Butterfly; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Butterfly",
     "reviewNotes": [],
     "isCustom": false
@@ -1408,13 +1645,20 @@
       "После короткой паузы вверху повторите."
     ],
     "commonMistakes": [
-      "Провисание таза",
-      "Неполная амплитуда"
+      {
+        "text": "Провисание таза",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Неполная амплитуда",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Pushups. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Pushups; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "Pushups",
     "reviewNotes": [
       "В оригинале «36 дюймов» (~90 см) между руками — похоже на ошибку (обычно чуть шире плеч) — требует проверки"
@@ -1453,13 +1697,20 @@
       "На выдохе за счёт грудных вернитесь в исходное положение. Вверху на секунду сократите грудные."
     ],
     "commonMistakes": [
-      "Слишком глубокое опускание с болью в плече",
-      "Раскачивание"
+      {
+        "text": "Слишком глубокое опускание с болью в плече",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Раскачивание",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dips_-_Chest_Version. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dips_-_Chest_Version; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Dips_-_Chest_Version",
     "reviewNotes": [
       "Паттерн: брусья отнесены к вертикальному жиму — требует проверки"
@@ -1497,17 +1748,24 @@
     "instructions": [
       "Возьмитесь за перекладину ладонями вперёд выбранным хватом: широкий — шире плеч, средний — на ширине плеч, узкий — уже плеч.",
       "Вися на прямых руках, отклоните корпус назад примерно на 30°, прогнитесь в пояснице и выведите грудь вперёд — это исходное положение.",
-      "На выдохе подтянитесь до касания перекладины верхом груди, опуская плечи вниз и назад. Вверху сократите мышцы спины; предплечья только держат перекладину.",
+      "На выдохе подтянитесь до касания перекладины верхом груди, опуская плечи вниз и назад. Вверху сократите мышцы спины. Корпус перемещается как единое целое — двигаются только руки; предплечья только держат перекладину.",
       "После секундной паузы на вдохе медленно опуститесь до полного выпрямления рук и растяжения широчайших."
     ],
     "commonMistakes": [
-      "Рывки и раскачивание",
-      "Неполное выпрямление рук внизу"
+      {
+        "text": "Рывки и раскачивание",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Неполное выпрямление рук внизу",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Pullups. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Pullups; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Pullups",
     "reviewNotes": [],
     "isCustom": false
@@ -1543,17 +1801,24 @@
     "instructions": [
       "Возьмитесь за перекладину ладонями к себе, хватом уже плеч.",
       "Вися на прямых руках, держите корпус как можно ровнее, прогнитесь в пояснице и выведите грудь вперёд — это исходное положение. По оригиналу, ровный корпус усиливает работу бицепса и снижает участие спины.",
-      "На выдохе подтянитесь, пока голова не окажется примерно на уровне перекладины, держа локти близко к корпусу. Предплечья только держат перекладину.",
-      "После секундной паузы на вдохе медленно опуститесь до полного выпрямления рук."
+      "На выдохе подтянитесь, пока голова не окажется примерно на уровне перекладины, концентрируясь на работе бицепса и держа локти близко к корпусу. Двигаются только руки; предплечья только держат перекладину.",
+      "Секунду удерживайте сокращение бицепса, затем на вдохе медленно опуститесь до полного выпрямления рук."
     ],
     "commonMistakes": [
-      "Рывки и раскачивание",
-      "Неполная амплитуда"
+      {
+        "text": "Рывки и раскачивание",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Неполная амплитуда",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Chin-Up. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Chin-Up; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Chin-Up",
     "reviewNotes": [
       "Утверждение оригинала про бицепс vs спину — требует проверки"
@@ -1592,12 +1857,15 @@
       "После короткой паузы вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Рывки за счёт отскока петли"
+      {
+        "text": "Рывки за счёт отскока петли",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Band_Assisted_Pull-Up. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Band_Assisted_Pull-Up; лицензия The Unlicense (public domain); техника: перевод; мышцы изменены относительно базы.",
     "sourceId": "Band_Assisted_Pull-Up",
     "reviewNotes": [
       "База: вспомогательные abdominals, forearms, middle back — заменены на biceps, mid_back по аналогии с подтягиваниями — требует проверки",
@@ -1634,17 +1902,24 @@
       "Сядьте в тренажёр с широкой рукоятью на верхнем блоке, отрегулируйте упор для коленей — он не даст весу поднять вас.",
       "Возьмитесь за рукоять ладонями вперёд хватом шире плеч.",
       "Держа рукоять на прямых руках, отклоните корпус назад примерно на 30°, прогнитесь в пояснице, грудь вперёд — это исходное положение.",
-      "На выдохе тяните рукоять до касания верха груди, опуская плечи вниз и назад. Корпус неподвижен, предплечья только держат рукоять.",
+      "На выдохе тяните рукоять до касания верха груди, опуская плечи вниз и назад. Вверху сократите мышцы спины. Корпус неподвижен, предплечья только держат рукоять.",
       "После секундной паузы со сведёнными лопатками на вдохе медленно верните рукоять до полного выпрямления рук."
     ],
     "commonMistakes": [
-      "Раскачивание корпусом",
-      "Тяга руками вместо спины"
+      {
+        "text": "Раскачивание корпусом",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Тяга руками вместо спины",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Wide-Grip_Lat_Pulldown. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Wide-Grip_Lat_Pulldown; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Wide-Grip_Lat_Pulldown",
     "reviewNotes": [
       "База: shoulders → задние дельты"
@@ -1680,20 +1955,26 @@
       "Сядьте в тренажёр верхнего блока, отрегулируйте упор для коленей.",
       "Возьмитесь за рукоять ладонями вперёд узким хватом (уже ширины плеч).",
       "На прямых руках отклоните корпус назад примерно на 30°, прогнитесь в пояснице, грудь вперёд — это исходное положение.",
-      "На выдохе тяните рукоять до касания верха груди, опуская плечи вниз и назад. Корпус неподвижен.",
+      "На выдохе тяните рукоять до касания верха груди, опуская плечи вниз и назад. Вверху сократите мышцы спины. Корпус неподвижен, предплечья только держат рукоять.",
       "После секундной паузы со сведёнными лопатками на вдохе медленно верните рукоять до полного выпрямления рук."
     ],
     "commonMistakes": [
-      "Раскачивание корпусом",
-      "Тяга руками вместо спины"
+      {
+        "text": "Раскачивание корпусом",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Тяга руками вместо спины",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Close-Grip_Front_Lat_Pulldown. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Close-Grip_Front_Lat_Pulldown; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Close-Grip_Front_Lat_Pulldown",
     "reviewNotes": [
-      "В оригинале упомянута широкая рукоять, хотя хват узкий — так в базе",
       "База: shoulders → задние дельты"
     ],
     "isCustom": false
@@ -1732,14 +2013,25 @@
       "На вдохе медленно опустите штангу в исходное положение."
     ],
     "commonMistakes": [
-      "Округление спины",
-      "Подъём корпуса для рывка",
-      "Тяга бицепсом"
+      {
+        "text": "Округление спины",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Подъём корпуса для рывка",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Тяга бицепсом",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Bent_Over_Barbell_Row. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Bent_Over_Barbell_Row; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Bent_Over_Barbell_Row",
     "reviewNotes": [
       "Структурное: наклон с весом в руках — косвенная нагрузка на позвоночник — требует проверки",
@@ -1782,13 +2074,20 @@
       "После короткой паузы вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Округление спины",
-      "Рывок корпусом"
+      {
+        "text": "Округление спины",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Рывок корпусом",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: T-Bar_Row_with_Handle. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: T-Bar_Row_with_Handle; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "T-Bar_Row_with_Handle",
     "reviewNotes": [
       "Структурное — требует проверки (как тяга в наклоне)"
@@ -1825,17 +2124,24 @@
       "Поставьте гантели по обе стороны горизонтальной скамьи.",
       "Поставьте правое колено на край скамьи, наклоните корпус до параллели с полом и обопритесь правой рукой о другой край.",
       "Левой рукой возьмите гантель с пола, держа поясницу прямой, ладонь к корпусу — это исходное положение.",
-      "На выдохе тяните гантель вверх к боку груди, держа плечо близко к корпусу; корпус неподвижен. Работают мышцы спины, а не рука.",
+      "На выдохе тяните гантель вверх к боку груди, держа плечо близко к корпусу; корпус неподвижен. Вверху сократите мышцы спины. Работают мышцы спины, а не рука; предплечья только держат гантель.",
       "На вдохе опустите гантель прямо вниз. После подхода поменяйте сторону."
     ],
     "commonMistakes": [
-      "Скручивание корпуса",
-      "Тяга бицепсом"
+      {
+        "text": "Скручивание корпуса",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Тяга бицепсом",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: One-Arm_Dumbbell_Row. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: One-Arm_Dumbbell_Row; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "One-Arm_Dumbbell_Row",
     "reviewNotes": [
       "Не структурное: корпус опирается на скамью — требует проверки",
@@ -1875,13 +2181,20 @@
       "Держа корпус неподвижно, на выдохе тяните рукоять к животу, держа руки близко к корпусу. Сильно сократите мышцы спины, задержитесь на секунду и на вдохе медленно вернитесь."
     ],
     "commonMistakes": [
-      "Раскачивание корпусом вперёд-назад",
-      "Округление спины при возврате"
+      {
+        "text": "Раскачивание корпусом вперёд-назад",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Округление спины при возврате",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Seated_Cable_Rows. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Seated_Cable_Rows; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Seated_Cable_Rows",
     "reviewNotes": [
       "База: shoulders → задние дельты"
@@ -1918,13 +2231,20 @@
       "Задержитесь в конечной точке и медленно верните рукояти. В серии не опускайте вес на упоры полностью, чтобы мышцы оставались под нагрузкой."
     ],
     "commonMistakes": [
-      "Рывок корпусом",
-      "Поднятые плечи"
+      {
+        "text": "Рывок корпусом",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Поднятые плечи",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Leverage_Iso_Row. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Leverage_Iso_Row; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "Leverage_Iso_Row",
     "reviewNotes": [],
     "isCustom": false
@@ -1957,13 +2277,20 @@
       "Не сгибая рук, на вдохе вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Сгибание рук — превращение в тягу",
-      "Работа корпусом"
+      {
+        "text": "Сгибание рук — превращение в тягу",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Работа корпусом",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Straight-Arm_Pulldown. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Straight-Arm_Pulldown; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Straight-Arm_Pulldown",
     "reviewNotes": [
       "Паттерн: односуставное (плечо) — «изоляция», хотя похоже на вертикальную тягу — требует проверки"
@@ -1997,13 +2324,20 @@
       "На вдохе медленно вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Вращение плечами",
-      "Сгибание рук"
+      {
+        "text": "Вращение плечами",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Сгибание рук",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Shrug. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Shrug; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Barbell_Shrug",
     "reviewNotes": [
       "По NSCA «структурными» называют только базовые; шраги — вспомогательное, отмечено «нет»"
@@ -2044,13 +2378,20 @@
       "На выдохе выжмите её обратно в исходное положение."
     ],
     "commonMistakes": [
-      "Сильный прогиб в пояснице",
-      "Помощь ногами (толчок)"
+      {
+        "text": "Сильный прогиб в пояснице",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Помощь ногами (толчок)",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Standing_Military_Press. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Standing_Military_Press; лицензия The Unlicense (public domain); техника: сокращённый перевод; мышцы изменены относительно базы.",
     "sourceId": "Standing_Military_Press",
     "reviewNotes": [
       "База: shoulders (основная) → передние дельты основные, средние — вспомогательные — требует проверки"
@@ -2092,13 +2433,20 @@
       "После секундной паузы на вдохе медленно опустите их в исходное положение."
     ],
     "commonMistakes": [
-      "Сильный прогиб в пояснице",
-      "Неполная амплитуда"
+      {
+        "text": "Сильный прогиб в пояснице",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Неполная амплитуда",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Seated_Dumbbell_Press. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Seated_Dumbbell_Press; лицензия The Unlicense (public domain); техника: сокращённый перевод; мышцы изменены относительно базы.",
     "sourceId": "Seated_Dumbbell_Press",
     "reviewNotes": [
       "Структурное: груз над головой нагружает позвоночник по оси даже сидя — требует проверки",
@@ -2137,16 +2485,23 @@
       "Сядьте на скамью со спинкой, держите гантели перед собой на уровне верха груди, ладони к себе, руки согнуты и прижаты к корпусу — как в верхней точке сгибания на бицепс.",
       "Поднимайте гантели, одновременно разворачивая ладони вперёд.",
       "Продолжайте до полного выпрямления рук над головой. Подъём — на выдохе.",
-      "После секундной паузы на вдохе опускайте гантели в исходное положение, разворачивая ладони к себе."
+      "После секундной паузы на вдохе опускайте гантели в исходное положение, разворачивая ладони к себе. Левая рука вращается против часовой стрелки, правая — по часовой."
     ],
     "commonMistakes": [
-      "Прогиб в пояснице",
-      "Рывок без контроля разворота"
+      {
+        "text": "Прогиб в пояснице",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Рывок без контроля разворота",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Arnold_Dumbbell_Press. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Arnold_Dumbbell_Press; лицензия The Unlicense (public domain); техника: сокращённый перевод; мышцы изменены относительно базы.",
     "sourceId": "Arnold_Dumbbell_Press",
     "reviewNotes": [
       "Структурное — требует проверки (как жим сидя)"
@@ -2184,13 +2539,20 @@
       "На вдохе медленно опустите рукояти в исходное положение."
     ],
     "commonMistakes": [
-      "Отрыв спины от спинки",
-      "Бросок веса вниз"
+      {
+        "text": "Отрыв спины от спинки",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Бросок веса вниз",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Machine_Shoulder_Military_Press. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Machine_Shoulder_Military_Press; лицензия The Unlicense (public domain); техника: сокращённый перевод; мышцы изменены относительно базы.",
     "sourceId": "Machine_Shoulder_Military_Press",
     "reviewNotes": [],
     "isCustom": false
@@ -2218,20 +2580,76 @@
     "lighterAlternatives": [],
     "instructions": [
       "Встаньте прямо, гантели в опущенных руках по бокам, ладони к себе — это исходное положение.",
-      "Без раскачивания корпуса поднимите гантели в стороны с небольшим сгибом в локтях, кисти слегка наклонены вперёд, «как будто наливаете воду из кувшина». Поднимайте до параллели рук с полом. Подъём — на выдохе, вверху пауза.",
+      "Без раскачивания корпуса поднимите гантели в стороны с небольшим сгибом в локтях до параллели рук с полом. Подъём — на выдохе, вверху пауза.",
       "На вдохе медленно опустите гантели в исходное положение."
     ],
     "commonMistakes": [
-      "Раскачивание корпусом",
-      "Подъём плеч к ушам"
+      {
+        "text": "Раскачивание корпусом",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Подъём плеч к ушам",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Side_Lateral_Raise. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Side_Lateral_Raise; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Side_Lateral_Raise",
+    "reviewNotes": [],
+    "isCustom": false
+  },
+  {
+    "id": "2d738f34-37a1-5c8c-8dc7-c15b8eb785eb",
+    "createdAt": "2026-10-23T00:00:00.000Z",
+    "updatedAt": "2026-10-23T00:00:00.000Z",
+    "deletedAt": null,
+    "nameRu": "Мах одной рукой в сторону на нижнем блоке",
+    "nameEn": "Standing Low-Pulley Deltoid Raise",
+    "primaryMuscles": [
+      "side_delts"
+    ],
+    "secondaryMuscles": [],
+    "equipment": [
+      "cable"
+    ],
+    "trackingType": "weight_reps",
+    "isUnilateral": true,
+    "category": "assistance",
+    "isStructural": false,
+    "equipmentType": "cable",
+    "movementPattern": "isolation",
+    "lighterAlternatives": [],
+    "instructions": [
+      "Встаньте правым боком к нижнему блоку. Левой рукой через корпус возьмите одиночную рукоять прямым хватом (ладонь вниз), рука перед собой. Правой рукой держитесь за тренажёр для опоры и равновесия.",
+      "Спина прямая, стопы на ширине плеч — это исходное положение.",
+      "На выдохе ведите левую руку через корпус в сторону, пока она не поднимется до уровня плеча.",
+      "Почувствуйте сокращение вверху в течение секунды и на вдохе медленно верните рукоять в исходное положение.",
+      "Выполните подход и поменяйте руку."
+    ],
+    "commonMistakes": [
+      {
+        "text": "Наклон корпуса в сторону",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Подъём плеча к уху",
+        "verified": false,
+        "source": null
+      }
+    ],
+    "defaultRestSec": 90,
+    "weightStepKg": 5,
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Standing_Low-Pulley_Deltoid_Raise; лицензия The Unlicense (public domain); техника: сокращённый перевод; мышцы изменены относительно базы.",
+    "sourceId": "Standing_Low-Pulley_Deltoid_Raise",
     "reviewNotes": [
-      "Совет «как будто наливаете воду» — из оригинала; его польза спорна — требует проверки"
+      "Добавлено для покрытия средних дельт упражнением на блоке",
+      "База: вспомогательная forearms — убрана (удержание рукояти, не рабочая мышца для подсчёта объёма) — требует проверки",
+      "База: shoulders → средние дельты"
     ],
     "isCustom": false
   },
@@ -2263,12 +2681,15 @@
       "Чередуйте руки до нужного числа повторений каждой рукой."
     ],
     "commonMistakes": [
-      "Раскачивание корпусом"
+      {
+        "text": "Раскачивание корпусом",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Front_Dumbbell_Raise. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Front_Dumbbell_Raise; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "Front_Dumbbell_Raise",
     "reviewNotes": [
       "Заменяет Cable_Seated_Lateral_Raise: в базе его техника описывает разведения в наклоне (задние дельты), а не махи в стороны"
@@ -2304,13 +2725,20 @@
       "Держите плечи параллельно полу на протяжении всего движения."
     ],
     "commonMistakes": [
-      "Рывок корпусом назад",
-      "Опускание локтей"
+      {
+        "text": "Рывок корпусом назад",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Опускание локтей",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Face_Pull. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Face_Pull; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "Face_Pull",
     "reviewNotes": [
       "mechanic = compound, но рабочие мышцы мелкие (задние дельты, ромбовидные): по NSCA — вспомогательное; категория изменена на «вспомогательное» — требует проверки",
@@ -2349,13 +2777,20 @@
       "Почувствуйте сокращение и на вдохе медленно опустите гантели."
     ],
     "commonMistakes": [
-      "Сгибание рук — превращение в тягу",
-      "Подъём плеч к ушам"
+      {
+        "text": "Сгибание рук — превращение в тягу",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Подъём плеч к ушам",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Reverse_Flyes. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Reverse_Flyes; лицензия The Unlicense (public domain); техника: сокращённый перевод; мышцы изменены относительно базы.",
     "sourceId": "Reverse_Flyes",
     "reviewNotes": [
       "Добавлена вспомогательная mid_back (в базе вспомогательных нет): сведение лопаток указано в самой технике — требует проверки"
@@ -2392,13 +2827,20 @@
       "Задержитесь в конечной точке и медленно верните вес."
     ],
     "commonMistakes": [
-      "Рывок корпусом",
-      "Сгибание локтей"
+      {
+        "text": "Рывок корпусом",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Сгибание локтей",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Reverse_Machine_Flyes. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Reverse_Machine_Flyes; лицензия The Unlicense (public domain); техника: перевод; мышцы изменены относительно базы.",
     "sourceId": "Reverse_Machine_Flyes",
     "reviewNotes": [
       "Добавлена вспомогательная mid_back — требует проверки"
@@ -2438,13 +2880,20 @@
       "На вдохе медленно опустите штангу в исходное положение."
     ],
     "commonMistakes": [
-      "Раскачивание корпусом",
-      "Вынос локтей вперёд"
+      {
+        "text": "Раскачивание корпусом",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Вынос локтей вперёд",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Curl. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Barbell_Curl; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Barbell_Curl",
     "reviewNotes": [],
     "isCustom": false
@@ -2478,13 +2927,20 @@
       "На вдохе медленно опустите гантели в исходное положение."
     ],
     "commonMistakes": [
-      "Раскачивание корпусом",
-      "Вынос локтей вперёд"
+      {
+        "text": "Раскачивание корпусом",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Вынос локтей вперёд",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dumbbell_Bicep_Curl. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dumbbell_Bicep_Curl; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Dumbbell_Bicep_Curl",
     "reviewNotes": [],
     "isCustom": false
@@ -2517,12 +2973,15 @@
       "На вдохе медленно опустите гантели в исходное положение."
     ],
     "commonMistakes": [
-      "Раскачивание корпусом"
+      {
+        "text": "Раскачивание корпусом",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Hammer_Curls. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Hammer_Curls; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Hammer_Curls",
     "reviewNotes": [
       "Группа biceps включает плечевую мышцу (m. brachialis), основную в этом хвате"
@@ -2558,13 +3017,20 @@
       "На выдохе согните руки до полного сокращения бицепса — гриф на уровне плеч. Задержитесь на секунду."
     ],
     "commonMistakes": [
-      "Отрыв локтей от подушки",
-      "Бросок веса в нижней точке"
+      {
+        "text": "Отрыв локтей от подушки",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Бросок веса в нижней точке",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Preacher_Curl. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Preacher_Curl; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Preacher_Curl",
     "reviewNotes": [
       "В базе оборудование barbell, но техника описывает EZ-гриф — указан EZ-гриф"
@@ -2598,13 +3064,20 @@
       "На вдохе медленно опустите рукоять в исходное положение."
     ],
     "commonMistakes": [
-      "Раскачивание корпусом",
-      "Вынос локтей вперёд"
+      {
+        "text": "Раскачивание корпусом",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Вынос локтей вперёд",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Standing_Biceps_Cable_Curl. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Standing_Biceps_Cable_Curl; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Standing_Biceps_Cable_Curl",
     "reviewNotes": [],
     "isCustom": false
@@ -2637,13 +3110,20 @@
       "После секундной паузы на вдохе медленно вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Локти уходят от корпуса",
-      "Наклон корпуса для помощи весом тела"
+      {
+        "text": "Локти уходят от корпуса",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Наклон корпуса для помощи весом тела",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Triceps_Pushdown. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Triceps_Pushdown; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Triceps_Pushdown",
     "reviewNotes": [],
     "isCustom": false
@@ -2676,13 +3156,20 @@
       "После секундной паузы на вдохе медленно вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Локти уходят от корпуса",
-      "Работа корпусом"
+      {
+        "text": "Локти уходят от корпуса",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Работа корпусом",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Triceps_Pushdown_-_Rope_Attachment. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Triceps_Pushdown_-_Rope_Attachment; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Triceps_Pushdown_-_Rope_Attachment",
     "reviewNotes": [],
     "isCustom": false
@@ -2717,13 +3204,20 @@
       "На выдохе разогните руки и вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Локти расходятся в стороны",
-      "Плечи двигаются вместе с предплечьями"
+      {
+        "text": "Локти расходятся в стороны",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Плечи двигаются вместе с предплечьями",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: EZ-Bar_Skullcrusher. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: EZ-Bar_Skullcrusher; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "EZ-Bar_Skullcrusher",
     "reviewNotes": [],
     "isCustom": false
@@ -2756,13 +3250,20 @@
       "На выдохе за счёт трицепса вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Локти расходятся",
-      "Прогиб в пояснице"
+      {
+        "text": "Локти расходятся",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Прогиб в пояснице",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 90,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Cable_Rope_Overhead_Triceps_Extension. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Cable_Rope_Overhead_Triceps_Extension; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Cable_Rope_Overhead_Triceps_Extension",
     "reviewNotes": [],
     "isCustom": false
@@ -2798,17 +3299,24 @@
     "instructions": [
       "Лягте на горизонтальную скамью. Узким хватом (около ширины плеч) снимите штангу и удерживайте на прямых руках над собой — это исходное положение.",
       "На вдохе медленно опускайте штангу до середины груди. В отличие от обычного жима, держите локти близко к корпусу.",
-      "После секундной паузы на выдохе выжмите штангу за счёт трицепса. Опускание — минимум вдвое дольше подъёма.",
+      "После секундной паузы на выдохе выжмите штангу за счёт трицепса. Вверху выпрямите руки и задержитесь на секунду. Опускание — минимум вдвое дольше подъёма.",
       "По окончании подхода верните штангу на стойки."
     ],
     "commonMistakes": [
-      "Слишком узкий хват с нагрузкой на запястья",
-      "Разведение локтей"
+      {
+        "text": "Слишком узкий хват с нагрузкой на запястья",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Разведение локтей",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Close-Grip_Barbell_Bench_Press. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Close-Grip_Barbell_Bench_Press; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Close-Grip_Barbell_Bench_Press",
     "reviewNotes": [],
     "isCustom": false
@@ -2846,13 +3354,20 @@
       "На выдохе за счёт трицепса вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Раскачивание",
-      "Разведение локтей"
+      {
+        "text": "Раскачивание",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Разведение локтей",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dips_-_Triceps_Version. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dips_-_Triceps_Version; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Dips_-_Triceps_Version",
     "reviewNotes": [
       "Паттерн: брусья отнесены к вертикальному жиму — требует проверки"
@@ -2890,13 +3405,20 @@
       "На вдохе медленно вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Отрыв таза от сиденья",
-      "Разведение локтей"
+      {
+        "text": "Отрыв таза от сиденья",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Разведение локтей",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dip_Machine. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Dip_Machine; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Dip_Machine",
     "reviewNotes": [
       "Паттерн: вертикальный жим — требует проверки"
@@ -2930,17 +3452,22 @@
       "Для усложнения можно поднять одну руку или ногу."
     ],
     "commonMistakes": [
-      "Провисание или подъём таза",
-      "Задержка дыхания"
+      {
+        "text": "Провисание или подъём таза",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Задержка дыхания",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 60,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Plank. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Plank; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "Plank",
-    "reviewNotes": [
-      "Паттерн «кор» — НЕ из списка ТЗ, предлагаю добавить (см. вопросы)"
-    ],
+    "reviewNotes": [],
     "isCustom": false
   },
   {
@@ -2972,17 +3499,22 @@
       "На вдохе медленно вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Тянуть голову руками",
-      "Рывки за счёт инерции"
+      {
+        "text": "Тянуть голову руками",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Рывки за счёт инерции",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 60,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Crunches. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Crunches; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Crunches",
-    "reviewNotes": [
-      "Паттерн «кор» — предлагаю добавить"
-    ],
+    "reviewNotes": [],
     "isCustom": false
   },
   {
@@ -3014,17 +3546,22 @@
       "На вдохе медленно вернитесь. Держите пресс под постоянным напряжением и не берите такой вес, при котором основную работу делает поясница."
     ],
     "commonMistakes": [
-      "Работа тазом вместо скручивания",
-      "Слишком большой вес"
+      {
+        "text": "Работа тазом вместо скручивания",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Слишком большой вес",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 60,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Cable_Crunch. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Cable_Crunch; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Cable_Crunch",
-    "reviewNotes": [
-      "Паттерн «кор» — предлагаю добавить"
-    ],
+    "reviewNotes": [],
     "isCustom": false
   },
   {
@@ -3054,17 +3591,22 @@
       "На вдохе медленно вернитесь в исходное положение."
     ],
     "commonMistakes": [
-      "Раскачивание",
-      "Бросок ног вниз"
+      {
+        "text": "Раскачивание",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Бросок ног вниз",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 60,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Hanging_Leg_Raise. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Hanging_Leg_Raise; лицензия The Unlicense (public domain); техника: сокращённый перевод.",
     "sourceId": "Hanging_Leg_Raise",
-    "reviewNotes": [
-      "Паттерн «кор» — предлагаю добавить"
-    ],
+    "reviewNotes": [],
     "isCustom": false
   },
   {
@@ -3097,18 +3639,24 @@
       "После паузы в вытянутом положении на выдохе вернитесь в исходное положение. Медленно, пресс всё время напряжён."
     ],
     "commonMistakes": [
-      "Прогиб в пояснице",
-      "Слишком далёкий выкат на старте"
+      {
+        "text": "Прогиб в пояснице",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Слишком далёкий выкат на старте",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 60,
     "weightStepKg": 2.5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Ab_Roller. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Ab_Roller; лицензия The Unlicense (public domain); техника: перевод; мышцы изменены относительно базы.",
     "sourceId": "Ab_Roller",
     "reviewNotes": [
       "mechanic = compound, но основная мышца — пресс (по NSCA область вспомогательных): категория изменена на «вспомогательное» — требует проверки",
-      "База: вспомогательная shoulders → широчайшие (разгибание плеча при возврате) — требует проверки",
-      "Паттерн «кор» — предлагаю добавить"
+      "База: вспомогательная shoulders → широчайшие (разгибание плеча при возврате) — требует проверки"
     ],
     "isCustom": false
   },
@@ -3141,16 +3689,18 @@
       "После подхода повторите, повернувшись другим боком."
     ],
     "commonMistakes": [
-      "Разворот корпуса к блоку"
+      {
+        "text": "Разворот корпуса к блоку",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 60,
     "weightStepKg": 5,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Pallof_Press. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Pallof_Press; лицензия The Unlicense (public domain); техника: перевод; мышцы изменены относительно базы.",
     "sourceId": "Pallof_Press",
     "reviewNotes": [
-      "База: вспомогательные chest, shoulders, triceps — убраны: руки работают статически, для подсчёта объёма это вводит в заблуждение — требует проверки",
-      "Паттерн «кор» — предлагаю добавить"
+      "База: вспомогательные chest, shoulders, triceps — убраны: руки работают статически, для подсчёта объёма это вводит в заблуждение — требует проверки"
     ],
     "isCustom": false
   },
@@ -3189,17 +3739,23 @@
       "Идите короткими быстрыми шагами, не задерживая дыхание. Пройдите заданную дистанцию — обычно 15–30 м (50–100 футов) — как можно быстрее."
     ],
     "commonMistakes": [
-      "Округление спины при подъёме",
-      "Задержка дыхания"
+      {
+        "text": "Округление спины при подъёме",
+        "verified": false,
+        "source": null
+      },
+      {
+        "text": "Задержка дыхания",
+        "verified": false,
+        "source": null
+      }
     ],
-    "commonMistakesSource": null,
     "defaultRestSec": 150,
     "weightStepKg": 2,
-    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Farmers_Walk. Лицензия: The Unlicense (public domain). Перевод техники — свой.",
+    "source": "free-exercise-db (https://github.com/yuhonas/free-exercise-db), id: Farmers_Walk; лицензия The Unlicense (public domain); техника: перевод.",
     "sourceId": "Farmers_Walk",
     "reviewNotes": [
       "mechanic в базе не указан; «базовое» — многосуставное с крупными мышцами ног и кора, хотя основная в базе — предплечья — требует проверки",
-      "Паттерн «перенос» — НЕ из списка ТЗ, предлагаю добавить",
       "Облегчённых альтернатив нет (тренажёра на хват в выборке нет)",
       "Тип записи «вес × время»; дистанция не записывается"
     ],

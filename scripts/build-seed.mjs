@@ -1,12 +1,14 @@
-// Сборка начальной базы упражнений из free-exercise-db + курирования (curation.mjs).
+// Сборка начальной базы упражнений из free-exercise-db + курирования (curation.mjs, cuts.mjs).
 // Запуск: node scripts/build-seed.mjs <путь к exercises.json из free-exercise-db>
-// Результат: src/data/seed/exercises.json и docs/exercises-review.md (таблица на проверку).
+// Результат: src/data/seed/exercises.json и docs/exercises-review.md.
+// Код выхода 1, если есть ошибки проверок (альтернатива не легче исходного, нет покрытия дельт и т. п.).
 
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { curation } from './curation.mjs';
+import { REASONS, cuts } from './cuts.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const rawPath = process.argv[2];
@@ -49,6 +51,26 @@ const MUSCLES = {
   adductors: 'Приводящие',
   calves: 'Икры',
 };
+/** Мышцы free-exercise-db → справочник приложения. shoulders — любой пучок дельт. */
+const DB_MUSCLE = {
+  quadriceps: 'quads',
+  hamstrings: 'hamstrings',
+  glutes: 'glutes',
+  calves: 'calves',
+  'lower back': 'lower_back',
+  'middle back': 'mid_back',
+  traps: 'upper_traps',
+  lats: 'lats',
+  chest: 'chest',
+  biceps: 'biceps',
+  triceps: 'triceps',
+  forearms: 'forearms',
+  abdominals: 'abs',
+  adductors: 'adductors',
+  abductors: 'abductors',
+  shoulders: 'shoulders',
+};
+const DELTS = ['front_delts', 'side_delts', 'rear_delts'];
 const PATTERN = {
   squat: 'присед',
   hinge: 'наклон/тяга бедром',
@@ -58,8 +80,8 @@ const PATTERN = {
   horizontal_pull: 'гориз. тяга',
   vertical_pull: 'верт. тяга',
   isolation: 'изоляция',
-  core: 'кор*',
-  carry: 'перенос*',
+  core: 'кор',
+  carry: 'перенос',
 };
 const EQTYPE = { free_weight: 'свободный вес', machine: 'тренажёр', cable: 'блок', bodyweight: 'собств. вес' };
 const TRACK = {
@@ -70,11 +92,37 @@ const TRACK = {
   weight_time: 'вес × время',
 };
 
-const problems = [];
+// Служебные фразы о повторениях — выкидываются из перевода всегда.
+const FILLER = /repeat( the movement| this motion)? for the (recommended|prescribed|specified) (amount|number)|^perform the amount of repetitions|^repeat\.?$/i;
+const FILLER_KEEP = /then perform|switch|other arm|other leg|with the left|other direction/i;
+
+const FILLER_FRAGMENT =
+  /(repeat( the movement| this motion)? for the (recommended|prescribed|specified) (amount|number) of (repetitions|times)( of your training program)?|perform the amount of repetitions prescribed in the program|^repeat)\.?/i;
+
+/** Служебные фразы о повторениях; если служебная только часть предложения — вырезается только она. */
+function fillerFragments(instructions) {
+  const out = [];
+  for (const step of instructions) {
+    for (const raw of step.replace(/^\d+\.\s*/, '').split(/(?<=\.)\s+/)) {
+      const s = raw.trim();
+      if (!FILLER.test(s) || FILLER_KEEP.test(s)) continue;
+      const m = s.match(FILLER_FRAGMENT);
+      const frag = m ? m[0] : s;
+      out.push({ orig: frag, partial: frag.replace(/\.$/, '') !== s.replace(/\.$/, '') });
+    }
+  }
+  return out;
+}
+
+const norm = (ids) => [...new Set(ids.map((m) => (DELTS.includes(m) ? 'shoulders' : m)))].sort().join(',');
+const normDb = (ids) => [...new Set(ids.map((m) => DB_MUSCLE[m]).filter(Boolean))].sort().join(',');
+
+const errors = [];
 const curatedIds = new Set(curation.map((c) => c.id));
+for (const id of Object.keys(cuts)) if (!curatedIds.has(id)) errors.push(`cuts.mjs: ${id} нет в выборке`);
 
 // ACSM (2009) Progression Models in Resistance Training: отдых 2–3 мин для базовых с большим весом,
-// 1–2 мин для вспомогательных. Берём середину/верх диапазона.
+// 1–2 мин для вспомогательных.
 const REST = { core: 150, assistance: 90 };
 // Шаг веса — эвристика интерфейса, меняется в карточке упражнения.
 const STEP = { free_weight: 2.5, machine: 5, cable: 5, bodyweight: 2.5 };
@@ -88,16 +136,26 @@ const seed = curation.map((c) => {
   const notes = [...c.notes];
   if (c.cat && fromMechanic && c.cat !== fromMechanic && !notes.some((n) => n.includes('mechanic')))
     notes.push(`Категория изменена: mechanic = ${src.mechanic}`);
-  if (c.str && category !== 'core') problems.push(`${c.id}: структурное, но не базовое`);
-  for (const a of c.alt) {
-    if (!curatedIds.has(a)) problems.push(`${c.id}: альтернатива ${a} не в выборке`);
-    const alt = curation.find((x) => x.id === a);
-    if (alt && !alt.P.some((m) => c.P.includes(m))) problems.push(`${c.id}: у альтернативы ${a} нет общих основных мышц`);
-    if (alt && alt.str && alt.cat !== 'assistance' && (alt.cat ?? 'core') === 'core' && byId.get(a)?.mechanic === 'compound')
-      notes.push(`Альтернатива ${a} сама структурная — требует проверки`);
-  }
-  if (c.ins.length < 3 || c.ins.length > 6) problems.push(`${c.id}: техника ${c.ins.length} пунктов`);
+  if (c.str && category !== 'core') errors.push(`${c.id}: структурное, но не базовое`);
+  if (c.ins.length < 3 || c.ins.length > 6) errors.push(`${c.id}: техника ${c.ins.length} пунктов (нужно 3–6)`);
+
+  const musclesChanged = norm(c.P) !== normDb(src.primaryMuscles) || norm(c.S) !== normDb(src.secondaryMuscles);
+  const removed = [
+    ...(cuts[c.id] ?? []).map((x) => ({ ...x, reasonText: REASONS[x.reason] })),
+    ...fillerFragments(src.instructions).map((f) => ({
+      orig: f.orig,
+      reason: 'filler',
+      reasonText: 'служебная фраза о повторениях',
+      note: f.partial ? 'остальная часть предложения переведена' : undefined,
+    })),
+  ];
   const dumbbellOnly = c.eq.includes('dumbbell') && c.et === 'free_weight' && !c.eq.includes('barbell');
+  const sourceParts = [
+    `free-exercise-db (${SOURCE_URL}), id: ${c.id}`,
+    'лицензия The Unlicense (public domain)',
+    removed.length ? 'техника: сокращённый перевод' : 'техника: перевод',
+  ];
+  if (musclesChanged) sourceParts.push('мышцы изменены относительно базы');
   return {
     id: stableUuid(c.id),
     createdAt: CREATED,
@@ -116,19 +174,49 @@ const seed = curation.map((c) => {
     movementPattern: c.pat,
     lighterAlternatives: c.alt.map(stableUuid),
     instructions: c.ins,
-    commonMistakes: c.mis,
-    commonMistakesSource: null,
+    // Частые ошибки без источника: не показываются в интерфейсе до проверки (verified: false).
+    commonMistakes: c.mis.map((text) => ({ text, verified: false, source: null })),
     defaultRestSec: c.rest ?? REST[category],
     weightStepKg: c.step ?? (dumbbellOnly ? 2 : STEP[c.et]),
-    source: `free-exercise-db (${SOURCE_URL}), id: ${c.id}. Лицензия: The Unlicense (public domain). Перевод техники — свой.`,
+    source: sourceParts.join('; ') + '.',
     sourceId: c.id,
     reviewNotes: notes,
     isCustom: false,
-    _db: { mechanic: src.mechanic, P: src.primaryMuscles, S: src.secondaryMuscles, equipment: src.equipment },
+    _review: { removed, musclesChanged, db: src },
   };
 });
 
-const out = seed.map(({ _db, ...e }) => e);
+const bySourceId = new Map(seed.map((e) => [e.sourceId, e]));
+
+// ——— Проверка: облегчённая альтернатива действительно легче ———
+// Определение ТЗ (раздел 2): вспомогательное, или неструктурное, или на тренажёре/блоке; плюс общие основные мышцы.
+const lighterViolations = [];
+for (const e of seed) {
+  for (const altSrc of curation.find((c) => c.id === e.sourceId).alt) {
+    const a = bySourceId.get(altSrc);
+    if (!a) {
+      lighterViolations.push(`${e.nameRu} → ${altSrc}: альтернативы нет в выборке`);
+      continue;
+    }
+    const lighter = !a.isStructural || a.category === 'assistance' || a.equipmentType === 'machine' || a.equipmentType === 'cable';
+    if (!lighter) lighterViolations.push(`${e.nameRu} → ${a.nameRu}: структурное базовое на свободном весе — не легче`);
+    if (!a.primaryMuscles.some((m) => e.primaryMuscles.includes(m)))
+      lighterViolations.push(`${e.nameRu} → ${a.nameRu}: нет общих основных мышц`);
+    if (a.isStructural) e.reviewNotes.push(`Альтернатива «${a.nameRu}» сама структурная (проходит как тренажёр) — требует проверки`);
+  }
+}
+errors.push(...lighterViolations);
+
+// ——— Проверка: покрытие пучков дельт ———
+const coverage = DELTS.map((m) => {
+  const list = seed.filter((e) => e.primaryMuscles.includes(m));
+  const machine = list.filter((e) => e.equipmentType === 'machine' || e.equipmentType === 'cable');
+  const ok = list.length >= 2 && machine.length >= 1;
+  if (!ok) errors.push(`${MUSCLES[m]}: ${list.length} упр. как основная, из них тренажёр/блок — ${machine.length}`);
+  return { m, list, machine, ok };
+});
+
+const out = seed.map(({ _review, ...e }) => e);
 mkdirSync(join(root, 'src/data/seed'), { recursive: true });
 writeFileSync(join(root, 'src/data/seed/exercises.json'), JSON.stringify(out, null, 2) + '\n');
 
@@ -136,59 +224,88 @@ writeFileSync(join(root, 'src/data/seed/exercises.json'), JSON.stringify(out, nu
 const ru = (ids) => ids.map((m) => MUSCLES[m] ?? `?${m}`).join(', ') || '—';
 const nameOf = new Map(seed.map((e) => [e.id, e.nameRu]));
 const esc = (s) => String(s).replace(/\|/g, '\\|');
-const groups = [
-  ['Ноги', 0, 21],
-  ['Грудь', 21, 32],
-  ['Спина', 32, 44],
-  ['Плечи', 44, 53],
-  ['Руки', 53, 65],
-  ['Пресс и перенос', 65, seed.length],
+const GROUPS = [
+  ['Ноги', 'Barbell_Full_Squat'],
+  ['Грудь', 'Barbell_Bench_Press_-_Medium_Grip'],
+  ['Спина', 'Pullups'],
+  ['Плечи', 'Standing_Military_Press'],
+  ['Руки', 'Barbell_Curl'],
+  ['Пресс и перенос', 'Plank'],
 ];
+const starts = GROUPS.map(([, id]) => seed.findIndex((e) => e.sourceId === id));
+if (starts.some((i) => i < 0)) throw new Error('Группа не найдена');
 
 let md = `# Упражнения: таблица на утверждение
 
 Сгенерировано \`scripts/build-seed.mjs\` из free-exercise-db (${SOURCE_URL}).
-Лицензия базы проверена 2026-10-23: **The Unlicense** (public domain), атрибуция не обязательна, но будет указана в «О приложении».
+Лицензию базы проверил 2026-10-23: **The Unlicense** (public domain). Атрибуция не обязательна, но будет указана в «О приложении».
 
-**Всего: ${seed.length}.** Пока вы не утвердите таблицу, в приложение ничего не загружается.
+**Всего: ${seed.length}.**
 
 ## Как читать
 
 - **Кат.** — категория по NSCA: **Б** — базовое (многосуставное, крупные мышцы), **В** — вспомогательное (односуставное). Берётся из поля \`mechanic\` (compound → Б, isolation → В) и сверяется с определением NSCA; расхождения — в пометках.
-- **Стр.** — структурное (NSCA: базовое, которое прямо или косвенно нагружает позвоночник): **да** / —.
-- **Обор.** — тип оборудования; **Запись** — форма ввода подхода.
-- **Мышцы:** основные / вспомогательные. Плечи из базы (\`shoulders\`) разнесены по пучкам дельт; другие отличия от базы — в пометках.
-- **Техника** — перевод \`instructions\` с сохранением смысла. Убраны только служебные шаги «повторите нужное число раз» и ссылки на разделы, которых в базе нет.
-- **Частые ошибки** — источника нет, поэтому в интерфейсе у всех стоит пометка «требует проверки».
+- **Стр.** — структурное (NSCA: базовое, которое прямо или косвенно нагружает позвоночник).
+- **Мышцы:** основные / вспомогательные. Плечи из базы (\`shoulders\`) разнесены по пучкам дельт. Если мышцы отличаются от базы, в \`source\` упражнения стоит «мышцы изменены относительно базы»; что именно изменено — в пометках.
+- **Техника** — перевод \`instructions\` с сохранением смысла. Всё, что вырезано, перечислено в разделе «Вырезано из оригинала». Там, где что-то вырезано, в \`source\` стоит «сокращённый перевод».
+- **Частые ошибки** хранятся с флагом \`verified: false\` и в интерфейсе не показываются, пока вы их не проверите.
 - **Отдых по умолчанию:** Б — 150 с, В — 90 с, пресс — 60 с. Основа — ACSM (2009): 2–3 мин для базовых с большим весом, 1–2 мин для вспомогательных. Для пресса 60 с — эвристика.
 - **Шаг веса** (эвристика, меняется в карточке): штанга 2,5 кг, гантели 2 кг, тренажёр и блок 5 кг.
-- \`*\` в паттерне — значения **не из списка ТЗ** (см. вопрос 1 ниже).
 
+## Проверки
+
+**Облегчённые альтернативы.** Правило: альтернатива вспомогательная, или неструктурная, или на тренажёре/блоке, и у неё есть общая основная мышца с исходным упражнением. ${
+  lighterViolations.length ? `Нарушения:\n\n${lighterViolations.map((v) => `- ${v}`).join('\n')}` : 'Нарушений нет.'
+}
+
+**Покрытие дельт.** Нужно минимум 2 упражнения, где пучок — основная мышца, и хотя бы одно из них на тренажёре или блоке.
+
+| Пучок | Упражнения (основная мышца) | Тренажёр/блок | ОК |
+|---|---|---|---|
+${coverage.map((c) => `| ${MUSCLES[c.m]} | ${c.list.map((e) => e.nameRu).join('; ')} | ${c.machine.map((e) => e.nameRu).join('; ') || '—'} | ${c.ok ? 'да' : '**нет**'} |`).join('\n')}
+
+## Решения по прошлой версии
+
+1. Паттерны «кор» и «перенос» добавлены.
+2. Спорные советы не возвращаются. Полный список вырезанного — ниже.
+3. Структурность выпадов, сплит-приседа, зашагиваний и жимов сидя — «да» с пометкой «требует проверки».
+4. Мышцы становой тяги изменены (поясница + ягодичные + задняя поверхность бедра), в \`source\` есть пометка.
+
+Также при сверке с оригиналом в переводы вернулись безобидные фрагменты, которые раньше потерялись при сокращении: «вверху выпрямите руки и задержитесь», «сократите мышцы спины», направление вращения в жиме Арнольда и т. п.
 `;
 
-for (const [title, a, b] of groups) {
+GROUPS.forEach(([title], gi) => {
+  const a = starts[gi];
+  const b = starts[gi + 1] ?? seed.length;
   md += `\n## ${title}\n\n| # | Упражнение | Мышцы: основные / вспомогательные | Кат. | Стр. | Обор. | Паттерн | Запись | Облегчённые альтернативы | Пометки |\n|---|---|---|---|---|---|---|---|---|---|\n`;
   seed.slice(a, b).forEach((e, i) => {
     const alts = e.lighterAlternatives.map((id) => nameOf.get(id)).join('; ') || '—';
-    const n = e.reviewNotes.length ? e.reviewNotes.map(esc).join('<br>') : '';
+    const n = e.reviewNotes.map(esc).join('<br>');
     md += `| ${a + i + 1} | **${esc(e.nameRu)}**<br><sub>${esc(e.nameEn)}</sub> | ${ru(e.primaryMuscles)} / ${ru(e.secondaryMuscles)} | ${e.category === 'core' ? 'Б' : 'В'} | ${e.isStructural ? 'да' : '—'} | ${EQTYPE[e.equipmentType]} | ${PATTERN[e.movementPattern]} | ${TRACK[e.trackingType]}${e.isUnilateral ? ', одностор.' : ''} | ${esc(alts)} | ${n} |\n`;
   });
+});
+
+md += `\n## Вырезано из оригинала\n\nДословные фрагменты \`instructions\` из базы, которых нет в переводе, с причиной.\nСлужебные фразы о повторениях («Repeat for the recommended amount of repetitions» и подобные) — тоже здесь.\n`;
+for (const e of seed) {
+  const r = e._review;
+  md += `\n### ${a(e)}\n\n`;
+  if (!r.removed.length) {
+    md += 'Ничего не вырезано.\n';
+    continue;
+  }
+  for (const x of r.removed) md += `- «${esc(x.orig)}» — ${x.reasonText}${x.note ? `; ${x.note}` : ''}\n`;
+}
+function a(e) {
+  return `${e.nameRu} (${e.sourceId})`;
 }
 
-md += `
-## Вопросы к вам
-
-1. **Паттерны «кор» и «перенос».** Для планки, скручиваний, жима Паллофа и прогулки фермера в списке паттернов ТЗ нет подходящего значения. Предлагаю добавить «кор» и «перенос». Другой вариант — отнести их к «изоляции».
-2. **Спорные советы из оригинала** — например, «колени не должны выходить за носки». В переводе я их опустил и отметил в пометках. Вернуть их дословно или оставить так?
-3. **Структурность** выпадов, сплит-приседа, зашагиваний и жимов сидя отмечена «да» с пометкой «требует проверки». У NSCA сказано «прямо или косвенно нагружает позвоночник»; я трактовал так: вес в руках стоя или над головой — значит, да.
-4. **Становая тяга:** в базе основная мышца только поясница. Я добавил ягодичные и заднюю поверхность бедра, иначе тяга бедром и сгибания ног не проходят как облегчённые альтернативы (у альтернатив должны быть общие основные мышцы).
-
-Полная техника и частые ошибки каждого упражнения — в \`src/data/seed/exercises.json\`.
-`;
-
+md += `\nПолная техника каждого упражнения — в \`src/data/seed/exercises.json\`.\n`;
 writeFileSync(join(root, 'docs/exercises-review.md'), md);
-console.log(`Готово: ${seed.length} упражнений.`);
-if (problems.length) {
-  console.log('Проблемы:');
-  for (const p of problems) console.log(' - ' + p);
+
+console.log(`Готово: ${seed.length} упражнений; сокращённый перевод: ${seed.filter((e) => e._review.removed.length).length}; мышцы изменены: ${seed.filter((e) => e._review.musclesChanged).length}.`);
+for (const c of coverage) console.log(`${c.m}: ${c.list.length} (тренажёр/блок ${c.machine.length})`);
+if (errors.length) {
+  console.log('Ошибки проверок:');
+  for (const p of errors) console.log(' - ' + p);
+  process.exit(1);
 }

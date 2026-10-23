@@ -65,6 +65,12 @@ export type MovementPattern =
   | 'core'
   | 'carry';
 
+export interface CommonMistake {
+  text: string;
+  verified: boolean;
+  source?: string | null;
+}
+
 export interface Exercise extends BaseEntity {
   nameRu: string;
   nameEn: string;
@@ -79,9 +85,8 @@ export interface Exercise extends BaseEntity {
   movementPattern: MovementPattern;
   lighterAlternatives: UUID[];
   instructions: string[];
-  commonMistakes: string[];
-  /** null — источника нет, в интерфейсе пометка «требует проверки» */
-  commonMistakesSource?: string | null;
+  /** Показываются в интерфейсе только с verified = true (проверены пользователем или есть источник). */
+  commonMistakes: CommonMistake[];
   defaultRestSec: number;
   weightStepKg: number;
   source: string;
