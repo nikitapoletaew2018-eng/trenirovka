@@ -210,7 +210,7 @@ export async function updateSet(id: string, patch: SetPatch): Promise<void> {
  * При отметке: значения переносятся в следующие нетронутые подходы, стартует таймер отдыха.
  * Возвращает длительность отдыха в секундах (или null при снятии отметки).
  */
-export async function toggleSetCompleted(id: string): Promise<number | null> {
+export async function toggleSetCompleted(id: string, opts: { startRest?: boolean } = {}): Promise<number | null> {
   const set = await db.sets.get(id);
   if (!set) return null;
   const we = await db.workoutExercises.get(set.workoutExerciseId);
@@ -219,8 +219,13 @@ export async function toggleSetCompleted(id: string): Promise<number | null> {
   const settings = await getSettings();
   const willComplete = !set.completed;
   const restSec = we.restSec ?? ex?.defaultRestSec ?? settings.defaultRestSec;
-
   const sets = await exerciseSets(we.id);
+  // Суперсет / круг: отдых — только после последнего упражнения группы.
+  let startRest = opts.startRest ?? true;
+  if (startRest && we.supersetGroup) {
+    const group = (await workoutExercises(we.workoutId)).filter((x) => x.supersetGroup === we.supersetGroup);
+    if (group.some((x) => x.order > we.order)) startRest = false;
+  }
   return withUndo(willComplete ? 'Подход выполнен' : 'Отметка снята', async (rec) => {
     const t = nowIso();
     await rec.update(db.sets, id, { completed: willComplete, completedAt: willComplete ? t : null, updatedAt: t });
@@ -230,6 +235,7 @@ export async function toggleSetCompleted(id: string): Promise<number | null> {
       id,
     );
     for (const [sid, v] of updates) await rec.update(db.sets, sid, { ...v, updatedAt: t });
+    if (!startRest) return 0;
     rec.put(db.restTimer, {
       id: 'current',
       workoutExerciseId: we.id,
