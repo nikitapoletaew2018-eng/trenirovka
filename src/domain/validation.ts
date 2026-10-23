@@ -30,6 +30,22 @@ export function isHalfStep(n: number): boolean {
   return Number.isInteger(n * 2);
 }
 
+/**
+ * Разбор времени из поля ввода → секунды.
+ * «90» — секунды; «1:30», «1.30», «1,30» — мин:сек (точка и запятая — потому что на цифровой
+ * клавиатуре iPhone нет двоеточия); «1:02:30» — ч:мин:сек. Секунды и минуты после разделителя — 0–59.
+ */
+export function parseDuration(s: string): number | null {
+  const t = s.trim();
+  if (t === '') return null;
+  const parts = t.split(/[:.,]/);
+  if (parts.length > 3 || parts.some((p) => !/^\d+$/.test(p))) return null;
+  const nums = parts.map(Number);
+  if (nums.slice(1).some((n) => n > 59)) return null;
+  const sec = nums.reduce((acc, n) => acc * 60 + n, 0);
+  return sec <= LIMITS.durationSec.max ? sec : null;
+}
+
 /** Разбор числа из поля ввода: принимает «82,5» и «82.5». */
 export function parseDecimal(s: string): number | null {
   const t = s.trim().replace(',', '.');

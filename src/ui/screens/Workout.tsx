@@ -411,7 +411,7 @@ function SetRow({ set, ex, settings, cols, label, mode }: { set: WorkoutSet; ex:
         <Stepper label="Повторы" value={set.reps ?? null} step={1} min={0} max={999} integer onChange={(v) => void updateSet(set.id, { reps: v })} />
       )}
       {(ex.trackingType === 'time' || ex.trackingType === 'weight_time') && (
-        <DurationInput label="Время, сек" value={set.durationSec ?? null} onChange={(v) => void updateSet(set.id, { durationSec: v })} />
+        <DurationInput label="Время" value={set.durationSec ?? null} onChange={(v) => void updateSet(set.id, { durationSec: v })} />
       )}
       {ex.trackingType !== 'time' && ex.trackingType !== 'weight_time' && effort}
       <button

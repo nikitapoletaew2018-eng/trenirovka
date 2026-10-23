@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { formatNumber, round } from '../domain/units';
-import { parseDecimal } from '../domain/validation';
+import { formatDuration, formatNumber, round } from '../domain/units';
+import { LIMITS, parseDecimal, parseDuration } from '../domain/validation';
 import { undoLast } from '../data/undo';
 import { back } from './router';
 import { useUndoEntry } from './hooks';
@@ -126,19 +126,51 @@ export function Stepper({
   );
 }
 
-/** Поле минут:секунд для упражнений на время. */
+/**
+ * Поле времени: показывает и принимает мин:сек («1:30»), а также «1.30», «1,30» или просто секунды («90»).
+ * Хранение — в секундах. Кнопки ± — по 5 секунд.
+ */
 export function DurationInput({ value, onChange, label }: { value: number | null; onChange: (v: number | null) => void; label: string }) {
+  const shown = value == null ? '' : formatDuration(value);
+  const [text, setText] = useState(shown);
+  const [focused, setFocused] = useState(false);
+  useEffect(() => {
+    if (!focused) setText(shown);
+  }, [shown, focused]);
+  const commit = () => {
+    setFocused(false);
+    if (text.trim() === '') return onChange(null);
+    const sec = parseDuration(text);
+    if (sec == null) return setText(shown); // неверный ввод — вернуть прежнее значение
+    onChange(sec);
+    setText(formatDuration(sec));
+  };
+  const bump = (d: number) => onChange(Math.min(LIMITS.durationSec.max, Math.max(0, (value ?? 0) + d)));
   return (
-    <Stepper
-      label={label}
-      value={value == null ? null : value}
-      step={5}
-      min={0}
-      max={86400}
-      integer
-      unit="сек"
-      onChange={onChange}
-    />
+    <div className="stepper">
+      <button type="button" aria-label={`${label}: минус 5 секунд`} onClick={() => bump(-5)}>
+        −
+      </button>
+      <div>
+        <input
+          aria-label={`${label} (мин:сек или секунды)`}
+          inputMode="decimal"
+          placeholder="0:00"
+          value={text}
+          onFocus={(e) => {
+            setFocused(true);
+            e.currentTarget.select();
+          }}
+          onChange={(e) => setText(e.target.value)}
+          onBlur={commit}
+          onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+        />
+        <span className="unit">мин:сек</span>
+      </div>
+      <button type="button" aria-label={`${label}: плюс 5 секунд`} onClick={() => bump(5)}>
+        +
+      </button>
+    </div>
   );
 }
 

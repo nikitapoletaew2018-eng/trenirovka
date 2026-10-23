@@ -12,7 +12,8 @@ import {
   type SetLike,
 } from './formulas';
 import { displayStep, formatWeight, fromDisplayWeight, kgToLb, lbToKg, toDisplayWeight } from './units';
-import { clampField, isHalfStep, isValidField, parseDecimal } from './validation';
+import { clampField, isHalfStep, isValidField, parseDecimal, parseDuration } from './validation';
+import { formatDuration } from './units';
 
 const w = (weightKg: number, reps: number, setType: SetLike['setType'] = 'working', completed = true): SetLike => ({
   setType,
@@ -154,6 +155,25 @@ describe('валидация', () => {
     expect(clampField('weightKg', 1200)).toBe(1000);
     expect(isHalfStep(2.5)).toBe(true);
     expect(isHalfStep(2.3)).toBe(false);
+  });
+  it('время: мин:сек или просто секунды, хранение в секундах', () => {
+    expect(parseDuration('90')).toBe(90);
+    expect(parseDuration('1:30')).toBe(90);
+    expect(parseDuration('1.30')).toBe(90);
+    expect(parseDuration('1,30')).toBe(90);
+    expect(parseDuration('0:45')).toBe(45);
+    expect(parseDuration('2:05')).toBe(125);
+    expect(parseDuration('1:02:30')).toBe(3750);
+    expect(parseDuration(' 45 ')).toBe(45);
+    expect(parseDuration('')).toBeNull();
+    expect(parseDuration('1:75')).toBeNull(); // секунды > 59
+    expect(parseDuration('1:-5')).toBeNull();
+    expect(parseDuration('abc')).toBeNull();
+    expect(parseDuration('1:2:3:4')).toBeNull();
+    expect(parseDuration('25:00:00')).toBeNull(); // больше 24 ч
+    // туда и обратно
+    expect(formatDuration(parseDuration('1:30') ?? 0)).toBe('1:30');
+    expect(formatDuration(3750)).toBe('1:02:30');
   });
   it('разбор чисел с запятой', () => {
     expect(parseDecimal('82,5')).toBe(82.5);
