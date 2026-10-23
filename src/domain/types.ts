@@ -60,7 +60,10 @@ export type MovementPattern =
   | 'vertical_push'
   | 'horizontal_pull'
   | 'vertical_pull'
-  | 'isolation';
+  | 'isolation'
+  // Не из списка ТЗ — предложено, ждёт утверждения (docs/exercises-review.md, вопрос 1)
+  | 'core'
+  | 'carry';
 
 export interface Exercise extends BaseEntity {
   nameRu: string;
@@ -77,9 +80,13 @@ export interface Exercise extends BaseEntity {
   lighterAlternatives: UUID[];
   instructions: string[];
   commonMistakes: string[];
+  /** null — источника нет, в интерфейсе пометка «требует проверки» */
+  commonMistakesSource?: string | null;
   defaultRestSec: number;
   weightStepKg: number;
   source: string;
+  /** id в исходной базе (free-exercise-db) */
+  sourceId?: string | null;
   /** Пометки «требует проверки» и т. п. */
   reviewNotes?: string[];
   isCustom: boolean;
