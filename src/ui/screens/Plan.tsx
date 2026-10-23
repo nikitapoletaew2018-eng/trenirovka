@@ -51,7 +51,7 @@ export function PlanScreen() {
       </div>
       <p className="small muted">
         Тренировок: {active.length}, выполнено: {done}.
-        {active.length > 0 && ' Тренировки можно перетаскивать за ⠿ между днями.'}
+        {planned.some((p) => p.status === 'planned' && !p.workoutId) && ' Запланированные можно перетаскивать за ⠿ между днями.'}
       </p>
       {prevCount > 0 && (
         <button
