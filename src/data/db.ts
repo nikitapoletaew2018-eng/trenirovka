@@ -1,4 +1,5 @@
 import Dexie, { type Table } from 'dexie';
+import { databaseName } from './mode';
 import type {
   Exercise,
   PlannedWorkout,
@@ -71,7 +72,8 @@ export const DATA_TABLES = [
 
 export type DataTable = (typeof DATA_TABLES)[number];
 
-export let db = new AppDB();
+// Имя базы выбирается один раз при запуске: реальная «trenirovka» или отдельная демо-база.
+export let db = new AppDB(databaseName());
 
 /** Для тестов: отдельная база. */
 export function useDatabase(next: AppDB): void {

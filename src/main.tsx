@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ensureSeed } from './data/seed';
+import { isDemoMode } from './data/mode';
 import { App } from './ui/App';
 import { requestPersistence } from './ui/protect';
 import { unlockAudio } from './ui/signals';
@@ -11,7 +12,8 @@ window.addEventListener('pointerdown', unlockAudio, { once: true });
 
 async function boot() {
   await ensureSeed();
-  void requestPersistence();
+  // Постоянное хранилище нужно только реальным данным
+  if (!isDemoMode()) void requestPersistence();
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <App />

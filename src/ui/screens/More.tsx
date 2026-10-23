@@ -11,6 +11,8 @@ import { useSettings } from '../hooks';
 import { navigate } from '../router';
 import { requestPersistence, saveBackup } from '../protect';
 import { canVibrate, requestNotifications, wakeLockSupported } from '../signals';
+import { DEMO_DB_NAME, REAL_DB_NAME, demoAvailable, enterDemo, isDemoMode } from '../../data/demo';
+import { today } from '../hooks';
 
 export function MoreScreen() {
   return (
@@ -128,6 +130,8 @@ export function SettingsScreen() {
           браузер может приостановить таймер: сигнал надёжен, пока приложение открыто.
         </p>
       </div>
+
+      <DemoCard />
 
       <h2>Данные</h2>
       <div className="card stack">
@@ -302,6 +306,41 @@ function AnalysisSettingsCard({ s }: { s: Settings }) {
         <ListField label="Разминка: повторы для каждого шага (эвристика)" value={s.warmupReps} onSave={(warmupReps) => void updateSettings({ warmupReps })} />
         <ListField label="Блины, кг (на одну сторону, через «;»)" value={s.platesKg} onSave={(platesKg) => void updateSettings({ platesKg })} />
         <ListField label="Блины, lb" value={s.platesLb} onSave={(platesLb) => void updateSettings({ platesLb })} />
+      </div>
+    </>
+  );
+}
+
+function DemoCard() {
+  const [busy, setBusy] = useState(false);
+  const demo = isDemoMode();
+  return (
+    <>
+      <h2>Демо-режим</h2>
+      <div className="card stack">
+        {demo ? (
+          <p className="small" style={{ margin: 0 }}>
+            Сейчас открыта демо-база «{DEMO_DB_NAME}». Выйти или удалить её — кнопками на плашке «ДЕМО» вверху.
+          </p>
+        ) : (
+          <>
+            <p className="small" style={{ margin: 0 }}>
+              Учебная история за 6 недель (чередование тренировок A/B), чтобы посмотреть отчёты, сигналы и графики. Хранится в отдельной базе «{DEMO_DB_NAME}» и
+              никогда не смешивается с вашими данными («{REAL_DB_NAME}»). Вверху будет плашка «ДЕМО» с кнопками «Выйти» и «Удалить демо».
+            </p>
+            <button
+              className="btn block"
+              disabled={busy || !demoAvailable()}
+              onClick={() => {
+                setBusy(true);
+                void enterDemo(today()).then(() => window.location.reload());
+              }}
+            >
+              {busy ? 'Готовлю демо…' : 'Открыть демо-режим'}
+            </button>
+            {!demoAvailable() && <p className="small muted">Недоступно: браузер запрещает локальное хранилище.</p>}
+          </>
+        )}
       </div>
     </>
   );

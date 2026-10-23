@@ -4,9 +4,9 @@ import type { AnalysisSettings, Session } from '../../domain/analysis';
 import { WEEKDAY_SHORT, addDays, formatDayMonth, weekStart } from '../../domain/dates';
 import type { PercentChange } from '../../domain/formulas';
 import { MUSCLES } from '../../domain/muscles';
-import { performancesOf, suggestNext, type OptionId, type Suggestion } from '../../domain/progression';
+import { performancesOf, suggestNext, suggestionCandidates, type OptionId, type Suggestion } from '../../domain/progression';
 import { RECORD_LABEL, computeRecords } from '../../domain/records';
-import { plannedInWeek, weeklyReport, type WeeklyReport } from '../../domain/report';
+import { weeklyReport, type WeeklyReport } from '../../domain/report';
 import { computeSignals, isStagnating, weeklyE1rmSeries, type Signal } from '../../domain/signals';
 import type { Exercise, PlannedItem, Settings } from '../../domain/types';
 import { formatDuration, formatNumber, formatWeight, formatWeightApprox } from '../../domain/units';
@@ -366,15 +366,14 @@ function NextWeekView({ snap, week, settings }: { snap: Snapshot; week: string; 
 
   const suggestions = useMemo(() => {
     const sessionsUpTo: Session[] = snap.sessions.filter((x) => x.date <= addDays(week, 6));
-    const items = new Map<string, PlannedItem>();
-    for (const p of plannedInWeek(snap.planned, week)) for (const it of p.plannedItems) if (!items.has(it.exerciseId)) items.set(it.exerciseId, it);
-    const out: Suggestion[] = [];
-    for (const [exId, current] of items) {
+    const out: (Suggestion & { source: 'this_week' | 'next_week' })[] = [];
+    for (const { exerciseId: exId, current, source } of suggestionCandidates(snap.planned, week)) {
       const ex = exById.get(exId);
       if (!ex) continue;
       const stagnating = isStagnating(weeklyE1rmSeries(snap.sessions, exId, week, s), s.stagnationWeeks, s.stableThresholdPct);
-      out.push(
-        suggestNext({
+      out.push({
+        source,
+        ...suggestNext({
           exercise: ex,
           current,
           history: performancesOf(sessionsUpTo, exId),
@@ -384,7 +383,7 @@ function NextWeekView({ snap, week, settings }: { snap: Snapshot; week: string; 
           unitLabel: unit,
           fmt,
         }),
-      );
+      });
     }
     return out;
     // fmt зависит только от unit
@@ -425,7 +424,7 @@ function NextWeekView({ snap, week, settings }: { snap: Snapshot; week: string; 
   };
 
   if (suggestions.length === 0)
-    return <Empty>В плане недели {formatDayMonth(week)} нет упражнений — предлагать нечего. Предложения строятся по запланированным упражнениям и их выполнению.</Empty>;
+    return <Empty>В планах этой и следующей недели нет упражнений — предлагать нечего. Предложения строятся по запланированным упражнениям и их последнему выполнению.</Empty>;
 
   return (
     <div>
@@ -450,6 +449,10 @@ function NextWeekView({ snap, week, settings }: { snap: Snapshot; week: string; 
                 {sg.item.targetReps != null && ` · цель ${sg.item.targetReps} повт.`}
               </p>
             )}
+            <p className="small muted" style={{ margin: '4px 0' }}>
+              {sg.basedOnDate ? `Расчёт по тренировке от ${formatDayMonth(sg.basedOnDate)}` : 'Выполнений этого упражнения нет'}
+              {sg.source === 'next_week' ? ' · на этой неделе упражнения нет, взята последняя тренировка с ним' : ''}
+            </p>
             <p className="small muted" style={{ margin: '4px 0' }}>
               Почему: {sg.reason}
             </p>

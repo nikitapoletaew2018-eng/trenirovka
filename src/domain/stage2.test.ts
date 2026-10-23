@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { buildSessions, type AnalysisSettings } from './analysis';
 import { platesPerSide, warmupSets } from './calculators';
-import { deloadItem, performancesOf, suggestNext, type SuggestArgs } from './progression';
+import { deloadItem, performancesOf, suggestNext, suggestionCandidates, type SuggestArgs } from './progression';
+import { exerciseSeries } from './series';
 import { computeRecords } from './records';
 import { weeklyReport } from './report';
 import { computeSignals, isStagnating } from './signals';
@@ -366,6 +367,66 @@ describe('прогрессия', () => {
     expect(deloadItem(it0, { setsFactor: 0.5, weightFactor: 1, minRir: 3 }, 2.5)).toMatchObject({ sets: 2, targetRir: 3, suggestedWeightKg: 100 });
     expect(deloadItem(it0, { setsFactor: 0.5, weightFactor: 0.9, minRir: 3 }, 2.5)).toMatchObject({ suggestedWeightKg: 90 });
     expect(deloadItem(item('bench', 1, 6, 8, 4), { setsFactor: 0.5, weightFactor: 1, minRir: 3 }, 2.5)).toMatchObject({ sets: 1, targetRir: 4 });
+  });
+});
+
+describe('чередование A/B: предложения по последней тренировке с упражнением', () => {
+  it('упражнение есть только в плане следующей недели — расчёт от тренировки 2 недели назад', () => {
+    const d = db();
+    workout(d, '2026-10-06', [{ ex: SQUAT, sets: [[100, 8], [100, 8], [100, 8]] }]); // тренировка B, 2 недели назад
+    workout(d, '2026-10-20', [{ ex: BENCH, sets: [[80, 12, 2], [80, 12, 2], [80, 12, 2]] }]); // A на этой неделе
+    const plan = [planned('2026-10-20', [item('bench', 3, 8, 12, 2)]), planned('2026-10-29', [item('squat', 3, 5, 8, 2)])];
+    const cands = suggestionCandidates(plan, W);
+    expect(cands.map((c) => [c.exerciseId, c.source])).toEqual([
+      ['bench', 'this_week'],
+      ['squat', 'next_week'],
+    ]);
+    const sq = cands.find((c) => c.exerciseId === 'squat')!;
+    const s = suggestNext({
+      exercise: SQUAT,
+      current: sq.current,
+      history: performancesOf(sessions(d), 'squat'),
+      rule: 'double',
+      lowerBoundFailSessions: 2,
+      stagnating: false,
+      unitLabel: 'кг',
+      fmt: (kg) => `${kg} кг`,
+    });
+    expect(s.basedOnDate).toBe('2026-10-06');
+    expect(s).toMatchObject({ kind: 'increase', item: { suggestedWeightKg: 102.5, targetReps: 5 } });
+  });
+  it('без выполнений — дата расчёта не указывается', () => {
+    const s = suggestNext({ exercise: BENCH, current: item('bench', 3, 8, 12), history: [], rule: 'double', lowerBoundFailSessions: 2, stagnating: false, unitLabel: 'кг', fmt: String });
+    expect(s.basedOnDate).toBeNull();
+  });
+});
+
+describe('e1RM > 10 повторов и разминка в рекордах', () => {
+  it('подходы с r > 10 не дают e1RM ни в отчёте, ни в рекордах, ни на графике', () => {
+    const d = db();
+    workout(d, '2026-10-20', [{ ex: BENCH, sets: [[60, 15], [60, 12], [60, 11]] }]);
+    const r = report(d);
+    expect(r.e1rm).toEqual([]);
+    const { records } = computeRecords(sessions(d), SETTINGS);
+    expect(records.get('bench')?.e1rm).toBeUndefined();
+    expect(records.get('bench')?.maxWeight?.value).toBe(60); // остальные рекорды считаются
+    expect(exerciseSeries(sessions(d), 'bench', SETTINGS)[0]?.e1rm).toBeNull();
+  });
+  it('в тренировке с r ≤ 10 и r > 10 e1RM берётся только из r ≤ 10', () => {
+    const d = db();
+    workout(d, '2026-10-20', [{ ex: BENCH, sets: [[60, 20], [80, 10]] }]);
+    expect(report(d).e1rm[0]?.value).toBeCloseTo(80 * (1 + 10 / 30), 6);
+  });
+  it('разминочные подходы не попадают в рекорды, даже если тяжелее рабочих', () => {
+    const d = db();
+    workout(d, '2026-10-01', [{ ex: BENCH, sets: [[100, 5]] }]);
+    workout(d, '2026-10-08', [{ ex: BENCH, sets: [[140, 3, undefined, 'warmup'], [120, 12, undefined, 'warmup'], [100, 5]] }]);
+    const { records, events } = computeRecords(sessions(d), SETTINGS);
+    expect(records.get('bench')?.maxWeight?.value).toBe(100);
+    expect(records.get('bench')?.e1rm?.value).toBeCloseTo(100 * (1 + 5 / 30), 6);
+    expect(records.get('bench')?.volume?.value).toBe(500);
+    expect(records.get('bench')?.repsAtWeight.has(140)).toBe(false);
+    expect(events).toEqual([]);
   });
 });
 

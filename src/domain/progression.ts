@@ -2,7 +2,9 @@
 // Приложение ПРЕДЛАГАЕТ; план меняется только после подтверждения пользователя.
 
 import { workingSetsOf, type Session } from './analysis';
-import type { Exercise, PlannedItem, ProgressionRule } from './types';
+import { addDays } from './dates';
+import { plannedInWeek } from './report';
+import type { Exercise, ISODate, PlannedItem, PlannedWorkout, ProgressionRule } from './types';
 
 export interface Performance {
   date: string;
@@ -30,6 +32,29 @@ export interface Suggestion {
   reason: string;
   heuristic: boolean;
   options?: SuggestionOption[];
+  /** Дата тренировки, по которой сделан расчёт (последнее выполнение упражнения); null — выполнений нет */
+  basedOnDate: string | null;
+}
+
+export interface SuggestionCandidate {
+  exerciseId: string;
+  /** Пункт плана, от которого считаем: из этой недели, иначе из следующей */
+  current: PlannedItem;
+  source: 'this_week' | 'next_week';
+}
+
+/**
+ * Упражнения для предложений: из плана этой недели и из плана следующей.
+ * Упражнения, которых нет на этой неделе (чередование A/B), тоже попадают —
+ * расчёт для них идёт по последней тренировке с упражнением, даже если она была несколько недель назад.
+ */
+export function suggestionCandidates(planned: PlannedWorkout[], week: ISODate): SuggestionCandidate[] {
+  const out = new Map<string, SuggestionCandidate>();
+  for (const p of plannedInWeek(planned, week))
+    for (const it of p.plannedItems) if (!out.has(it.exerciseId)) out.set(it.exerciseId, { exerciseId: it.exerciseId, current: it, source: 'this_week' });
+  for (const p of plannedInWeek(planned, addDays(week, 7)))
+    for (const it of p.plannedItems) if (!out.has(it.exerciseId)) out.set(it.exerciseId, { exerciseId: it.exerciseId, current: it, source: 'next_week' });
+  return [...out.values()];
 }
 
 /** Выполнения упражнения из тренировок (по возрастанию даты), только с рабочими подходами. */
@@ -74,7 +99,8 @@ export interface SuggestArgs {
 export function suggestNext(a: SuggestArgs): Suggestion {
   const { exercise: ex, current, history } = a;
   const base: PlannedItem = { ...current, reason: null };
-  const none = (reason: string): Suggestion => ({ exerciseId: ex.id, kind: 'none', item: base, reason, heuristic: false });
+  const basedOnDate = history[history.length - 1]?.date ?? null;
+  const none = (reason: string): Suggestion => ({ exerciseId: ex.id, kind: 'none', item: base, reason, heuristic: false, basedOnDate });
 
   if (ex.trackingType === 'time' || ex.trackingType === 'weight_time')
     return none('Для упражнений на время правило прогрессии не задано — план без изменений.');
@@ -126,9 +152,13 @@ export function suggestNext(a: SuggestArgs): Suggestion {
         kind: 'add_rep',
         item: make({ suggestedWeightKg: topWeight ?? current.suggestedWeightKg ?? null, targetReps: t }, ''),
         reason:
-          `Двойная прогрессия: верхняя граница ${current.repMax} повт. достигнута не во всех подходах` +
-          (!enoughSets ? ` (выполнено ${last.sets.length} из ${current.sets})` : '') +
-          (!rirOk ? `, или RIR ниже целевого ${target}` : '') +
+          `Двойная прогрессия: ${[
+            !reps.every((r) => r >= current.repMax) ? `верхняя граница ${current.repMax} повт. достигнута не во всех подходах (минимум ${minReps})` : null,
+            !enoughSets ? `выполнено ${last.sets.length} из ${current.sets} подходов` : null,
+            !rirOk ? `RIR ниже целевого ${target} хотя бы в одном подходе` : null,
+          ]
+            .filter(Boolean)
+            .join('; ')}` +
           ` → тот же вес${topWeight != null ? ` ${a.fmt(topWeight)}` : ''}, цель +1 повтор: ${t}.`,
       };
     }
@@ -160,6 +190,7 @@ export function suggestNext(a: SuggestArgs): Suggestion {
       kind: 'choose',
       item: keep,
       heuristic: true,
+      basedOnDate,
       reason:
         `Нижняя граница ${current.repMin} повт. не выполнена ${a.lowerBoundFailSessions} тренировки подряд (минимум в последней: ${minReps}). ` +
         'Варианты на выбор — это эвристика, число тренировок настраивается.',
@@ -178,6 +209,7 @@ export function suggestNext(a: SuggestArgs): Suggestion {
       kind: 'choose',
       item: rule.item,
       heuristic: true,
+      basedOnDate,
       reason: `Сигнал стагнации по e1RM. Варианты на выбор, автоматически ничего не меняется. По правилу: ${rule.reason}`,
       options: [
         { id: 'apply_rule', label: 'Продолжить по правилу прогрессии', item: rule.item },
@@ -188,7 +220,7 @@ export function suggestNext(a: SuggestArgs): Suggestion {
     };
   }
 
-  return { exerciseId: ex.id, kind: rule.kind, item: rule.item, reason: rule.reason, heuristic: false };
+  return { exerciseId: ex.id, kind: rule.kind, item: rule.item, reason: rule.reason, heuristic: false, basedOnDate };
 }
 
 // ——— Разгрузка ———

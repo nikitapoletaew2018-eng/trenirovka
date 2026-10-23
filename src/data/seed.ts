@@ -1,6 +1,6 @@
 import { EQUIPMENT, EQUIPMENT_TYPES, MUSCLES, PATTERNS, TRACKING } from '../domain/muscles';
 import type { CommonMistake, Exercise } from '../domain/types';
-import { db } from './db';
+import { db, type AppDB } from './db';
 import raw from './seed/exercises.json';
 
 /**
@@ -54,12 +54,12 @@ export function parseSeed(data: unknown): Exercise[] {
 export const SEED_EXERCISES: Exercise[] = parseSeed(raw);
 
 /** Добавляет недостающие упражнения начальной базы. Идемпотентно. */
-export async function ensureSeed(): Promise<void> {
-  const meta = await db.meta.get('seedVersion');
+export async function ensureSeed(target: AppDB = db): Promise<void> {
+  const meta = await target.meta.get('seedVersion');
   if (typeof meta?.value === 'number' && meta.value >= SEED_VERSION) return;
-  await db.transaction('rw', db.exercises, db.meta, async () => {
-    const existing = new Set(await db.exercises.toCollection().primaryKeys());
-    await db.exercises.bulkAdd(SEED_EXERCISES.filter((e) => !existing.has(e.id)));
-    await db.meta.put({ key: 'seedVersion', value: SEED_VERSION });
+  await target.transaction('rw', target.exercises, target.meta, async () => {
+    const existing = new Set(await target.exercises.toCollection().primaryKeys());
+    await target.exercises.bulkAdd(SEED_EXERCISES.filter((e) => !existing.has(e.id)));
+    await target.meta.put({ key: 'seedVersion', value: SEED_VERSION });
   });
 }

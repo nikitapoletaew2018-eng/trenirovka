@@ -1,6 +1,8 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import { getActiveWorkout } from '../data/workoutRepo';
+import { db } from '../data/db';
+import { deleteDemo, exitDemo, isDemoMode } from '../data/demo';
 import { UndoSnackbar } from './components';
 import { match, useRoute } from './router';
 import { HistoryScreen } from './screens/History';
@@ -74,11 +76,39 @@ function UpdatePrompt({ workoutActive }: { workoutActive: boolean }) {
   );
 }
 
+/** Плашка демо-режима: видна на всех экранах. Демо-данные — в отдельной базе. */
+function DemoBanner() {
+  return (
+    <div className="demo-banner" role="status">
+      <b>ДЕМО</b>
+      <span className="grow small">Отдельная база, ваши данные не затронуты</span>
+      <button
+        className="btn sm"
+        onClick={() => {
+          exitDemo();
+          window.location.reload();
+        }}
+      >
+        Выйти
+      </button>
+      <button
+        className="btn sm danger"
+        onClick={() => {
+          if (window.confirm('Удалить демо-базу целиком? Реальные данные не затрагиваются.')) void deleteDemo(db).then(() => window.location.reload());
+        }}
+      >
+        Удалить демо
+      </button>
+    </div>
+  );
+}
+
 export function App() {
   const path = useRoute();
   const active = useLiveQuery(() => getActiveWorkout(), []);
   return (
     <div className="app">
+      {isDemoMode() && <DemoBanner />}
       <Screen path={path} />
       <div className="bottom-dock">
         <UpdatePrompt workoutActive={!!active} />

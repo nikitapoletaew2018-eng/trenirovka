@@ -858,3 +858,28 @@ ol.steps li + li {
   color: var(--info);
   border-color: var(--info);
 }
+
+/* Плашка демо-режима: всегда сверху, контрастная */
+.demo-banner {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--warn);
+  color: #1a1203;
+}
+
+.demo-banner .btn {
+  background: rgba(0, 0, 0, 0.15);
+  border-color: rgba(0, 0, 0, 0.35);
+  color: #1a1203;
+}
+
+.demo-banner .btn.danger {
+  background: #7f1d1d;
+  border-color: #7f1d1d;
+  color: #fff;
+}

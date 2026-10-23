@@ -1,5 +1,6 @@
 import { DATA_TABLES, SCHEMA_VERSION, db, type DataTable } from './db';
 import { nowIso } from './ids';
+import { isDemoMode } from './mode';
 
 export const EXPORT_APP_ID = 'trenirovka';
 
@@ -94,6 +95,6 @@ export async function clearAllData(): Promise<void> {
   });
 }
 
-export function exportFileName(d = new Date()): string {
-  return `trenirovka-backup-${d.toISOString().slice(0, 10)}.json`;
+export function exportFileName(d = new Date(), demo = isDemoMode()): string {
+  return `trenirovka-${demo ? 'DEMO-' : ''}backup-${d.toISOString().slice(0, 10)}.json`;
 }
