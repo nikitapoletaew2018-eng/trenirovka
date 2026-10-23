@@ -68,7 +68,8 @@ export async function applyProgram(program: Program, startMonday: ISODate, deloa
   await withUndo(`Мезоцикл: ${program.name}`, async (rec) => {
     for (let w = 1; w <= program.weeks; w++) {
       const monday = addDays(startMonday, 7 * (w - 1));
-      const isDeload = deloads.has(w);
+      // Неделя, уже отмеченная разгрузочной вручную, такой и остаётся.
+      const isDeload = deloads.has(w) || !!(await weekPlanFor(monday))?.isDeload;
       await putWeekPlan(rec, monday, { isDeload, programId: program.id, weekIndex: w });
       for (const day of program.days) {
         const t = templates.get(day.templateId);
@@ -106,6 +107,7 @@ export async function previewDeload(monday: ISODate, deload: DeloadParams): Prom
 
 /** Сделать неделю разгрузочной (после подтверждения предпросмотра). */
 export async function makeWeekDeload(monday: ISODate, deload: DeloadParams): Promise<void> {
+  if (await isDeloadWeek(monday)) return; // повторное облегчение не применяем
   const preview = await previewDeload(monday, deload);
   await withUndo('Неделя — разгрузочная', async (rec) => {
     await putWeekPlan(rec, monday, { isDeload: true });

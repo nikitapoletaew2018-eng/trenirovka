@@ -108,6 +108,15 @@ export function ItemsEditor({
                 </select>
               </label>
             </div>
+            {it.targetReps != null && !timed && (
+              <p className="small" style={{ margin: '4px 0' }}>
+                Цель по повторам: <b>{it.targetReps}</b>{' '}
+                <button type="button" className="why" onClick={() => upd(i, { targetReps: null })}>
+                  сбросить
+                </button>
+              </p>
+            )}
+            {it.reason && <p className="small muted" style={{ margin: '4px 0' }}>Почему: {it.reason}</p>}
             {withWeight && ex && (ex.trackingType === 'weight_reps' || ex.trackingType === 'weight_time') && (
               <label className="field">
                 <span>Вес, {unitLabel(unit)} (необязательно)</span>

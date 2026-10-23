@@ -39,6 +39,12 @@ export function formatWeight(kg: number, unit: WeightUnit, withUnit = true): str
   return withUnit ? `${s} ${unit === 'kg' ? 'кг' : 'lb'}` : s;
 }
 
+/** Оценки (e1RM): один знак после запятой. */
+export function formatWeightApprox(kg: number, unit: WeightUnit, withUnit = true): string {
+  const s = formatNumber(round(toDisplayWeight(kg, unit), 1), 1);
+  return withUnit ? `${s} ${unit === 'kg' ? 'кг' : 'lb'}` : s;
+}
+
 export function unitLabel(unit: WeightUnit): string {
   return unit === 'kg' ? 'кг' : 'lb';
 }

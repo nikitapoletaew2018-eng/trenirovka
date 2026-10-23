@@ -4,10 +4,16 @@ import { formatLongDate, localDate } from '../../domain/dates';
 import type { Exercise, Settings, Workout, WorkoutExercise, WorkoutSet } from '../../domain/types';
 import { displayStep, formatDuration, formatWeight, fromDisplayWeight, toDisplayWeight, unitLabel } from '../../domain/units';
 import { nextSetType, workoutSummary } from '../../domain/workoutLogic';
+import { buildSessions } from '../../domain/analysis';
+import { RECORD_LABEL, computeRecords, prsInWorkout, type PrEvent } from '../../domain/records';
+import { nowIso } from '../../data/ids';
+import { PlateCalculator, WarmupCalculator } from '../Calculators';
+import { analysisSettings, recordValue } from './Progress';
 import { db } from '../../data/db';
 import {
   addExercise,
   addSet,
+  addWarmupSets,
   adjustRest,
   deleteSet,
   deleteWorkout,
@@ -69,7 +75,7 @@ export function WorkoutView({ workoutId, mode }: { workoutId: string; mode: Mode
   return (
     <main className={`page workout ${mode === "active" ? "has-dock" : ""}`}>
       <WorkoutHeader workout={workout} mode={mode} onFinish={() => setFinishing(true)} />
-      {mode === 'edit' && workout.finishedAt && <WorkoutSummaryCard wes={wes} setsByWe={setsByWe} exMap={exMap} settings={settings} startedAt={workout.startedAt} finishedAt={workout.finishedAt} wellbeing={workout.wellbeing ?? null} />}
+      {mode === 'edit' && workout.finishedAt && <WorkoutSummaryCard workoutId={workout.id} wes={wes} setsByWe={setsByWe} exMap={exMap} settings={settings} startedAt={workout.startedAt} finishedAt={workout.finishedAt} wellbeing={workout.wellbeing ?? null} />}
       {wes.length === 0 && <Empty>Добавьте первое упражнение.</Empty>}
       {wes.map((we, i) => {
         const ex = exMap.get(we.exerciseId);
@@ -204,7 +210,10 @@ function ExerciseCard({
 }) {
   const [menu, setMenu] = useState(false);
   const [replace, setReplace] = useState(false);
+  const [calc, setCalc] = useState<'plates' | 'warmup' | null>(null);
   const unit = settings.unit;
+  const weighted = ex.trackingType === 'weight_reps' || ex.trackingType === 'weight_time';
+  const workKg = we.plan?.suggestedWeightKg ?? sets.find((s) => s.setType !== 'warmup' && s.weightKg != null)?.weightKg ?? null;
   const lastWorking = last?.sets.filter((s) => s.setType !== 'warmup') ?? [];
   const cols = ex.trackingType === 'reps' ? 'cols-3' : ex.trackingType === 'time' ? 'cols-2' : ex.trackingType === 'weight_time' ? 'cols-wt' : '';
   let workingNo = 0;
@@ -304,6 +313,16 @@ function ExerciseCard({
               <span>Заметка к упражнению</span>
               <NotesField value={we.notes ?? ''} onSave={(notes) => void updateWorkoutExercise(we.id, { notes })} />
             </label>
+            {weighted && (
+              <div className="row">
+                <button className="btn grow" onClick={() => { setMenu(false); setCalc('plates'); }}>
+                  Блины
+                </button>
+                <button className="btn grow" onClick={() => { setMenu(false); setCalc('warmup'); }}>
+                  Разминка
+                </button>
+              </div>
+            )}
             <button className="btn block" onClick={() => navigate(`/exercise/${ex.id}`)}>
               Техника и карточка упражнения
             </button>
@@ -320,6 +339,10 @@ function ExerciseCard({
             </button>
           </div>
         </Sheet>
+      )}
+      {calc === 'plates' && <PlateCalculator initialKg={workKg} settings={settings} onClose={() => setCalc(null)} />}
+      {calc === 'warmup' && (
+        <WarmupCalculator workKg={workKg} stepKg={ex.weightStepKg} settings={settings} onAdd={(ws) => void addWarmupSets(we.id, ws)} onClose={() => setCalc(null)} />
       )}
       {replace && (
         <ExercisePicker
@@ -528,11 +551,12 @@ function SummaryKv({ s, settings }: { s: ReturnType<typeof useSummary>; settings
   );
 }
 
-function WorkoutSummaryCard(props: SummaryProps & { startedAt: string; finishedAt: string; wellbeing: number | null }) {
+function WorkoutSummaryCard(props: SummaryProps & { workoutId: string; startedAt: string; finishedAt: string; wellbeing: number | null }) {
   const s = useSummary(props, props.startedAt, props.finishedAt);
   return (
     <div className="card" style={{ marginBottom: 12 }}>
       <SummaryKv s={s} settings={props.settings} />
+      <PrList workoutId={props.workoutId} settings={props.settings} exMap={props.exMap} />
       {props.wellbeing != null && <p className="small muted">Самочувствие: {props.wellbeing} из 5</p>}
       <p className="small muted">
         Тоннаж = Σ вес × повторы рабочих подходов (разминочные не считаются).
@@ -555,6 +579,7 @@ function FinishSheet(props: SummaryProps & { workoutId: string; onClose: () => v
   return (
     <Sheet title="Завершить тренировку" onClose={props.onClose}>
       <SummaryKv s={s} settings={props.settings} />
+      <PrList workoutId={props.workoutId} settings={props.settings} exMap={props.exMap} />
       <h3>Самочувствие (необязательно)</h3>
       <div className="row">
         {[1, 2, 3, 4, 5].map((n) => (
@@ -591,3 +616,29 @@ function FinishSheet(props: SummaryProps & { workoutId: string; onClose: () => v
   );
 }
 
+
+/**
+ * Новые личные рекорды этой тренировки (только рабочие подходы). Незавершённая тренировка
+ * считается завершённой «сейчас» — чтобы показать рекорды ещё до нажатия «Завершить».
+ */
+function PrList({ workoutId, settings, exMap }: { workoutId: string; settings: Settings; exMap: Map<string, Exercise> }) {
+  const prs = useLiveQuery(async (): Promise<PrEvent[]> => {
+    const [workouts, wes, sets, exercises] = await Promise.all([db.workouts.toArray(), db.workoutExercises.toArray(), db.sets.toArray(), db.exercises.toArray()]);
+    const now = nowIso();
+    const ws = workouts.map((w) => (w.id === workoutId && !w.finishedAt ? { ...w, finishedAt: now } : w));
+    const { events } = computeRecords(buildSessions(ws, wes, sets, exercises), analysisSettings(settings));
+    return prsInWorkout(events, workoutId);
+  }, [workoutId, settings]);
+  if (!prs?.length) return null;
+  return (
+    <div style={{ marginTop: 8 }}>
+      <b>Новые рекорды</b>
+      {prs.map((e, i) => (
+        <p key={i} className="small" style={{ margin: '2px 0' }}>
+          🏆 {exMap.get(e.exerciseId)?.nameRu ?? '—'}: {RECORD_LABEL[e.kind]} — {recordValue(e.kind, e.value, e.extra ?? null, settings.unit)}
+          <span className="muted"> (было {recordValue(e.kind, e.previous, e.extra ?? null, settings.unit)})</span>
+        </p>
+      ))}
+    </div>
+  );
+}

@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { localDate, userTimeZone } from '../domain/dates';
 import type { Exercise, Settings } from '../domain/types';
 import { db } from '../data/db';
@@ -8,7 +8,8 @@ import { lastUndo, subscribeUndo } from '../data/undo';
 
 export function useSettings(): Settings {
   const s = useLiveQuery(() => db.settings.get('settings'), []);
-  return { ...DEFAULT_SETTINGS, ...s };
+  // Стабильная ссылка, пока настройки не изменились: объект стоит в зависимостях живых запросов.
+  return useMemo(() => ({ ...DEFAULT_SETTINGS, ...s }), [s]);
 }
 
 export function useExercises(): Exercise[] | undefined {

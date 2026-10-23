@@ -7,6 +7,8 @@ import { HistoryScreen } from './screens/History';
 import { ExerciseDetail, LibraryScreen, NewExerciseScreen } from './screens/Library';
 import { AboutScreen, MoreScreen, SettingsScreen } from './screens/More';
 import { PlanScreen, PlannedEditor } from './screens/Plan';
+import { ProgramEditor, ProgramsScreen } from './screens/Programs';
+import { ProgressScreen } from './screens/Progress';
 import { TemplateEditor, TemplatesScreen } from './screens/Templates';
 import { TodayScreen } from './screens/Today';
 import { RestBar, WorkoutView } from './screens/Workout';
@@ -14,8 +16,9 @@ import { RestBar, WorkoutView } from './screens/Workout';
 const TABS = [
   { href: '/today', label: 'Сегодня', ico: '🏋', match: ['/today'] },
   { href: '/plan', label: 'План', ico: '📅', match: ['/plan', '/planned'] },
+  { href: '/progress', label: 'Прогресс', ico: '📈', match: ['/progress'] },
   { href: '/history', label: 'История', ico: '🕘', match: ['/history', '/workout'] },
-  { href: '/more', label: 'Ещё', ico: '☰', match: ['/more', '/library', '/exercise', '/templates', '/template', '/settings', '/about'] },
+  { href: '/more', label: 'Ещё', ico: '☰', match: ['/more', '/library', '/exercise', '/templates', '/template', '/programs', '/program', '/settings', '/about'] },
 ];
 
 function Screen({ path }: { path: string }) {
@@ -23,12 +26,17 @@ function Screen({ path }: { path: string }) {
   if ((p = match('/exercise/:id', path))) return <ExerciseDetail id={p.id!} />;
   if ((p = match('/template/:id', path))) return <TemplateEditor id={p.id!} />;
   if ((p = match('/planned/:id', path))) return <PlannedEditor id={p.id!} />;
+  if ((p = match('/program/:id', path))) return <ProgramEditor id={p.id!} />;
   if ((p = match('/workout/:id', path))) return <WorkoutView key={p.id} workoutId={p.id!} mode="edit" />;
   switch (path) {
     case '/plan':
       return <PlanScreen />;
     case '/history':
       return <HistoryScreen />;
+    case '/progress':
+      return <ProgressScreen />;
+    case '/programs':
+      return <ProgramsScreen />;
     case '/more':
       return <MoreScreen />;
     case '/library':

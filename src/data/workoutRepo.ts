@@ -361,11 +361,11 @@ export async function finishWorkout(workoutId: string, opts: FinishOptions): Pro
       const doneNow = sets.filter(
         (s) => s.setType !== 'warmup' && (s.completed || opts.unfinished === 'complete'),
       ).length;
-      await rec.update(db.plannedWorkouts, pw.id, {
-        status: plannedStatusAfterFinish(planned, doneNow),
-        workoutId,
-        updatedAt: t,
-      });
+      const status = plannedStatusAfterFinish(planned, doneNow);
+      // Ни одного рабочего подхода — план не израсходован: отвязываем, чтобы его можно было начать или перенести.
+      const linked = status !== 'planned';
+      await rec.update(db.plannedWorkouts, pw.id, { status, workoutId: linked ? workoutId : null, updatedAt: t });
+      if (!linked) await rec.update(db.workouts, workoutId, { plannedWorkoutId: null });
     }
   });
 }

@@ -30,6 +30,8 @@ export interface SignalInput {
   settings: AnalysisSettings;
   /** Неделя ещё идёт — формулировки «пока» */
   inProgress: boolean;
+  /** Форматирование веса для текста «Почему?» (единицы отображения) */
+  fmtKg?: (kg: number) => string;
 }
 
 const f1 = (n: number) => formatNumber(n, 1);
@@ -60,6 +62,7 @@ export function computeSignals(input: SignalInput): Signal[] {
   const { week, sessions, settings: s } = input;
   const exById = new Map(input.exercises.map((e) => [e.id, e]));
   const name = (id: string) => exById.get(id)?.nameRu ?? 'упражнение';
+  const kg = input.fmtKg ?? ((v: number) => `${f1(v)} кг`);
   const [cur, prev, prev2] = [0, 1, 2].map((n) => aggregateWeek(sessions, weeksBack(week, n), s)) as [WeekAgg, WeekAgg, WeekAgg];
   const out: Signal[] = [];
 
@@ -74,8 +77,8 @@ export function computeSignals(input: SignalInput): Signal[] {
       kind: 'stagnation',
       title: `Стагнация: ${name(id)}`,
       why:
-        `Лучший e1RM ≈ за последние ${s.stagnationWeeks} нед. с этим упражнением: ${recent.map((x) => f1(x.value)).join(', ')} кг; ` +
-        `раньше лучший был ${f1(before)} кг. Рост не больше порога «стабильно» ±${f1(s.stableThresholdPct)}%. ` +
+        `Лучший e1RM ≈ за последние ${s.stagnationWeeks} нед. с этим упражнением: ${recent.map((x) => kg(x.value)).join(', ')}; ` +
+        `раньше лучший был ${kg(before)}. Рост не больше порога «стабильно» ±${f1(s.stableThresholdPct)}%. ` +
         `Порог и число недель (${s.stagnationWeeks}) — эвристики, меняются в настройках.`,
       heuristic: true,
       action: 'progression_options',
@@ -100,7 +103,7 @@ export function computeSignals(input: SignalInput): Signal[] {
     const rpe2 = rpeFromRir(rir2);
     if (rpe0 < rpe2) continue;
     falling.push(id);
-    details.push(`${name(id)}: e1RM ≈ ${f1(v2)} → ${f1(v1)} → ${f1(v0)} кг, средний RPE ${f1(rpe2)} → ${f1(rpe0)}`);
+    details.push(`${name(id)}: e1RM ≈ ${kg(v2)} → ${kg(v1)} → ${kg(v0)}, средний RPE ${f1(rpe2)} → ${f1(rpe0)}`);
   }
   const wb = mean(cur.wellbeing);
   const lowWellbeing = wb != null && wb <= s.fatigueWellbeing;

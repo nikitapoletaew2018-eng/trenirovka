@@ -172,6 +172,17 @@ describe('тренировка', () => {
     expect(await getActiveWorkout()).toBeNull();
   });
 
+  it('завершение без рабочих подходов не расходует план: тренировка плана отвязывается', async () => {
+    const pwId = uuid();
+    const t = '2026-10-23T00:00:00.000Z';
+    await db.plannedWorkouts.put({ id: pwId, createdAt: t, updatedAt: t, date: '2026-10-23', name: 'Верх', plannedItems: [{ exerciseId: BENCH, sets: 3, repMin: 6, repMax: 8 }], status: 'planned' });
+    const w = await startWorkout({ name: 'Верх', plannedWorkoutId: pwId, items: [{ exerciseId: BENCH, sets: 3, repMin: 6, repMax: 8 }] });
+    expect((await db.plannedWorkouts.get(pwId))?.workoutId).toBe(w.id);
+    await finishWorkout(w.id, { unfinished: 'delete' });
+    expect(await db.plannedWorkouts.get(pwId)).toMatchObject({ status: 'planned', workoutId: null });
+    expect((await db.workouts.get(w.id))?.plannedWorkoutId).toBeNull();
+  });
+
   it('замена упражнения сохраняет выполненные подходы и запоминает исходное', async () => {
     const w = await startWorkout({ name: 'T', exerciseIds: [BENCH] });
     const [we] = await workoutExercises(w.id);

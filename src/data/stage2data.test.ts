@@ -68,6 +68,9 @@ describe('мезоцикл', () => {
     const [pw] = await plannedForWeek(MON);
     expect(pw!.plannedItems[0]).toMatchObject({ sets: 2, targetRir: 3 });
     expect(await isDeloadWeek(MON)).toBe(true);
+    // повторно не облегчается
+    await makeWeekDeload(MON, DELOAD);
+    expect((await plannedForWeek(MON))[0]!.plannedItems[0]!.sets).toBe(2);
     await undoLast();
     expect((await plannedForWeek(MON))[0]!.plannedItems[0]!.sets).toBe(4);
   });

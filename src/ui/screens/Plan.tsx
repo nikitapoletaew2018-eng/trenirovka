@@ -16,6 +16,8 @@ import {
   updatePlanned,
 } from '../../data/planRepo';
 import { getActiveWorkout, startWorkout } from '../../data/workoutRepo';
+import { isDeloadWeek } from '../../data/programRepo';
+import { DeloadSheet } from './Progress';
 import { Empty, Page, Sheet, Why, confirmDelete } from '../components';
 import { STATUS_CLASS, STATUS_LABEL } from '../format';
 import { ItemsEditor } from '../ItemsEditor';
@@ -29,6 +31,9 @@ export function PlanScreen() {
   const prevCount = useLiveQuery(async () => (await plannedForWeek(addDays(monday, -7))).filter((p) => p.status !== 'moved').length, [monday]) ?? 0;
   const [addDay, setAddDay] = useState<string | null>(null);
   const [actions, setActions] = useState<PlannedWorkout | null>(null);
+  const [deloadOpen, setDeloadOpen] = useState(false);
+  const isDeload = useLiveQuery(() => isDeloadWeek(monday), [monday]);
+  const settings = useSettings();
   const drag = useDrag((id, day) => void movePlannedDate(id, day));
 
   const byDay = new Map<string, PlannedWorkout[]>();
@@ -49,6 +54,7 @@ export function PlanScreen() {
           ›
         </button>
       </div>
+      {isDeload && <p><span className="chip deload">Разгрузочная неделя</span></p>}
       <p className="small muted">
         Тренировок: {active.length}, выполнено: {done}.
         {planned.some((p) => p.status === 'planned' && !p.workoutId) && ' Запланированные можно перетаскивать за ⠿ между днями.'}
@@ -62,6 +68,15 @@ export function PlanScreen() {
           Скопировать прошлую неделю сюда ({prevCount})
         </button>
       )}
+
+      <div className="row" style={{ marginBottom: 10 }}>
+        <button className="btn sm grow" disabled={!!isDeload} onClick={() => setDeloadOpen(true)}>
+          {isDeload ? 'Неделя разгрузочная' : 'Сделать разгрузочной…'}
+        </button>
+        <button className="btn sm grow" onClick={() => navigate('/programs')}>
+          Мезоцикл на N недель
+        </button>
+      </div>
 
       {weekDays(monday).map((day, i) => (
         <div key={day} data-day={day} className={`day ${day === d ? 'today' : ''} ${drag.overDay === day ? 'drop-target' : ''}`}>
@@ -101,6 +116,7 @@ export function PlanScreen() {
       ))}
       {drag.ghost}
       {addDay && <AddSheet day={addDay} onClose={() => setAddDay(null)} />}
+      {deloadOpen && <DeloadSheet monday={monday} sourceWeek={addDays(monday, -7)} settings={settings} onClose={() => setDeloadOpen(false)} />}
       {actions && <ActionsSheet pw={actions} todayDate={d} onClose={() => setActions(null)} />}
     </Page>
   );

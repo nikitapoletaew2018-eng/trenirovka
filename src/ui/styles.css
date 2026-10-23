@@ -364,7 +364,7 @@ textarea.input {
   bottom: 0;
   z-index: 20;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   height: calc(var(--nav-h) + var(--safe-b));
   padding-bottom: var(--safe-b);
   background: var(--surface);
@@ -816,4 +816,45 @@ ol.steps li + li {
 
 .field .stepper {
   max-width: 220px;
+}
+
+/* ——— Таблицы отчёта и графики ——— */
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tbl th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tbl td {
+  padding: 6px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.tbl td + td,
+.tbl th + th {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.chart-tip {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.chip.deload {
+  color: var(--info);
+  border-color: var(--info);
 }
