@@ -31,9 +31,12 @@ function isRecord(x: unknown): x is Record<string, unknown> {
 
 /**
  * Миграции формата экспорта: exportMigrations[n] переводит файл версии n в n + 1.
- * Пока версия одна — список пуст.
+ * Каждый шаг — чистая функция над таблицами файла.
  */
-const exportMigrations: Record<number, (tables: Record<string, unknown[]>) => Record<string, unknown[]>> = {};
+const exportMigrations: Record<number, (tables: Record<string, unknown[]>) => Record<string, unknown[]>> = {
+  // 1 → 2: появилась таблица программ
+  1: (t) => ({ ...t, programs: t.programs ?? [] }),
+};
 
 export function parseExport(raw: unknown): ExportFile {
   if (!isRecord(raw) || raw.app !== EXPORT_APP_ID) throw new ImportError('Это не файл экспорта приложения «Тренировка».');

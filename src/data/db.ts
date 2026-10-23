@@ -2,6 +2,7 @@ import Dexie, { type Table } from 'dexie';
 import type {
   Exercise,
   PlannedWorkout,
+  Program,
   RestTimer,
   Settings,
   WeekPlan,
@@ -15,7 +16,7 @@ import type {
  * Версия схемы данных. Увеличивается при любом изменении структуры;
  * для каждой версии — шаг миграции Dexie (ниже) и шаг миграции экспорта (backup.ts).
  */
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
 
 export interface MetaRow {
   key: string;
@@ -25,6 +26,7 @@ export interface MetaRow {
 export class AppDB extends Dexie {
   exercises!: Table<Exercise, string>;
   templates!: Table<WorkoutTemplate, string>;
+  programs!: Table<Program, string>;
   weekPlans!: Table<WeekPlan, string>;
   plannedWorkouts!: Table<PlannedWorkout, string>;
   workouts!: Table<Workout, string>;
@@ -49,8 +51,8 @@ export class AppDB extends Dexie {
       settings: 'id',
       meta: 'key',
     });
-    // Пример будущей миграции:
-    // this.version(2).stores({...}).upgrade(async (tx) => { ... });
+    // v2 — программы (мезоциклы). Существующие данные не меняются: новые поля необязательные.
+    this.version(2).stores({ programs: 'id, updatedAt', weekPlans: 'id, weekStart, programId' });
   }
 }
 
@@ -58,6 +60,7 @@ export class AppDB extends Dexie {
 export const DATA_TABLES = [
   'exercises',
   'templates',
+  'programs',
   'weekPlans',
   'plannedWorkouts',
   'workouts',

@@ -125,7 +125,31 @@ export interface PlannedItem {
   suggestedWeightKg?: number | null;
   restSec?: number | null;
   supersetGroup?: string | null;
+  /** Цель по повторам из правила прогрессии (например, «+1 повтор»); null — нижняя граница диапазона */
+  targetReps?: number | null;
   reason?: string | null;
+}
+
+export type ProgressionRule = 'double' | 'linear';
+
+export interface ProgramDay {
+  /** 0 = понедельник … 6 = воскресенье */
+  weekday: number;
+  templateId: UUID;
+}
+
+export interface Program extends BaseEntity {
+  name: string;
+  /** Длина мезоцикла в неделях (4–8) */
+  weeks: number;
+  progressionRule: ProgressionRule;
+  /** Разгрузка каждые N недель (по расписанию); null — не по расписанию */
+  deloadEveryNWeeks?: number | null;
+  /** Последняя неделя мезоцикла — разгрузочная */
+  lastWeekDeload: boolean;
+  days: ProgramDay[];
+  /** Для готовых программ — источник схемы */
+  source?: string | null;
 }
 
 export interface PlannedWorkout extends BaseEntity {
@@ -142,6 +166,9 @@ export interface PlannedWorkout extends BaseEntity {
 export interface WeekPlan extends BaseEntity {
   weekStart: ISODate; // понедельник
   isDeload: boolean;
+  programId?: UUID | null;
+  /** Номер недели в мезоцикле, с 1 */
+  weekIndex?: number | null;
 }
 
 export interface Workout extends BaseEntity {
@@ -215,6 +242,25 @@ export interface Settings {
   volumeJumpPct: number;
   soundEnabled: boolean;
   vibrationEnabled: boolean;
+  /** Допуск «в целевом диапазоне RIR»: |RIR − цель| ≤ допуск. Эвристика */
+  rirTolerance: number;
+  /** Сигнал усталости по самочувствию: среднее ≤ порога. Эвристика */
+  fatigueWellbeing: number;
+  /** Нижняя граница диапазона не выполнена столько тренировок подряд → предложить выбор. Эвристика */
+  lowerBoundFailSessions: number;
+  progressionRule: ProgressionRule;
+  /** Разгрузка: доля сохраняемых рабочих подходов (0,5 = −50%) */
+  deloadSetsFactor: number;
+  /** Разгрузка: множитель веса (1 — тот же, 0,9 — −10%) */
+  deloadWeightFactor: number;
+  /** Разгрузка: минимальный целевой RIR */
+  deloadMinRir: number;
+  /** Разминка: проценты рабочего веса и повторы. Эвристика */
+  warmupPercents: number[];
+  warmupReps: number[];
+  /** Доступные блины (на одну сторону), кг и lb */
+  platesKg: number[];
+  platesLb: number[];
   lastBackupAt?: ISODateTime | null;
   backupReminderDismissedAt?: ISODateTime | null;
   persistGranted?: boolean | null;

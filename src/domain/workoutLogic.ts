@@ -35,7 +35,8 @@ export function firstSetValues(plan: PlannedItem | null | undefined, lastTime: L
     setType: 'working',
     weightKg: plan?.suggestedWeightKg ?? last?.weightKg ?? null,
     addedWeightKg: last?.addedWeightKg ?? null,
-    reps: plan ? plan.repMin : (last?.reps ?? null),
+    // Цель по повторам из прогрессии («+1 повтор»), иначе нижняя граница диапазона
+    reps: plan ? (plan.targetReps ?? plan.repMin) : (last?.reps ?? null),
     durationSec: last?.durationSec ?? null,
     rir: plan?.targetRir ?? last?.rir ?? null,
   };

@@ -246,6 +246,24 @@ export async function toggleSetCompleted(id: string, opts: { startRest?: boolean
   });
 }
 
+/** Добавить разминочные подходы перед рабочими (из калькулятора разминки). Порядок пересчитывается. */
+export async function addWarmupSets(workoutExerciseId: string, warmups: { weightKg: number; reps: number | null }[]): Promise<void> {
+  const we = await db.workoutExercises.get(workoutExerciseId);
+  if (!we || warmups.length === 0) return;
+  const sets = await exerciseSets(workoutExerciseId);
+  await withUndo('Добавлена разминка', async (rec) => {
+    warmups.forEach((w, i) =>
+      rec.put(db.sets, {
+        ...setRow(we.workoutId, we.id, i, { ...EMPTY_WARMUP, weightKg: w.weightKg, reps: w.reps }),
+        autofilled: false,
+      }),
+    );
+    for (const [j, s] of sets.entries()) await rec.update(db.sets, s.id, { order: warmups.length + j });
+  });
+}
+
+const EMPTY_WARMUP: SetValues = { setType: 'warmup', weightKg: null, addedWeightKg: null, reps: null, durationSec: null, rir: null };
+
 export async function deleteSet(id: string): Promise<void> {
   await withUndo('Подход удалён', (rec) => rec.update(db.sets, id, { deletedAt: nowIso() }));
 }
