@@ -4,7 +4,9 @@ import { formatDayMonth, weekStart } from '../../domain/dates';
 import { MUSCLES, MUSCLE_IDS } from '../../domain/muscles';
 import { exerciseSeries, exerciseSeriesByWeek, frequencyByWeek, lastWeeks, muscleSetsByWeek, type ExercisePoint } from '../../domain/series';
 import type { MuscleId, Settings } from '../../domain/types';
+import { formatDayMonth as fdm } from '../../domain/dates';
 import { formatNumber, round, toDisplayWeight, unitLabel } from '../../domain/units';
+import type { WeightUnit } from '../../domain/types';
 import type { Snapshot } from '../../data/analyticsRepo';
 import { Empty, Seg, Why } from '../components';
 import { today } from '../hooks';
@@ -162,6 +164,53 @@ function MiniBars({ data, label, unit }: { data: { label: string; value: number 
           <Bar dataKey="value" fill={SERIES} radius={[4, 4, 0, 0]} isAnimationActive={false} />
         </BarChart>
       </ResponsiveContainer>
+    </div>
+  );
+}
+
+/** Среднее значение показателя по дням цикла (личная аналитика модуля «Цикл»). */
+export function CycleDayChart({ points, label }: { points: { day: number; value: number; n: number }[]; label: string }) {
+  if (!points.length) return <p className="muted">Нет данных для этого показателя.</p>;
+  const data = points.map((p) => ({ label: String(p.day), value: Math.round(p.value * 10) / 10, n: p.n }));
+  return (
+    <div style={{ width: '100%', height: 200 }} role="img" aria-label={`${label} по дням цикла`}>
+      <ResponsiveContainer>
+        <LineChart data={data} margin={{ top: 12, right: 12, bottom: 4, left: -8 }}>
+          <CartesianGrid stroke={GRID} vertical={false} />
+          <XAxis dataKey="label" tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} minTickGap={8} />
+          <YAxis tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} width={44} domain={['auto', 'auto']} />
+          <Tooltip content={(p) => <ChartTooltip active={p.active} payload={p.payload} label={`день ${String(p.label)}`} unit="" />} cursor={{ stroke: AXIS, strokeWidth: 1 }} />
+          <Line type="linear" dataKey="value" stroke={SERIES} strokeWidth={2} dot={{ r: 4, fill: SERIES, stroke: '#181b21', strokeWidth: 2 }} isAnimationActive={false} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+/**
+ * Вес тела и скользящее среднее за 7 дней. Две серии: точки веса — приглушённые, линия среднего — цвет серии 1.
+ * Легенда подписана, цвет не единственный признак (точки vs линия).
+ */
+export function WeightChart({ points, unit }: { points: { date: string; weight: number; avg7: number }[]; unit: WeightUnit }) {
+  const data = points.map((p) => ({ label: fdm(p.date), weight: round(toDisplayWeight(p.weight, unit), 1), avg7: round(toDisplayWeight(p.avg7, unit), 1) }));
+  return (
+    <div>
+      <div style={{ width: '100%', height: 220 }} role="img" aria-label="Вес тела и среднее за 7 дней">
+        <ResponsiveContainer>
+          <LineChart data={data} margin={{ top: 12, right: 12, bottom: 4, left: -8 }}>
+            <CartesianGrid stroke={GRID} vertical={false} />
+            <XAxis dataKey="label" tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} minTickGap={16} />
+            <YAxis tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} width={44} domain={['auto', 'auto']} />
+            <Tooltip content={(p) => <ChartTooltip active={p.active} payload={p.payload} label={p.label} unit={unitLabel(unit)} />} cursor={{ stroke: AXIS, strokeWidth: 1 }} />
+            <Line type="linear" dataKey="weight" stroke="transparent" dot={{ r: 4, fill: AXIS, stroke: '#181b21', strokeWidth: 2 }} isAnimationActive={false} />
+            <Line type="linear" dataKey="avg7" stroke={SERIES} strokeWidth={2} dot={false} isAnimationActive={false} />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+      <p className="small muted">
+        <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: 4, background: AXIS }} /> вес ·{' '}
+        <span style={{ display: 'inline-block', width: 16, height: 2, background: SERIES, verticalAlign: 'middle' }} /> среднее за 7 дней
+      </p>
     </div>
   );
 }

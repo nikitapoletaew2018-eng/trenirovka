@@ -18,6 +18,7 @@ import {
 import { getActiveWorkout, startWorkout } from '../../data/workoutRepo';
 import { isDeloadWeek } from '../../data/programRepo';
 import { DeloadSheet } from './Progress';
+import { PlannedLightBanner } from '../cycleUi';
 import { Empty, Page, Sheet, Why, confirmDelete } from '../components';
 import { STATUS_CLASS, STATUS_LABEL } from '../format';
 import { ItemsEditor } from '../ItemsEditor';
@@ -55,6 +56,7 @@ export function PlanScreen() {
         </button>
       </div>
       {isDeload && <p><span className="chip deload">Разгрузочная неделя</span></p>}
+      <PlannedLightBanner monday={monday} settings={settings} />
       <p className="small muted">
         Тренировок: {active.length}, выполнено: {done}.
         {planned.some((p) => p.status === 'planned' && !p.workoutId) && ' Запланированные можно перетаскивать за ⠿ между днями.'}

@@ -11,6 +11,9 @@ import { AboutScreen, MoreScreen, SettingsScreen } from './screens/More';
 import { PlanScreen, PlannedEditor } from './screens/Plan';
 import { ProgramEditor, ProgramsScreen } from './screens/Programs';
 import { ProgressScreen } from './screens/Progress';
+import { CycleScreen } from './screens/Cycle';
+import { BodyScreen } from './screens/Body';
+import { RemindersScreen } from './screens/Reminders';
 import { TemplateEditor, TemplatesScreen } from './screens/Templates';
 import { TodayScreen } from './screens/Today';
 import { RestBar, WorkoutView } from './screens/Workout';
@@ -20,7 +23,7 @@ const TABS = [
   { href: '/plan', label: 'План', ico: '📅', match: ['/plan', '/planned'] },
   { href: '/progress', label: 'Прогресс', ico: '📈', match: ['/progress'] },
   { href: '/history', label: 'История', ico: '🕘', match: ['/history', '/workout'] },
-  { href: '/more', label: 'Ещё', ico: '☰', match: ['/more', '/library', '/exercise', '/templates', '/template', '/programs', '/program', '/settings', '/about'] },
+  { href: '/more', label: 'Ещё', ico: '☰', match: ['/more', '/library', '/exercise', '/templates', '/template', '/programs', '/program', '/settings', '/about', '/cycle', '/body', '/reminders'] },
 ];
 
 function Screen({ path }: { path: string }) {
@@ -39,6 +42,12 @@ function Screen({ path }: { path: string }) {
       return <ProgressScreen />;
     case '/programs':
       return <ProgramsScreen />;
+    case '/cycle':
+      return <CycleScreen />;
+    case '/body':
+      return <BodyScreen />;
+    case '/reminders':
+      return <RemindersScreen />;
     case '/more':
       return <MoreScreen />;
     case '/library':

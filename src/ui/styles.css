@@ -883,3 +883,95 @@ ol.steps li + li {
   border-color: #7f1d1d;
   color: #fff;
 }
+
+/* ——— Календарь цикла ——— */
+.cal {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.cal-head {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.cal-day {
+  position: relative;
+  min-height: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  font-variant-numeric: tabular-nums;
+  padding: 0;
+}
+
+.cal-day.period {
+  background: #5b1f2e;
+  border-color: #e66767;
+}
+
+.cal-day.predicted {
+  border: 2px dashed #e66767;
+}
+
+.cal-day.today {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.cal-dot {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: var(--info);
+}
+
+.cal-legend {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+.cal-legend.period {
+  background: #5b1f2e;
+  border: 1px solid #e66767;
+}
+
+.cal-legend.predicted {
+  border: 2px dashed #e66767;
+}
+
+/* ——— Фото замеров ——— */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.photo {
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.photo figcaption {
+  padding: 0 0 0 8px;
+}

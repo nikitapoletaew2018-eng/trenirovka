@@ -132,6 +132,24 @@ export async function mergeWithNext(id: string): Promise<PlannedWorkout | null> 
   return next;
 }
 
+/**
+ * Плановое облегчение (ТЗ, 6.3.2): только если пользовательница сама включила его в настройках цикла,
+ * и только после подтверждения предпросмотра. Пункты заменяются облегчёнными версиями.
+ */
+export async function lightenPlanned(changes: { id: string; items: PlannedItem[] }[]): Promise<void> {
+  await withUndo('Подставлены облегчённые версии', async (rec) => {
+    for (const c of changes) {
+      const pw = await db.plannedWorkouts.get(c.id);
+      if (!pw || pw.status !== 'planned' || pw.workoutId) continue;
+      await rec.update(db.plannedWorkouts, c.id, {
+        plannedItems: c.items,
+        name: pw.name.endsWith('(облегчённая)') ? pw.name : `${pw.name} (облегчённая)`,
+        updatedAt: nowIso(),
+      });
+    }
+  });
+}
+
 export async function deletePlanned(id: string): Promise<void> {
   await withUndo('Удалено из плана', (rec) => rec.update(db.plannedWorkouts, id, { deletedAt: nowIso() }));
 }

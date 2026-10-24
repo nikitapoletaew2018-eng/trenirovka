@@ -2,7 +2,7 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
 import { db } from '../data/db';
-import { exportData, exportFileName } from '../data/backup';
+import { exportData, exportFileName, type ExportOptions } from '../data/backup';
 import { updateSettings } from '../data/settings';
 import { nowIso } from '../data/ids';
 import { useSettings } from './hooks';
@@ -75,20 +75,23 @@ export function InstallHint() {
   );
 }
 
-/** Сохранить бэкап: «Поделиться» файлом (удобно на телефоне) или обычная загрузка. */
-export async function saveBackup(): Promise<void> {
-  const data = await exportData();
-  const name = exportFileName();
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const file = new File([blob], name, { type: 'application/json' });
+/** Сохранить бэкап JSON. Данные цикла и фото — только по галочкам (ТЗ, 6.4). */
+export async function saveBackup(opts: ExportOptions = {}): Promise<void> {
+  const data = await exportData(opts);
+  if (await saveFile(exportFileName(), JSON.stringify(data, null, 2), 'application/json')) await updateSettings({ lastBackupAt: nowIso() });
+}
+
+/** Отдать файл пользователю: «Поделиться» (удобно на телефоне) или обычная загрузка. false — пользователь отменил. */
+export async function saveFile(name: string, content: string, type: string): Promise<boolean> {
+  const blob = new Blob([content], { type });
+  const file = new File([blob], name, { type });
   const nav = navigator as Navigator & { canShare?: (d: ShareData) => boolean };
   if (nav.canShare?.({ files: [file] }) && navigator.share) {
     try {
       await navigator.share({ files: [file], title: name });
-      await updateSettings({ lastBackupAt: nowIso() });
-      return;
+      return true;
     } catch (e) {
-      if (e instanceof DOMException && e.name === 'AbortError') return;
+      if (e instanceof DOMException && e.name === 'AbortError') return false;
     }
   }
   const url = URL.createObjectURL(blob);
@@ -97,7 +100,7 @@ export async function saveBackup(): Promise<void> {
   a.download = name;
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 10_000);
-  await updateSettings({ lastBackupAt: nowIso() });
+  return true;
 }
 
 /** Раз в неделю — напоминание сделать JSON-бэкап (если есть что сохранять). */

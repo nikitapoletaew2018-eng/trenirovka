@@ -129,6 +129,8 @@ export interface StartOptions {
   plannedWorkoutId?: string | null;
   items?: PlannedItem[];
   exerciseIds?: string[];
+  /** Облегчённая версия по самочувствию (выбрана пользовательницей после чек-ина) */
+  isLightVersion?: boolean;
 }
 
 export async function startWorkout(opts: StartOptions): Promise<Workout> {
@@ -150,7 +152,7 @@ export async function startWorkout(opts: StartOptions): Promise<Workout> {
       notes: '',
       wellbeing: null,
       bodyWeightKg: settings.bodyWeightKg ?? null,
-      isLightVersion: false,
+      isLightVersion: opts.isLightVersion ?? false,
     };
     await rec.put(db.workouts, w);
     let order = 0;

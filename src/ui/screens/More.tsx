@@ -21,6 +21,9 @@ export function MoreScreen() {
         ['/library', 'Упражнения', 'Библиотека, избранное, свои упражнения'],
         ['/templates', 'Шаблоны', 'Наборы упражнений для плана'],
         ['/programs', 'Программы', 'Мезоцикл на 4–8 недель, разгрузка, готовые схемы'],
+        ['/body', 'Замеры тела', 'Вес, обхваты, фото; график веса со средним за 7 дней'],
+        ['/cycle', 'Цикл', 'Необязательный модуль: учёт цикла и самочувствия'],
+        ['/reminders', 'Напоминания и CSV', 'План в календарь телефона (.ics), выгрузка таблицей'],
         ['/settings', 'Настройки', 'Единицы, отдых, сигналы, данные и бэкап'],
         ['/about', 'О приложении', 'Источники, формулы, лицензии, приватность'],
       ].map(([href, title, sub]) => (
@@ -42,6 +45,9 @@ export function SettingsScreen() {
   const s = useSettings();
   const fileRef = useRef<HTMLInputElement>(null);
   const [msg, setMsg] = useState<string | null>(null);
+  // ТЗ, 6.4: данные цикла в экспорт по умолчанию не входят
+  const [withCycle, setWithCycle] = useState(false);
+  const [withPhotos, setWithPhotos] = useState(false);
   const [notif, setNotif] = useState(() => ('Notification' in window ? Notification.permission : 'unsupported'));
 
   const onImport = async (file: File) => {
@@ -145,7 +151,15 @@ export function SettingsScreen() {
           </button>
         )}
         <p className="small">Последний бэкап: {s.lastBackupAt ? new Date(s.lastBackupAt).toLocaleString('ru-RU') : 'не было'}</p>
-        <button className="btn primary block" onClick={() => void saveBackup()}>
+        <label className="check">
+          <input type="checkbox" checked={withCycle} onChange={(e) => setWithCycle(e.target.checked)} />
+          Включить данные цикла{s.cycleEnabled ? '' : ' (модуль выключен)'}
+        </label>
+        <label className="check">
+          <input type="checkbox" checked={withPhotos} onChange={(e) => setWithPhotos(e.target.checked)} />
+          Включить фото замеров (файл станет больше)
+        </label>
+        <button className="btn primary block" onClick={() => void saveBackup({ includeCycle: withCycle, includePhotos: withPhotos })}>
           Экспорт JSON (бэкап)
         </button>
         <button className="btn block" onClick={() => fileRef.current?.click()}>
@@ -210,6 +224,18 @@ export function AboutScreen() {
         <li>Готовые программы (фулбади 3×/нед., верх/низ 4×/нед.) — схемы частоты и сплита из ACSM (2009).</li>
         <li>Разгрузочная неделя — определение по консенсусу экспертов: Bell et al., 2023, Sports Medicine – Open.</li>
       </ul>
+
+      <h2>Модуль «Цикл»</h2>
+      <ul className="small">
+        <li>Влияние фазы цикла на силу и адаптации к силовым тренировкам: убедительных доказательств нет, рекомендован индивидуальный подход — Colenso-Semple et al., 2023, Frontiers in Sports and Active Living (зонтичный обзор); McNulty et al., 2020, Sports Medicine (метаанализ).</li>
+        <li>Отсутствие менструации ≥ 90 дней и низкая энергодоступность — IOC consensus statement on REDs (Mountjoy et al., 2023).</li>
+        <li>Обычная длина цикла 24–38 дней — FIGO (Munro et al., 2018).</li>
+        <li>Фазы — приблизительная календарная оценка (граница — за 14 дней до прогнозируемой менструации, требует проверки). Модуль не предназначен для контрацепции и определения фертильности.</li>
+        <li>Шифрование: AES-GCM, ключ из PIN через PBKDF2-SHA256, 600 000 итераций (OWASP Password Storage Cheat Sheet).</li>
+      </ul>
+
+      <h2>Напоминания</h2>
+      <p className="small">Файл календаря — формат iCalendar (RFC 5545).</p>
 
       <h2>Справочные ориентиры (не цели)</h2>
       <ul className="small">

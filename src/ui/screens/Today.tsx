@@ -4,6 +4,9 @@ import { formatLongDate, localDate } from '../../domain/dates';
 import { db } from '../../data/db';
 import { itemsFromTemplate, listTemplates, plannedToday } from '../../data/planRepo';
 import { exercisesOfWorkout, getActiveWorkout, startWorkout } from '../../data/workoutRepo';
+import { CycleOffer, useStartFlow } from '../cycleUi';
+import { weekdayIndex } from '../../domain/dates';
+import { useSettings } from '../hooks';
 import { Empty, Page, Sheet } from '../components';
 import { today } from '../hooks';
 import { navigate } from '../router';
@@ -26,22 +29,33 @@ function StartScreen() {
     return list.find((w) => !w.deletedAt && w.finishedAt) ?? null;
   }, []);
   const [pickTemplate, setPickTemplate] = useState(false);
+  const flow = useStartFlow();
 
   return (
     <Page title={`Сегодня, ${formatLongDate(d).replace(/ \d{4} г\.$/, '')}`}>
       <InstallHint />
       <BackupReminder />
+      <CycleOffer />
+      <MeasurementReminder />
 
       {planned.length > 0 ? (
         planned.map((pw) => (
-          <button
-            key={pw.id}
-            className="btn primary block big"
-            style={{ marginBottom: 8 }}
-            onClick={() => void startWorkout({ name: pw.name, plannedWorkoutId: pw.id, items: pw.plannedItems })}
-          >
-            ▶ По плану: {pw.name}
-          </button>
+          <div key={pw.id} style={{ marginBottom: 8 }}>
+            <button
+              className="btn primary block big"
+              onClick={() => flow.start({ opts: { name: pw.name, plannedWorkoutId: pw.id, items: pw.plannedItems }, planned: pw })}
+            >
+              ▶ По плану: {pw.name}
+            </button>
+            {flow.mode === 'optional' && (
+              <button
+                className="btn sm ghost block"
+                onClick={() => flow.start({ opts: { name: pw.name, plannedWorkoutId: pw.id, items: pw.plannedItems }, planned: pw }, true)}
+              >
+                Сначала чек-ин самочувствия
+              </button>
+            )}
+          </div>
         ))
       ) : (
         <div className="card">
@@ -69,6 +83,7 @@ function StartScreen() {
           </button>
         )}
       </div>
+      {flow.sheets}
       {pickTemplate && (
         <Sheet title="Шаблон" onClose={() => setPickTemplate(false)}>
           {templates.length === 0 && <Empty>Шаблонов нет.</Empty>}
@@ -78,7 +93,7 @@ function StartScreen() {
               className="list-btn"
               onClick={() => {
                 setPickTemplate(false);
-                void startWorkout({ name: t.name, items: itemsFromTemplate(t) });
+                flow.start({ opts: { name: t.name, items: itemsFromTemplate(t) } });
               }}
             >
               <span className="grow">
@@ -92,5 +107,23 @@ function StartScreen() {
         </Sheet>
       )}
     </Page>
+  );
+}
+
+/** Напоминание о замерах в выбранный день недели (если сегодня ещё нет записи веса). */
+function MeasurementReminder() {
+  const s = useSettings();
+  const d = today();
+  const has = useLiveQuery(async () => (await db.measurements.where('date').equals(d).toArray()).some((m) => !m.deletedAt), [d]);
+  if (s.measurementReminderWeekday == null || s.measurementReminderWeekday !== weekdayIndex(d) || has !== false) return null;
+  return (
+    <div className="banner info">
+      <b>Сегодня день замеров</b>
+      <div className="row" style={{ marginTop: 6 }}>
+        <button className="btn sm" onClick={() => navigate('/body')}>
+          Записать
+        </button>
+      </div>
+    </div>
   );
 }
