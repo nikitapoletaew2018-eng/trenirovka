@@ -654,8 +654,9 @@ textarea.input {
 .sheet {
   width: 100%;
   max-width: 640px;
-  max-height: 92dvh;
+  max-height: 92%;
   overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--surface);
   border-radius: 18px 18px 0 0;
   border: 1px solid var(--border);

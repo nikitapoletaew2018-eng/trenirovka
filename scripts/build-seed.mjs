@@ -3,98 +3,130 @@
 // Результат: src/data/seed/exercises.json и docs/exercises-review.md.
 // Код выхода 1, если есть ошибки проверок (альтернатива не легче исходного, нет покрытия дельт и т. п.).
 
-import { createHash } from 'node:crypto';
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { curation } from './curation.mjs';
-import { REASONS, cuts } from './cuts.mjs';
+import { createHash } from "node:crypto";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { curation as baseCuration } from "./curation.mjs";
+import { REASONS, cuts as baseCuts } from "./cuts.mjs";
+import { extra, extraCuts } from "./curation-extra.mjs";
 
-const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+// Дополнительные упражнения встают в конец своей группы (перед первым упражнением следующей).
+const NEXT_GROUP = {
+  legs: "Barbell_Bench_Press_-_Medium_Grip",
+  chest: "Pullups",
+  back: "Standing_Military_Press",
+  shoulders: "Barbell_Curl",
+  arms: "Plank",
+  core: null,
+};
+const curation = [...baseCuration];
+for (const [g, nextId] of Object.entries(NEXT_GROUP)) {
+  const add = extra.filter((e) => e.g === g).map(({ g: _g, ...e }) => e);
+  const at = nextId
+    ? curation.findIndex((c) => c.id === nextId)
+    : curation.length;
+  if (at < 0) throw new Error(`Группа не найдена: ${nextId}`);
+  curation.splice(at, 0, ...add);
+}
+if (extra.some((e) => !(e.g in NEXT_GROUP)))
+  throw new Error("curation-extra.mjs: неизвестная группа");
+const cuts = { ...baseCuts, ...extraCuts };
+
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const rawPath = process.argv[2];
 if (!rawPath) {
-  console.error('Укажите путь к exercises.json из free-exercise-db');
+  console.error("Укажите путь к exercises.json из free-exercise-db");
   process.exit(1);
 }
 
-const raw = JSON.parse(readFileSync(rawPath, 'utf8'));
+const raw = JSON.parse(readFileSync(rawPath, "utf8"));
 const byId = new Map(raw.map((e) => [e.id, e]));
-const SOURCE_URL = 'https://github.com/yuhonas/free-exercise-db';
-const CREATED = '2026-10-23T00:00:00.000Z';
+const SOURCE_URL = "https://github.com/yuhonas/free-exercise-db";
+const CREATED = "2026-10-23T00:00:00.000Z";
 
 /** Детерминированный UUID (формат v5, SHA-1) из id базы — стабилен между пересборками. */
 function stableUuid(name) {
-  const h = createHash('sha1').update(`trenirovka:free-exercise-db:${name}`).digest();
+  const h = createHash("sha1")
+    .update(`trenirovka:free-exercise-db:${name}`)
+    .digest();
   h[6] = (h[6] & 0x0f) | 0x50;
   h[8] = (h[8] & 0x3f) | 0x80;
-  const x = h.subarray(0, 16).toString('hex');
+  const x = h.subarray(0, 16).toString("hex");
   return `${x.slice(0, 8)}-${x.slice(8, 12)}-${x.slice(12, 16)}-${x.slice(16, 20)}-${x.slice(20)}`;
 }
 
 const MUSCLES = {
-  chest: 'Большая грудная',
-  front_delts: 'Передние дельты',
-  side_delts: 'Средние дельты',
-  rear_delts: 'Задние дельты',
-  lats: 'Широчайшая',
-  upper_traps: 'Трапеция (верх)',
-  mid_back: 'Ромбовидные / ср. трапеция',
-  lower_back: 'Разгибатели спины',
-  biceps: 'Бицепс и плечевая',
-  triceps: 'Трицепс',
-  forearms: 'Предплечья',
-  abs: 'Пресс',
-  glutes: 'Большая ягодичная',
-  abductors: 'Ср./малая ягодичные',
-  quads: 'Квадрицепс',
-  hamstrings: 'Задняя поверхность бедра',
-  adductors: 'Приводящие',
-  calves: 'Икры',
+  chest: "Большая грудная",
+  front_delts: "Передние дельты",
+  side_delts: "Средние дельты",
+  rear_delts: "Задние дельты",
+  lats: "Широчайшая",
+  upper_traps: "Трапеция (верх)",
+  mid_back: "Ромбовидные / ср. трапеция",
+  lower_back: "Разгибатели спины",
+  biceps: "Бицепс и плечевая",
+  triceps: "Трицепс",
+  forearms: "Предплечья",
+  abs: "Пресс",
+  glutes: "Большая ягодичная",
+  abductors: "Ср./малая ягодичные",
+  quads: "Квадрицепс",
+  hamstrings: "Задняя поверхность бедра",
+  adductors: "Приводящие",
+  calves: "Икры",
 };
 /** Мышцы free-exercise-db → справочник приложения. shoulders — любой пучок дельт. */
 const DB_MUSCLE = {
-  quadriceps: 'quads',
-  hamstrings: 'hamstrings',
-  glutes: 'glutes',
-  calves: 'calves',
-  'lower back': 'lower_back',
-  'middle back': 'mid_back',
-  traps: 'upper_traps',
-  lats: 'lats',
-  chest: 'chest',
-  biceps: 'biceps',
-  triceps: 'triceps',
-  forearms: 'forearms',
-  abdominals: 'abs',
-  adductors: 'adductors',
-  abductors: 'abductors',
-  shoulders: 'shoulders',
+  quadriceps: "quads",
+  hamstrings: "hamstrings",
+  glutes: "glutes",
+  calves: "calves",
+  "lower back": "lower_back",
+  "middle back": "mid_back",
+  traps: "upper_traps",
+  lats: "lats",
+  chest: "chest",
+  biceps: "biceps",
+  triceps: "triceps",
+  forearms: "forearms",
+  abdominals: "abs",
+  adductors: "adductors",
+  abductors: "abductors",
+  shoulders: "shoulders",
 };
-const DELTS = ['front_delts', 'side_delts', 'rear_delts'];
+const DELTS = ["front_delts", "side_delts", "rear_delts"];
 const PATTERN = {
-  squat: 'присед',
-  hinge: 'наклон/тяга бедром',
-  lunge: 'выпад',
-  horizontal_push: 'гориз. жим',
-  vertical_push: 'верт. жим',
-  horizontal_pull: 'гориз. тяга',
-  vertical_pull: 'верт. тяга',
-  isolation: 'изоляция',
-  core: 'кор',
-  carry: 'перенос',
+  squat: "присед",
+  hinge: "наклон/тяга бедром",
+  lunge: "выпад",
+  horizontal_push: "гориз. жим",
+  vertical_push: "верт. жим",
+  horizontal_pull: "гориз. тяга",
+  vertical_pull: "верт. тяга",
+  isolation: "изоляция",
+  core: "кор",
+  carry: "перенос",
 };
-const EQTYPE = { free_weight: 'свободный вес', machine: 'тренажёр', cable: 'блок', bodyweight: 'собств. вес' };
+const EQTYPE = {
+  free_weight: "свободный вес",
+  machine: "тренажёр",
+  cable: "блок",
+  bodyweight: "собств. вес",
+};
 const TRACK = {
-  weight_reps: 'вес × повт',
-  bodyweight_reps: 'собств. вес × повт',
-  reps: 'повторы',
-  time: 'время',
-  weight_time: 'вес × время',
+  weight_reps: "вес × повт",
+  bodyweight_reps: "собств. вес × повт",
+  reps: "повторы",
+  time: "время",
+  weight_time: "вес × время",
 };
 
 // Служебные фразы о повторениях — выкидываются из перевода всегда.
-const FILLER = /repeat( the movement| this motion)? for the (recommended|prescribed|specified) (amount|number)|^perform the amount of repetitions|^repeat\.?$/i;
-const FILLER_KEEP = /then perform|switch|other arm|other leg|with the left|other direction/i;
+const FILLER =
+  /repeat( the movement| this motion)? for the (recommended|prescribed|specified) (amount|number)|^perform the amount of repetitions|^repeat\.?$/i;
+const FILLER_KEEP =
+  /then perform|switch|other arm|other leg|with the left|other direction/i;
 
 const FILLER_FRAGMENT =
   /(repeat( the movement| this motion)? for the (recommended|prescribed|specified) (amount|number) of (repetitions|times)( of your training program)?|perform the amount of repetitions prescribed in the program|^repeat)\.?/i;
@@ -103,23 +135,38 @@ const FILLER_FRAGMENT =
 function fillerFragments(instructions) {
   const out = [];
   for (const step of instructions) {
-    for (const raw of step.replace(/^\d+\.\s*/, '').split(/(?<=\.)\s+/)) {
+    for (const raw of step.replace(/^\d+\.\s*/, "").split(/(?<=\.)\s+/)) {
       const s = raw.trim();
       if (!FILLER.test(s) || FILLER_KEEP.test(s)) continue;
       const m = s.match(FILLER_FRAGMENT);
       const frag = m ? m[0] : s;
-      out.push({ orig: frag, partial: frag.replace(/\.$/, '') !== s.replace(/\.$/, '') });
+      out.push({
+        orig: frag,
+        partial: frag.replace(/\.$/, "") !== s.replace(/\.$/, ""),
+      });
     }
   }
   return out;
 }
 
-const norm = (ids) => [...new Set(ids.map((m) => (DELTS.includes(m) ? 'shoulders' : m)))].sort().join(',');
-const normDb = (ids) => [...new Set(ids.map((m) => DB_MUSCLE[m]).filter(Boolean))].sort().join(',');
+const norm = (ids) =>
+  [...new Set(ids.map((m) => (DELTS.includes(m) ? "shoulders" : m)))]
+    .sort()
+    .join(",");
+const normDb = (ids) =>
+  [...new Set(ids.map((m) => DB_MUSCLE[m]).filter(Boolean))].sort().join(",");
 
 const errors = [];
 const curatedIds = new Set(curation.map((c) => c.id));
-for (const id of Object.keys(cuts)) if (!curatedIds.has(id)) errors.push(`cuts.mjs: ${id} нет в выборке`);
+for (const id of Object.keys(cuts))
+  if (!curatedIds.has(id)) errors.push(`cuts.mjs: ${id} нет в выборке`);
+// Вырезанное должно дословно встречаться в оригинале — иначе список вырезанного недостоверен.
+for (const [id, list] of Object.entries(cuts)) {
+  const text = byId.get(id)?.instructions.join(" ") ?? "";
+  for (const x of list)
+    if (!text.includes(x.orig))
+      errors.push(`cuts: ${id}: нет в оригинале «${x.orig.slice(0, 50)}…»`);
+}
 
 // ACSM (2009) Progression Models in Resistance Training: отдых 2–3 мин для базовых с большим весом,
 // 1–2 мин для вспомогательных.
@@ -130,32 +177,49 @@ const STEP = { free_weight: 2.5, machine: 5, cable: 5, bodyweight: 2.5 };
 const seed = curation.map((c) => {
   const src = byId.get(c.id);
   if (!src) throw new Error(`Нет в базе: ${c.id}`);
-  const fromMechanic = src.mechanic === 'compound' ? 'core' : src.mechanic === 'isolation' ? 'assistance' : null;
+  const fromMechanic =
+    src.mechanic === "compound"
+      ? "core"
+      : src.mechanic === "isolation"
+        ? "assistance"
+        : null;
   const category = c.cat ?? fromMechanic;
   if (!category) throw new Error(`Нет категории: ${c.id}`);
   const notes = [...c.notes];
-  if (c.cat && fromMechanic && c.cat !== fromMechanic && !notes.some((n) => n.includes('mechanic')))
+  if (
+    c.cat &&
+    fromMechanic &&
+    c.cat !== fromMechanic &&
+    !notes.some((n) => n.includes("mechanic"))
+  )
     notes.push(`Категория изменена: mechanic = ${src.mechanic}`);
-  if (c.str && category !== 'core') errors.push(`${c.id}: структурное, но не базовое`);
-  if (c.ins.length < 3 || c.ins.length > 6) errors.push(`${c.id}: техника ${c.ins.length} пунктов (нужно 3–6)`);
+  if (c.str && category !== "core")
+    errors.push(`${c.id}: структурное, но не базовое`);
+  if (c.ins.length < 3 || c.ins.length > 6)
+    errors.push(`${c.id}: техника ${c.ins.length} пунктов (нужно 3–6)`);
 
-  const musclesChanged = norm(c.P) !== normDb(src.primaryMuscles) || norm(c.S) !== normDb(src.secondaryMuscles);
+  const musclesChanged =
+    norm(c.P) !== normDb(src.primaryMuscles) ||
+    norm(c.S) !== normDb(src.secondaryMuscles);
   const removed = [
     ...(cuts[c.id] ?? []).map((x) => ({ ...x, reasonText: REASONS[x.reason] })),
     ...fillerFragments(src.instructions).map((f) => ({
       orig: f.orig,
-      reason: 'filler',
-      reasonText: 'служебная фраза о повторениях',
-      note: f.partial ? 'остальная часть предложения переведена' : undefined,
+      reason: "filler",
+      reasonText: "служебная фраза о повторениях",
+      note: f.partial ? "остальная часть предложения переведена" : undefined,
     })),
   ];
-  const dumbbellOnly = c.eq.includes('dumbbell') && c.et === 'free_weight' && !c.eq.includes('barbell');
+  const dumbbellOnly =
+    c.eq.includes("dumbbell") &&
+    c.et === "free_weight" &&
+    !c.eq.includes("barbell");
   const sourceParts = [
     `free-exercise-db (${SOURCE_URL}), id: ${c.id}`,
-    'лицензия The Unlicense (public domain)',
-    removed.length ? 'техника: сокращённый перевод' : 'техника: перевод',
+    "лицензия The Unlicense (public domain)",
+    removed.length ? "техника: сокращённый перевод" : "техника: перевод",
   ];
-  if (musclesChanged) sourceParts.push('мышцы изменены относительно базы');
+  if (musclesChanged) sourceParts.push("мышцы изменены относительно базы");
   return {
     id: stableUuid(c.id),
     createdAt: CREATED,
@@ -176,10 +240,14 @@ const seed = curation.map((c) => {
     lighterAlternatives: c.alt.map(stableUuid),
     instructions: c.ins,
     // Частые ошибки без источника: не показываются в интерфейсе до проверки (verified: false).
-    commonMistakes: c.mis.map((text) => ({ text, verified: false, source: null })),
+    commonMistakes: c.mis.map((text) => ({
+      text,
+      verified: false,
+      source: null,
+    })),
     defaultRestSec: c.rest ?? REST[category],
     weightStepKg: c.step ?? (dumbbellOnly ? 2 : STEP[c.et]),
-    source: sourceParts.join('; ') + '.',
+    source: sourceParts.join("; ") + ".",
     sourceId: c.id,
     reviewNotes: notes,
     isCustom: false,
@@ -196,14 +264,28 @@ for (const e of seed) {
   for (const altSrc of curation.find((c) => c.id === e.sourceId).alt) {
     const a = bySourceId.get(altSrc);
     if (!a) {
-      lighterViolations.push(`${e.nameRu} → ${altSrc}: альтернативы нет в выборке`);
+      lighterViolations.push(
+        `${e.nameRu} → ${altSrc}: альтернативы нет в выборке`,
+      );
       continue;
     }
-    const lighter = !a.isStructural || a.category === 'assistance' || a.equipmentType === 'machine' || a.equipmentType === 'cable';
-    if (!lighter) lighterViolations.push(`${e.nameRu} → ${a.nameRu}: структурное базовое на свободном весе — не легче`);
+    const lighter =
+      !a.isStructural ||
+      a.category === "assistance" ||
+      a.equipmentType === "machine" ||
+      a.equipmentType === "cable";
+    if (!lighter)
+      lighterViolations.push(
+        `${e.nameRu} → ${a.nameRu}: структурное базовое на свободном весе — не легче`,
+      );
     if (!a.primaryMuscles.some((m) => e.primaryMuscles.includes(m)))
-      lighterViolations.push(`${e.nameRu} → ${a.nameRu}: нет общих основных мышц`);
-    if (a.isStructural) e.reviewNotes.push(`Альтернатива «${a.nameRu}» сама структурная (проходит как тренажёр) — требует проверки`);
+      lighterViolations.push(
+        `${e.nameRu} → ${a.nameRu}: нет общих основных мышц`,
+      );
+    if (a.isStructural)
+      e.reviewNotes.push(
+        `Альтернатива «${a.nameRu}» сама структурная (проходит как тренажёр) — требует проверки`,
+      );
   }
 }
 errors.push(...lighterViolations);
@@ -211,30 +293,38 @@ errors.push(...lighterViolations);
 // ——— Проверка: покрытие пучков дельт ———
 const coverage = DELTS.map((m) => {
   const list = seed.filter((e) => e.primaryMuscles.includes(m));
-  const machine = list.filter((e) => e.equipmentType === 'machine' || e.equipmentType === 'cable');
+  const machine = list.filter(
+    (e) => e.equipmentType === "machine" || e.equipmentType === "cable",
+  );
   const ok = list.length >= 2 && machine.length >= 1;
-  if (!ok) errors.push(`${MUSCLES[m]}: ${list.length} упр. как основная, из них тренажёр/блок — ${machine.length}`);
+  if (!ok)
+    errors.push(
+      `${MUSCLES[m]}: ${list.length} упр. как основная, из них тренажёр/блок — ${machine.length}`,
+    );
   return { m, list, machine, ok };
 });
 
 const out = seed.map(({ _review, ...e }) => e);
-mkdirSync(join(root, 'src/data/seed'), { recursive: true });
-writeFileSync(join(root, 'src/data/seed/exercises.json'), JSON.stringify(out, null, 2) + '\n');
+mkdirSync(join(root, "src/data/seed"), { recursive: true });
+writeFileSync(
+  join(root, "src/data/seed/exercises.json"),
+  JSON.stringify(out, null, 2) + "\n",
+);
 
 // ——— Таблица на проверку ———
-const ru = (ids) => ids.map((m) => MUSCLES[m] ?? `?${m}`).join(', ') || '—';
+const ru = (ids) => ids.map((m) => MUSCLES[m] ?? `?${m}`).join(", ") || "—";
 const nameOf = new Map(seed.map((e) => [e.id, e.nameRu]));
-const esc = (s) => String(s).replace(/\|/g, '\\|');
+const esc = (s) => String(s).replace(/\|/g, "\\|");
 const GROUPS = [
-  ['Ноги', 'Barbell_Full_Squat'],
-  ['Грудь', 'Barbell_Bench_Press_-_Medium_Grip'],
-  ['Спина', 'Pullups'],
-  ['Плечи', 'Standing_Military_Press'],
-  ['Руки', 'Barbell_Curl'],
-  ['Пресс и перенос', 'Plank'],
+  ["Ноги", "Barbell_Full_Squat"],
+  ["Грудь", "Barbell_Bench_Press_-_Medium_Grip"],
+  ["Спина", "Pullups"],
+  ["Плечи", "Standing_Military_Press"],
+  ["Руки", "Barbell_Curl"],
+  ["Пресс и перенос", "Plank"],
 ];
 const starts = GROUPS.map(([, id]) => seed.findIndex((e) => e.sourceId === id));
-if (starts.some((i) => i < 0)) throw new Error('Группа не найдена');
+if (starts.some((i) => i < 0)) throw new Error("Группа не найдена");
 
 let md = `# Упражнения: таблица на утверждение
 
@@ -256,14 +346,16 @@ let md = `# Упражнения: таблица на утверждение
 ## Проверки
 
 **Облегчённые альтернативы.** Правило: альтернатива вспомогательная, или неструктурная, или на тренажёре/блоке, и у неё есть общая основная мышца с исходным упражнением. ${
-  lighterViolations.length ? `Нарушения:\n\n${lighterViolations.map((v) => `- ${v}`).join('\n')}` : 'Нарушений нет.'
+  lighterViolations.length
+    ? `Нарушения:\n\n${lighterViolations.map((v) => `- ${v}`).join("\n")}`
+    : "Нарушений нет."
 }
 
 **Покрытие дельт.** Нужно минимум 2 упражнения, где пучок — основная мышца, и хотя бы одно из них на тренажёре или блоке.
 
 | Пучок | Упражнения (основная мышца) | Тренажёр/блок | ОК |
 |---|---|---|---|
-${coverage.map((c) => `| ${MUSCLES[c.m]} | ${c.list.map((e) => e.nameRu).join('; ')} | ${c.machine.map((e) => e.nameRu).join('; ') || '—'} | ${c.ok ? 'да' : '**нет**'} |`).join('\n')}
+${coverage.map((c) => `| ${MUSCLES[c.m]} | ${c.list.map((e) => e.nameRu).join("; ")} | ${c.machine.map((e) => e.nameRu).join("; ") || "—"} | ${c.ok ? "да" : "**нет**"} |`).join("\n")}
 
 ## Решения по прошлой версии
 
@@ -280,9 +372,10 @@ GROUPS.forEach(([title], gi) => {
   const b = starts[gi + 1] ?? seed.length;
   md += `\n## ${title}\n\n| # | Упражнение | Мышцы: основные / вспомогательные | Кат. | Стр. | Обор. | Паттерн | Запись | Облегчённые альтернативы | Пометки |\n|---|---|---|---|---|---|---|---|---|---|\n`;
   seed.slice(a, b).forEach((e, i) => {
-    const alts = e.lighterAlternatives.map((id) => nameOf.get(id)).join('; ') || '—';
-    const n = e.reviewNotes.map(esc).join('<br>');
-    md += `| ${a + i + 1} | **${esc(e.nameRu)}**<br><sub>${esc(e.nameEn)}</sub> | ${ru(e.primaryMuscles)} / ${ru(e.secondaryMuscles)} | ${e.category === 'core' ? 'Б' : 'В'} | ${e.isStructural ? 'да' : '—'} | ${EQTYPE[e.equipmentType]} | ${PATTERN[e.movementPattern]} | ${TRACK[e.trackingType]}${e.isUnilateral ? ', одностор.' : ''} | ${esc(alts)} | ${n} |\n`;
+    const alts =
+      e.lighterAlternatives.map((id) => nameOf.get(id)).join("; ") || "—";
+    const n = e.reviewNotes.map(esc).join("<br>");
+    md += `| ${a + i + 1} | **${esc(e.nameRu)}**<br><sub>${esc(e.nameEn)}</sub> | ${ru(e.primaryMuscles)} / ${ru(e.secondaryMuscles)} | ${e.category === "core" ? "Б" : "В"} | ${e.isStructural ? "да" : "—"} | ${EQTYPE[e.equipmentType]} | ${PATTERN[e.movementPattern]} | ${TRACK[e.trackingType]}${e.isUnilateral ? ", одностор." : ""} | ${esc(alts)} | ${n} |\n`;
   });
 });
 
@@ -291,22 +384,26 @@ for (const e of seed) {
   const r = e._review;
   md += `\n### ${a(e)}\n\n`;
   if (!r.removed.length) {
-    md += 'Ничего не вырезано.\n';
+    md += "Ничего не вырезано.\n";
     continue;
   }
-  for (const x of r.removed) md += `- «${esc(x.orig)}» — ${x.reasonText}${x.note ? `; ${x.note}` : ''}\n`;
+  for (const x of r.removed)
+    md += `- «${esc(x.orig)}» — ${x.reasonText}${x.note ? `; ${x.note}` : ""}\n`;
 }
 function a(e) {
   return `${e.nameRu} (${e.sourceId})`;
 }
 
 md += `\nПолная техника каждого упражнения — в \`src/data/seed/exercises.json\`.\n`;
-writeFileSync(join(root, 'docs/exercises-review.md'), md);
+writeFileSync(join(root, "docs/exercises-review.md"), md);
 
-console.log(`Готово: ${seed.length} упражнений; сокращённый перевод: ${seed.filter((e) => e._review.removed.length).length}; мышцы изменены: ${seed.filter((e) => e._review.musclesChanged).length}.`);
-for (const c of coverage) console.log(`${c.m}: ${c.list.length} (тренажёр/блок ${c.machine.length})`);
+console.log(
+  `Готово: ${seed.length} упражнений; сокращённый перевод: ${seed.filter((e) => e._review.removed.length).length}; мышцы изменены: ${seed.filter((e) => e._review.musclesChanged).length}.`,
+);
+for (const c of coverage)
+  console.log(`${c.m}: ${c.list.length} (тренажёр/блок ${c.machine.length})`);
 if (errors.length) {
-  console.log('Ошибки проверок:');
-  for (const p of errors) console.log(' - ' + p);
+  console.log("Ошибки проверок:");
+  for (const p of errors) console.log(" - " + p);
   process.exit(1);
 }

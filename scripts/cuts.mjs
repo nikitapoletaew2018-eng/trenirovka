@@ -54,7 +54,7 @@ export const cuts = {
   ],
   Hyperextensions_Back_Extensions: [
     { orig: '(my preference)', reason: 'opinion' },
-    { orig: 'as you inhale (на подъёме корпуса, шаг 5)', reason: 'typo', note: 'на опускании в оригинале тоже вдох' },
+    { orig: 'as you inhale', reason: 'typo', note: 'на подъёме корпуса (шаг 5); на опускании в оригинале тоже вдох' },
   ],
   'Wide-Grip_Lat_Pulldown': [
     {

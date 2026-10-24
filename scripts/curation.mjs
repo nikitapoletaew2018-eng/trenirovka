@@ -12,8 +12,8 @@ export const curation = [
   // ───────────── Ноги ─────────────
   {
     id: 'Barbell_Full_Squat',
-    ru: 'Присед со штангой на спине',
-    aliases: ['приседания со штангой', 'присед', 'back squat'],
+    ru: 'Приседания со штангой',
+    aliases: ['приседания со штангой', 'присед', 'back squat', 'присед со штангой на спине'],
     P: ['quads'],
     S: ['glutes', 'hamstrings', 'lower_back', 'calves'],
     eq: ['barbell'],
@@ -34,8 +34,8 @@ export const curation = [
   },
   {
     id: 'Front_Barbell_Squat',
-    ru: 'Фронтальный присед со штангой',
-    aliases: ['фронтальные приседания', 'front squat'],
+    ru: 'Фронтальные приседания со штангой',
+    aliases: ['фронтальные приседания', 'front squat', 'фронтальный присед со штангой'],
     P: ['quads'],
     S: ['glutes', 'hamstrings', 'calves'],
     eq: ['barbell'],
@@ -56,7 +56,8 @@ export const curation = [
   },
   {
     id: 'Goblet_Squat',
-    ru: 'Гоблет-присед',
+    ru: 'Приседания с гантелью у груди (гоблет)',
+    aliases: ['гоблет-присед'],
     P: ['quads'],
     S: ['glutes', 'hamstrings', 'calves'],
     eq: ['kettlebell', 'dumbbell'],
@@ -79,7 +80,8 @@ export const curation = [
   },
   {
     id: 'Hack_Squat',
-    ru: 'Гакк-присед в тренажёре',
+    ru: 'Гакк-приседания в тренажёре',
+    aliases: ['гакк-присед в тренажёре'],
     P: ['quads'],
     S: ['glutes', 'hamstrings', 'calves'],
     eq: ['machine'],
@@ -228,7 +230,8 @@ export const curation = [
   },
   {
     id: 'Sumo_Deadlift',
-    ru: 'Тяга сумо',
+    ru: 'Становая тяга сумо',
+    aliases: ['тяга сумо'],
     P: ['hamstrings'],
     S: ['glutes', 'quads', 'adductors', 'lower_back', 'mid_back', 'upper_traps', 'forearms'],
     eq: ['barbell'],
@@ -248,7 +251,8 @@ export const curation = [
   },
   {
     id: 'Good_Morning',
-    ru: 'Гуд-морнинг со штангой',
+    ru: 'Наклоны со штангой на плечах (гуд-морнинг)',
+    aliases: ['гуд-морнинг со штангой'],
     P: ['hamstrings'],
     S: ['glutes', 'lower_back', 'abs'],
     eq: ['barbell'],
@@ -313,8 +317,8 @@ export const curation = [
   },
   {
     id: 'Dumbbell_Step_Ups',
-    ru: 'Зашагивания на платформу с гантелями',
-    aliases: ['степ-ап', 'step up'],
+    ru: 'Зашагивания на скамью с гантелями',
+    aliases: ['степ-ап', 'step up', 'зашагивания на платформу с гантелями'],
     P: ['quads'],
     S: ['glutes', 'hamstrings', 'calves'],
     eq: ['dumbbell', 'bench'],
@@ -549,7 +553,8 @@ export const curation = [
   },
   {
     id: 'Leverage_Chest_Press',
-    ru: 'Жим от груди в рычажном тренажёре',
+    ru: 'Жим от груди в тренажёре',
+    aliases: ['жим от груди в рычажном тренажёре'],
     P: ['chest'],
     S: ['front_delts', 'triceps'],
     eq: ['machine'],
@@ -569,7 +574,8 @@ export const curation = [
   },
   {
     id: 'Leverage_Incline_Chest_Press',
-    ru: 'Жим под углом в рычажном тренажёре',
+    ru: 'Жим в тренажёре под углом вверх',
+    aliases: ['жим под углом в рычажном тренажёре'],
     P: ['chest'],
     S: ['front_delts', 'triceps'],
     eq: ['machine'],
@@ -880,7 +886,8 @@ export const curation = [
   },
   {
     id: 'Leverage_Iso_Row',
-    ru: 'Тяга в рычажном тренажёре',
+    ru: 'Горизонтальная тяга в тренажёре',
+    aliases: ['тяга в рычажном тренажёре'],
     P: ['lats'],
     S: ['mid_back', 'biceps'],
     eq: ['machine'],
@@ -899,7 +906,8 @@ export const curation = [
   },
   {
     id: 'Straight-Arm_Pulldown',
-    ru: 'Пуловер на верхнем блоке прямыми руками',
+    ru: 'Тяга верхнего блока прямыми руками (пуловер)',
+    aliases: ['пуловер на верхнем блоке прямыми руками'],
     P: ['lats'],
     S: [],
     eq: ['cable'],
@@ -1043,7 +1051,8 @@ export const curation = [
   },
   {
     id: 'Standing_Low-Pulley_Deltoid_Raise',
-    ru: 'Мах одной рукой в сторону на нижнем блоке',
+    ru: 'Махи в сторону в кроссовере одной рукой',
+    aliases: ['мах одной рукой в сторону на нижнем блоке'],
     P: ['side_delts'],
     S: [],
     eq: ['cable'],
@@ -1089,7 +1098,8 @@ export const curation = [
   },
   {
     id: 'Face_Pull',
-    ru: 'Тяга каната к лицу',
+    ru: 'Тяга каната к лицу (face pull)',
+    aliases: ['тяга каната к лицу'],
     P: ['rear_delts'],
     S: ['mid_back'],
     eq: ['cable'],
@@ -1112,7 +1122,8 @@ export const curation = [
   },
   {
     id: 'Reverse_Flyes',
-    ru: 'Обратные разведения гантелей лёжа на наклонной',
+    ru: 'Разведения гантелей на задние дельты лёжа на наклонной',
+    aliases: ['обратные разведения гантелей лёжа на наклонной'],
     P: ['rear_delts'],
     S: ['mid_back'],
     eq: ['dumbbell', 'bench'],
@@ -1132,7 +1143,8 @@ export const curation = [
   },
   {
     id: 'Reverse_Machine_Flyes',
-    ru: 'Обратные разведения в тренажёре',
+    ru: 'Обратная бабочка (задние дельты)',
+    aliases: ['обратные разведения в тренажёре'],
     P: ['rear_delts'],
     S: ['mid_back'],
     eq: ['machine'],
@@ -1372,7 +1384,8 @@ export const curation = [
   },
   {
     id: 'Dip_Machine',
-    ru: 'Отжимания в тренажёре сидя',
+    ru: 'Жим вниз в тренажёре (брусья сидя)',
+    aliases: ['отжимания в тренажёре сидя'],
     P: ['triceps'],
     S: ['chest', 'front_delts'],
     eq: ['machine'],
@@ -1479,7 +1492,8 @@ export const curation = [
   },
   {
     id: 'Ab_Roller',
-    ru: 'Ролик для пресса',
+    ru: 'Ролик для пресса (выкатывания)',
+    aliases: ['ролик для пресса'],
     P: ['abs'],
     S: ['lats'],
     eq: ['other'],
@@ -1504,7 +1518,8 @@ export const curation = [
   },
   {
     id: 'Pallof_Press',
-    ru: 'Жим Паллофа',
+    ru: 'Жим Паллофа (антиротация в кроссовере)',
+    aliases: ['жим паллофа'],
     P: ['abs'],
     S: [],
     eq: ['cable'],
@@ -1529,8 +1544,8 @@ export const curation = [
   },
   {
     id: 'Farmers_Walk',
-    ru: 'Прогулка фермера',
-    aliases: ['фермерская прогулка', 'переноска гантелей'],
+    ru: 'Прогулка фермера (ходьба с гантелями)',
+    aliases: ['фермерская прогулка', 'переноска гантелей', 'прогулка фермера'],
     P: ['forearms'],
     S: ['upper_traps', 'abs', 'glutes', 'hamstrings', 'quads', 'lower_back'],
     eq: ['dumbbell', 'other'],

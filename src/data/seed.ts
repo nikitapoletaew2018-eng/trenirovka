@@ -7,7 +7,7 @@ import raw from './seed/exercises.json';
  * Версия начальной базы упражнений. При увеличении новые упражнения добавляются,
  * существующие не перезаписываются (пользователь мог изменить отдых, шаг, избранное).
  */
-export const SEED_VERSION = 2;
+export const SEED_VERSION = 3;
 
 const isStr = (x: unknown): x is string => typeof x === 'string';
 const isStrArr = (x: unknown): x is string[] => Array.isArray(x) && x.every(isStr);
@@ -63,7 +63,7 @@ export async function ensureSeed(target: AppDB = db): Promise<void> {
   const byId = new Map(rows.map((e) => [e.id, e]));
   await target.transaction('rw', target.exercises, target.meta, async () => {
     await target.exercises.bulkAdd(SEED_EXERCISES.filter((e) => !byId.has(e.id)));
-    // v2: новые названия и синонимы встроенных упражнений («Болгарские выпады»).
+    // v2: новые названия и синонимы встроенных упражнений («Болгарские выпады»); v3: +54 упражнения и понятные названия.
     // Меняются только название и синонимы; отдых, шаг веса и избранное пользователя остаются.
     if (from >= 1)
       for (const s of SEED_EXERCISES) {

@@ -1,11 +1,17 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { formatDuration, formatNumber, round } from '../domain/units';
-import { LIMITS, parseDecimal, parseDuration } from '../domain/validation';
-import { undoLast } from '../data/undo';
-import { back } from './router';
-import { useUndoEntry } from './hooks';
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { formatDuration, formatNumber, round } from "../domain/units";
+import { LIMITS, parseDecimal, parseDuration } from "../domain/validation";
+import { undoLast } from "../data/undo";
+import { back } from "./router";
+import { useUndoEntry, useVisibleArea } from "./hooks";
 
-export function Page({ title, children, onBack, actions, className }: {
+export function Page({
+  title,
+  children,
+  onBack,
+  actions,
+  className,
+}: {
   title: ReactNode;
   children: ReactNode;
   onBack?: boolean | (() => void);
@@ -13,10 +19,14 @@ export function Page({ title, children, onBack, actions, className }: {
   className?: string;
 }) {
   return (
-    <main className={`page ${className ?? ''}`}>
+    <main className={`page ${className ?? ""}`}>
       <header className="page-head">
         {onBack && (
-          <button className="icon-btn" aria-label="Назад" onClick={() => (typeof onBack === 'function' ? onBack() : back())}>
+          <button
+            className="icon-btn"
+            aria-label="Назад"
+            onClick={() => (typeof onBack === "function" ? onBack() : back())}
+          >
             ‹
           </button>
         )}
@@ -28,15 +38,36 @@ export function Page({ title, children, onBack, actions, className }: {
   );
 }
 
-export function Sheet({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
+export function Sheet({
+  title,
+  onClose,
+  children,
+}: {
+  title: string;
+  onClose: () => void;
+  children: ReactNode;
+}) {
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
+  // Лист держится в видимой части экрана: иначе на iPhone клавиатура закрывает список под полем поиска.
+  const area = useVisibleArea();
   return (
-    <div className="sheet-backdrop" onClick={onClose} role="presentation">
-      <div className="sheet" role="dialog" aria-modal="true" aria-label={title} onClick={(e) => e.stopPropagation()}>
+    <div
+      className="sheet-backdrop"
+      style={{ top: area.top, height: area.height, bottom: "auto" }}
+      onClick={onClose}
+      role="presentation"
+    >
+      <div
+        className="sheet"
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="sheet-head">
           <h2>{title}</h2>
           <button className="icon-btn" aria-label="Закрыть" onClick={onClose}>
@@ -74,7 +105,10 @@ export function Stepper({
   decimals?: number;
   integer?: boolean;
 }) {
-  const shown = value == null ? '' : formatNumber(round(value, decimals), decimals === 1 ? 1 : 2);
+  const shown =
+    value == null
+      ? ""
+      : formatNumber(round(value, decimals), decimals === 1 ? 1 : 2);
   const [text, setText] = useState(shown);
   const [focused, setFocused] = useState(false);
   useEffect(() => {
@@ -86,7 +120,7 @@ export function Stepper({
     setFocused(false);
     const n = parseDecimal(text);
     if (n == null) {
-      if (text.trim() === '') onChange(null);
+      if (text.trim() === "") onChange(null);
       else setText(shown);
       return;
     }
@@ -101,13 +135,17 @@ export function Stepper({
   };
   return (
     <div className="stepper">
-      <button type="button" aria-label={`${label}: уменьшить`} onClick={() => bump(-step)}>
+      <button
+        type="button"
+        aria-label={`${label}: уменьшить`}
+        onClick={() => bump(-step)}
+      >
         −
       </button>
       <div>
         <input
           aria-label={label}
-          inputMode={integer ? 'numeric' : 'decimal'}
+          inputMode={integer ? "numeric" : "decimal"}
           value={text}
           onFocus={(e) => {
             setFocused(true);
@@ -115,11 +153,15 @@ export function Stepper({
           }}
           onChange={(e) => setText(e.target.value)}
           onBlur={commit}
-          onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+          onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
         />
         {unit && <span className="unit">{unit}</span>}
       </div>
-      <button type="button" aria-label={`${label}: увеличить`} onClick={() => bump(step)}>
+      <button
+        type="button"
+        aria-label={`${label}: увеличить`}
+        onClick={() => bump(step)}
+      >
         +
       </button>
     </div>
@@ -130,8 +172,16 @@ export function Stepper({
  * Поле времени: показывает и принимает мин:сек («1:30»), а также «1.30», «1,30» или просто секунды («90»).
  * Хранение — в секундах. Кнопки ± — по 5 секунд.
  */
-export function DurationInput({ value, onChange, label }: { value: number | null; onChange: (v: number | null) => void; label: string }) {
-  const shown = value == null ? '' : formatDuration(value);
+export function DurationInput({
+  value,
+  onChange,
+  label,
+}: {
+  value: number | null;
+  onChange: (v: number | null) => void;
+  label: string;
+}) {
+  const shown = value == null ? "" : formatDuration(value);
   const [text, setText] = useState(shown);
   const [focused, setFocused] = useState(false);
   useEffect(() => {
@@ -139,16 +189,21 @@ export function DurationInput({ value, onChange, label }: { value: number | null
   }, [shown, focused]);
   const commit = () => {
     setFocused(false);
-    if (text.trim() === '') return onChange(null);
+    if (text.trim() === "") return onChange(null);
     const sec = parseDuration(text);
     if (sec == null) return setText(shown); // неверный ввод — вернуть прежнее значение
     onChange(sec);
     setText(formatDuration(sec));
   };
-  const bump = (d: number) => onChange(Math.min(LIMITS.durationSec.max, Math.max(0, (value ?? 0) + d)));
+  const bump = (d: number) =>
+    onChange(Math.min(LIMITS.durationSec.max, Math.max(0, (value ?? 0) + d)));
   return (
     <div className="stepper">
-      <button type="button" aria-label={`${label}: минус 5 секунд`} onClick={() => bump(-5)}>
+      <button
+        type="button"
+        aria-label={`${label}: минус 5 секунд`}
+        onClick={() => bump(-5)}
+      >
         −
       </button>
       <div>
@@ -163,11 +218,15 @@ export function DurationInput({ value, onChange, label }: { value: number | null
           }}
           onChange={(e) => setText(e.target.value)}
           onBlur={commit}
-          onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+          onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
         />
         <span className="unit">мин:сек</span>
       </div>
-      <button type="button" aria-label={`${label}: плюс 5 секунд`} onClick={() => bump(5)}>
+      <button
+        type="button"
+        aria-label={`${label}: плюс 5 секунд`}
+        onClick={() => bump(5)}
+      >
         +
       </button>
     </div>
@@ -179,7 +238,12 @@ export function Why({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <button type="button" className="why" aria-expanded={open} onClick={() => setOpen(!open)}>
+      <button
+        type="button"
+        className="why"
+        aria-expanded={open}
+        onClick={() => setOpen(!open)}
+      >
         Почему?
       </button>
       {open && <div className="banner info small">{children}</div>}
@@ -236,7 +300,12 @@ export function Seg<T extends string>({
   return (
     <div className="seg" role="group" aria-label={label}>
       {options.map((o) => (
-        <button key={o.value} type="button" aria-pressed={o.value === value} onClick={() => onChange(o.value)}>
+        <button
+          key={o.value}
+          type="button"
+          aria-pressed={o.value === value}
+          onClick={() => onChange(o.value)}
+        >
           {o.label}
         </button>
       ))}
@@ -244,4 +313,4 @@ export function Seg<T extends string>({
   );
 }
 
-export { confirmDelete } from './dialog';
+export { confirmDelete } from "./dialog";
