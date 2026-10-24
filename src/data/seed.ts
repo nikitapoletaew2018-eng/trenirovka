@@ -7,7 +7,7 @@ import raw from './seed/exercises.json';
  * Версия начальной базы упражнений. При увеличении новые упражнения добавляются,
  * существующие не перезаписываются (пользователь мог изменить отдых, шаг, избранное).
  */
-export const SEED_VERSION = 1;
+export const SEED_VERSION = 2;
 
 const isStr = (x: unknown): x is string => typeof x === 'string';
 const isStrArr = (x: unknown): x is string[] => Array.isArray(x) && x.every(isStr);
@@ -41,6 +41,7 @@ export function parseSeed(data: unknown): Exercise[] {
       typeof e.isUnilateral === 'boolean' &&
       isStrArr(e.lighterAlternatives) &&
       isStrArr(e.instructions) &&
+      (e.aliases === undefined || isStrArr(e.aliases)) &&
       Array.isArray(e.commonMistakes) &&
       e.commonMistakes.every(isMistake) &&
       typeof e.defaultRestSec === 'number' &&
@@ -56,10 +57,19 @@ export const SEED_EXERCISES: Exercise[] = parseSeed(raw);
 /** Добавляет недостающие упражнения начальной базы. Идемпотентно. */
 export async function ensureSeed(target: AppDB = db): Promise<void> {
   const meta = await target.meta.get('seedVersion');
-  if (typeof meta?.value === 'number' && meta.value >= SEED_VERSION) return;
+  const from = typeof meta?.value === 'number' ? meta.value : 0;
+  if (from >= SEED_VERSION) return;
+  const rows = await target.exercises.toArray();
+  const byId = new Map(rows.map((e) => [e.id, e]));
   await target.transaction('rw', target.exercises, target.meta, async () => {
-    const existing = new Set(await target.exercises.toCollection().primaryKeys());
-    await target.exercises.bulkAdd(SEED_EXERCISES.filter((e) => !existing.has(e.id)));
+    await target.exercises.bulkAdd(SEED_EXERCISES.filter((e) => !byId.has(e.id)));
+    // v2: новые названия и синонимы встроенных упражнений («Болгарские выпады»).
+    // Меняются только название и синонимы; отдых, шаг веса и избранное пользователя остаются.
+    if (from >= 1)
+      for (const s of SEED_EXERCISES) {
+        const cur = byId.get(s.id);
+        if (cur && !cur.isCustom) await target.exercises.put({ ...cur, nameRu: s.nameRu, aliases: s.aliases ?? [] });
+      }
     await target.meta.put({ key: 'seedVersion', value: SEED_VERSION });
   });
 }

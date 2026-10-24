@@ -449,3 +449,20 @@ describe('калькуляторы', () => {
     expect(warmupSets(25, [40, 60, 80], [8, 5, 3], 2.5, 20).map((x) => x.weight)).toEqual([20]);
   });
 });
+
+describe('запас повторов не записывали', () => {
+  it('в причине прогрессии нет упоминания RIR', () => {
+    const s = suggestNext({
+      exercise: BENCH,
+      current: item('bench', 3, 8, 12, 2, 80),
+      history: [{ date: '2026-10-20', plan: null, sets: [{ weightKg: 80, reps: 12, rir: null }, { weightKg: 80, reps: 12, rir: null }, { weightKg: 80, reps: 12, rir: null }] }],
+      rule: 'double',
+      lowerBoundFailSessions: 2,
+      stagnating: false,
+      unitLabel: 'кг',
+      fmt: (kg) => `${kg} кг`,
+    });
+    expect(s.kind).toBe('increase');
+    expect(s.reason).not.toMatch(/RIR/);
+  });
+});

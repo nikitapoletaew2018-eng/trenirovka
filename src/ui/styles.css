@@ -1003,3 +1003,22 @@ ol.steps li + li {
   font-size: 17px;
   line-height: 1.4;
 }
+
+/* Связь «суперсет со следующим» между карточками редактора */
+.link-toggle {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  margin: 4px 0;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.link-toggle.on {
+  border-style: solid;
+  border-color: var(--info);
+  color: var(--info);
+}

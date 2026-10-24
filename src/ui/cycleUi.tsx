@@ -10,7 +10,7 @@ import { lightenPlanned, movePlannedDate, plannedForWeek, reschedule } from '../
 import { updateSettings } from '../data/settings';
 import { startWorkout, type StartOptions } from '../data/workoutRepo';
 import { Sheet } from './components';
-import { planLine } from './format';
+import { effortOf, planLine } from './format';
 import { today, useExerciseMap, useSettings } from './hooks';
 import { navigate } from './router';
 
@@ -152,7 +152,7 @@ function LightOptionsSheet({ pending, data, onClose }: { pending: PendingStart; 
           По плану
         </button>
         <button className="btn block" onClick={() => go(lightVersion(items, params), true)}>
-          Облегчённая версия: −{Math.round((1 - params.setsFactor) * 100)}% подходов, RIR +{params.rirPlus}, без попыток рекордов
+          Облегчённая версия: −{Math.round((1 - params.setsFactor) * 100)}% подходов, {settings.showEffort ? `RIR +${params.rirPlus}` : 'с запасом сил'}, без попыток рекордов
         </button>
         <button className="btn block" disabled={repl.replaced.length === 0} onClick={() => go(repl.items, true)}>
           Облегчённые замены{repl.replaced.length ? `: ${repl.replaced.map((r) => `${exMap.get(r.from)?.nameRu} → ${exMap.get(r.to)?.nameRu}`).join('; ')}` : ' — в плане нет базовых структурных упражнений с альтернативами'}
@@ -238,8 +238,8 @@ export function PlannedLightBanner({ monday, settings }: { monday: string; setti
               </b>
               {items.map((it, i) => (
                 <p key={i} className="small" style={{ margin: '2px 0' }}>
-                  {exMap.get(it.exerciseId)?.nameRu}: {planLine(pw.plannedItems[i]!, settings.unit, settings.effortScale, exMap.get(it.exerciseId)?.trackingType)} →{' '}
-                  <b>{planLine(it, settings.unit, settings.effortScale, exMap.get(it.exerciseId)?.trackingType)}</b>
+                  {exMap.get(it.exerciseId)?.nameRu}: {planLine(pw.plannedItems[i]!, settings.unit, effortOf(settings), exMap.get(it.exerciseId)?.trackingType)} →{' '}
+                  <b>{planLine(it, settings.unit, effortOf(settings), exMap.get(it.exerciseId)?.trackingType)}</b>
                 </p>
               ))}
             </div>

@@ -4,6 +4,7 @@ import { formatLongDate, localDate } from '../../domain/dates';
 import type { Exercise, Settings, Workout, WorkoutExercise, WorkoutSet } from '../../domain/types';
 import { displayStep, formatDuration, formatWeight, fromDisplayWeight, toDisplayWeight, unitLabel } from '../../domain/units';
 import { nextSetType, workoutSummary } from '../../domain/workoutLogic';
+import { isLinkedWithNext, supersetNumbers } from '../../domain/superset';
 import { buildSessions } from '../../domain/analysis';
 import { RECORD_LABEL, computeRecords, prsInWorkout, type PrEvent } from '../../domain/records';
 import { nowIso } from '../../data/ids';
@@ -14,6 +15,7 @@ import {
   addExercise,
   addSet,
   addWarmupSets,
+  linkExerciseWithNext,
   adjustRest,
   deleteSet,
   deleteWorkout,
@@ -31,7 +33,7 @@ import {
 } from '../../data/workoutRepo';
 import { DurationInput, Empty, Sheet, Stepper, Why, confirmDelete } from '../components';
 import { ExercisePicker } from '../ExercisePicker';
-import { EFFORT_VALUES, SET_TYPE_LABEL, SET_TYPE_SHORT, formatSet, planLine } from '../format';
+import { EFFORT_VALUES, SET_TYPE_LABEL, SET_TYPE_SHORT, formatSet, effortOf, planLine } from '../format';
 import { useExerciseMap, useNow, useSettings } from '../hooks';
 import { navigate } from '../router';
 import { notifyRestOver, setWakeLock, unlockAudio } from '../signals';
@@ -91,6 +93,8 @@ export function WorkoutView({ workoutId, mode }: { workoutId: string; mode: Mode
             mode={mode}
             isFirst={i === 0}
             isLast={i === wes.length - 1}
+            supersetNo={we.supersetGroup ? supersetNumbers(wes.map((x) => x.supersetGroup)).get(we.supersetGroup) : undefined}
+            linkedNext={isLinkedWithNext(wes.map((x) => x.supersetGroup), i)}
             replacedFrom={we.replacedFromExerciseId ? exMap.get(we.replacedFromExerciseId) : undefined}
           />
         );
@@ -197,6 +201,8 @@ function ExerciseCard({
   isFirst,
   isLast,
   replacedFrom,
+  supersetNo,
+  linkedNext,
 }: {
   we: WorkoutExercise;
   ex: Exercise;
@@ -207,6 +213,8 @@ function ExerciseCard({
   isFirst: boolean;
   isLast: boolean;
   replacedFrom?: Exercise;
+  supersetNo?: number;
+  linkedNext: boolean;
 }) {
   const [menu, setMenu] = useState(false);
   const [replace, setReplace] = useState(false);
@@ -215,7 +223,10 @@ function ExerciseCard({
   const weighted = ex.trackingType === 'weight_reps' || ex.trackingType === 'weight_time';
   const workKg = we.plan?.suggestedWeightKg ?? sets.find((s) => s.setType !== 'warmup' && s.weightKg != null)?.weightKg ?? null;
   const lastWorking = last?.sets.filter((s) => s.setType !== 'warmup') ?? [];
-  const cols = ex.trackingType === 'reps' ? 'cols-3' : ex.trackingType === 'time' ? 'cols-2' : ex.trackingType === 'weight_time' ? 'cols-wt' : '';
+  const showEffort = settings.showEffort;
+  // Без колонки «запас повторов» строка короче: вес + повторы + ✓
+  const cols =
+    ex.trackingType === 'time' ? 'cols-2' : ex.trackingType === 'weight_time' ? 'cols-wt' : ex.trackingType === 'reps' ? (showEffort ? 'cols-3' : 'cols-2') : showEffort ? '' : 'cols-wt';
   let workingNo = 0;
 
   return (
@@ -223,13 +234,13 @@ function ExerciseCard({
       <div className="row">
         <div className="grow">
           <p className="ex-title">
-            {we.supersetGroup && <span className="chip" style={{ marginRight: 6 }}>Суперсет {we.supersetGroup}</span>}
+            {supersetNo && <span className="chip" style={{ marginRight: 6 }}>Суперсет {supersetNo}</span>}
             {ex.nameRu}
           </p>
           {replacedFrom && <p className="ex-meta">Замена: {replacedFrom.nameRu}</p>}
           {we.plan && (
             <p className="ex-meta">
-              План: <b>{planLine(we.plan, unit, settings.effortScale, ex.trackingType)}</b>
+              План: <b>{planLine(we.plan, unit, effortOf(settings), ex.trackingType)}</b>
             </p>
           )}
           {mode === 'active' && (
@@ -258,7 +269,7 @@ function ExerciseCard({
         {ex.trackingType === 'bodyweight_reps' && <span>Доп./асс., {unitLabel(unit)}</span>}
         {ex.trackingType !== 'time' && ex.trackingType !== 'weight_time' && <span>Повторы</span>}
         {(ex.trackingType === 'time' || ex.trackingType === 'weight_time') && <span>Время</span>}
-        {ex.trackingType !== 'time' && ex.trackingType !== 'weight_time' && <span>{settings.effortScale === 'rir' ? 'RIR' : 'RPE'}</span>}
+        {showEffort && ex.trackingType !== 'time' && ex.trackingType !== 'weight_time' && <span>{settings.effortScale === 'rir' ? 'Запас' : 'RPE'}</span>}
         <span>✓</span>
       </div>
       {sets.map((s) => {
@@ -285,17 +296,15 @@ function ExerciseCard({
                 ↓ Ниже
               </button>
             </div>
-            <label className="field">
-              <span>Суперсет / круг: упражнения с одной буквой идут подряд, отдых — после последнего</span>
-              <select className="input" value={we.supersetGroup ?? ''} onChange={(e) => void updateWorkoutExercise(we.id, { supersetGroup: e.target.value || null })}>
-                <option value="">Нет</option>
-                {['A', 'B', 'C', 'D'].map((g) => (
-                  <option key={g} value={g}>
-                    {g}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <div>
+              <button className="btn block" disabled={isLast && !linkedNext} onClick={() => void linkExerciseWithNext(we.id, !linkedNext)}>
+                {linkedNext ? 'Отделить от следующего упражнения' : 'Суперсет со следующим упражнением'}
+              </button>
+              <p className="small muted" style={{ margin: '4px 0 0' }}>
+                Суперсет — упражнения делаются по очереди без отдыха: подход одного → подход другого → отдых → снова по кругу. Таймер отдыха запускается
+                после последнего упражнения суперсета.
+              </p>
+            </div>
             <label className="field">
               <span>Отдых, сек (по умолчанию {ex.defaultRestSec})</span>
               <input
@@ -383,7 +392,7 @@ function SetRow({ set, ex, settings, cols, label, mode }: { set: WorkoutSet; ex:
   const effort = (
     <select
       className="effort"
-      aria-label={settings.effortScale === 'rir' ? 'RIR — повторы в запасе' : 'RPE'}
+      aria-label={settings.effortScale === 'rir' ? 'Запас повторов (RIR)' : 'RPE'}
       value={set.rir ?? ''}
       onChange={(e) => {
         const v = e.target.value === '' ? null : Number(e.target.value);
@@ -437,7 +446,7 @@ function SetRow({ set, ex, settings, cols, label, mode }: { set: WorkoutSet; ex:
       {(ex.trackingType === 'time' || ex.trackingType === 'weight_time') && (
         <DurationInput label="Время" value={set.durationSec ?? null} onChange={(v) => void updateSet(set.id, { durationSec: v })} />
       )}
-      {ex.trackingType !== 'time' && ex.trackingType !== 'weight_time' && effort}
+      {settings.showEffort && ex.trackingType !== 'time' && ex.trackingType !== 'weight_time' && effort}
       <button
         className="done-btn"
         aria-pressed={set.completed}

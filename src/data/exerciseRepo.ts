@@ -15,14 +15,19 @@ export interface ExerciseFilter {
   favoritesOnly?: boolean;
 }
 
+/** Для поиска: регистр и «ё» не важны. */
+export function normalizeSearch(s: string): string {
+  return s.toLowerCase().replace(/ё/g, 'е').trim();
+}
+
 export function filterExercises(list: Exercise[], f: ExerciseFilter): Exercise[] {
-  const q = f.query?.trim().toLowerCase() ?? '';
+  const q = normalizeSearch(f.query ?? '');
   return list
     .filter((e) => {
       if (f.favoritesOnly && !e.isFavorite) return false;
       if (f.muscle && !e.primaryMuscles.includes(f.muscle) && !e.secondaryMuscles.includes(f.muscle)) return false;
       if (f.equipmentType && e.equipmentType !== f.equipmentType) return false;
-      if (q && !e.nameRu.toLowerCase().includes(q) && !e.nameEn.toLowerCase().includes(q)) return false;
+      if (q && ![e.nameRu, e.nameEn, ...(e.aliases ?? [])].some((n) => normalizeSearch(n).includes(q))) return false;
       return true;
     })
     .sort((a, b) => Number(!!b.isFavorite) - Number(!!a.isFavorite) || a.nameRu.localeCompare(b.nameRu, 'ru'));

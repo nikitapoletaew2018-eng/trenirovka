@@ -73,13 +73,23 @@ export function SettingsScreen() {
           <Seg<WeightUnit> label="Единицы веса" value={s.unit} onChange={(unit) => void updateSettings({ unit })} options={[{ value: 'kg', label: 'кг' }, { value: 'lb', label: 'lb' }]} />
         </div>
         <p className="small muted">Значения хранятся в кг; переключение меняет только отображение.</p>
+        <label className="check">
+          <input type="checkbox" checked={s.showEffort} onChange={(e) => void updateSettings({ showEffort: e.target.checked })} />
+          Отмечать запас повторов (RIR)
+        </label>
+        <p className="small muted">
+          Сколько повторов вы могли бы сделать ещё, когда закончили подход: 0 — больше ни одного, 2 — ещё два. Помогает точнее подбирать вес, но
+          необязательно — без этого приложение ведёт прогрессию по весу и повторам.
+        </p>
+        {s.showEffort && (<>
         <div className="row">
-          <span className="grow">Усилие</span>
+          <span className="grow">Шкала</span>
           <Seg<EffortScale> label="Шкала усилия" value={s.effortScale} onChange={(effortScale) => void updateSettings({ effortScale })} options={[{ value: 'rir', label: 'RIR' }, { value: 'rpe', label: 'RPE' }]} />
         </div>
         <Why>
           RIR — повторы в запасе. RPE = 10 − RIR (Zourdos et al., 2016, Journal of Strength and Conditioning Research). Хранится RIR, RPE пересчитывается.
         </Why>
+        </>)}
         <div className="row">
           <span className="grow">Вес грифа</span>
           <Seg<string>

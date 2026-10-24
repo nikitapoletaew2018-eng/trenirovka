@@ -28,11 +28,16 @@ export function effortLabel(rir: number | null | undefined, scale: EffortScale):
 }
 
 /** «3×6–8 @RIR 2 · 82,5 кг»; для упражнений на время — «3 подхода». */
-export function planLine(p: PlannedItem, unit: WeightUnit, scale: EffortScale, tracking: TrackingType = 'weight_reps'): string {
+/** Шкала усилия для отображения; null — «запас повторов» скрыт в настройках. */
+export function effortOf(s: { showEffort: boolean; effortScale: EffortScale }): EffortScale | null {
+  return s.showEffort ? s.effortScale : null;
+}
+
+export function planLine(p: PlannedItem, unit: WeightUnit, scale: EffortScale | null, tracking: TrackingType = 'weight_reps'): string {
   const timed = tracking === 'time' || tracking === 'weight_time';
   const reps = p.repMin === p.repMax ? `${p.repMin}` : `${p.repMin}–${p.repMax}`;
   const parts = [timed ? `${p.sets} подх.` : `${p.sets}×${reps}`];
-  if (!timed && p.targetRir != null) parts[0] += ` @${effortLabel(p.targetRir, scale)}`;
+  if (!timed && scale && p.targetRir != null) parts[0] += ` @${effortLabel(p.targetRir, scale)}`;
   if (p.suggestedWeightKg != null) parts.push(formatWeight(p.suggestedWeightKg, unit));
   return parts.join(' · ');
 }

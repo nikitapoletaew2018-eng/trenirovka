@@ -139,7 +139,7 @@ export function suggestNext(a: SuggestArgs): Suggestion {
         item: make({ suggestedWeightKg: w, targetReps: current.repMin }, ''),
         reason:
           `Двойная прогрессия: во всех ${last.sets.length} рабочих подходах ≥ ${current.repMax} повт.` +
-          (target != null ? (rirKnown ? ` при RIR ≥ ${target}` : ' (RIR записан не везде — условие по RIR проверено только там, где он есть)') : '') +
+          (target != null && last.sets.some((x) => x.rir != null) ? (rirKnown ? ` при RIR ≥ ${target}` : ' (RIR записан не везде — условие по RIR проверено только там, где он есть)') : '') +
           ` → вес ${a.fmt(topWeight)} → ${a.fmt(w)} (шаг ${a.fmt(step)}), цель — ${current.repMin} повт.`,
       };
     } else if (allTop && !hasWeight) {

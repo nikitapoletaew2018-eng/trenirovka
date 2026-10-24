@@ -3,7 +3,7 @@
 // шаги «повторите нужное число раз» и ссылки на несуществующие в базе разделы («foot positioning section»).
 // Частые ошибки — без источника, поэтому все помечены «требует проверки» (commonMistakesSource = null).
 //
-// Ключи: id — id в базе; ru — название; P/S — основные/вспомогательные мышцы (id из src/domain/muscles);
+// Ключи: id — id в базе; ru — название; aliases — синонимы для поиска (народные названия); P/S — основные/вспомогательные мышцы (id из src/domain/muscles);
 // eq — оборудование; tr — тип записи; uni — одностороннее; cat — категория (если не задана — из mechanic);
 // str — структурное (NSCA); et — тип оборудования; pat — паттерн; alt — облегчённые альтернативы (id базы);
 // ins — техника; mis — частые ошибки; notes — пометки для проверки; rest/step — переопределения.
@@ -13,6 +13,7 @@ export const curation = [
   {
     id: 'Barbell_Full_Squat',
     ru: 'Присед со штангой на спине',
+    aliases: ['приседания со штангой', 'присед', 'back squat'],
     P: ['quads'],
     S: ['glutes', 'hamstrings', 'lower_back', 'calves'],
     eq: ['barbell'],
@@ -34,6 +35,7 @@ export const curation = [
   {
     id: 'Front_Barbell_Squat',
     ru: 'Фронтальный присед со штангой',
+    aliases: ['фронтальные приседания', 'front squat'],
     P: ['quads'],
     S: ['glutes', 'hamstrings', 'calves'],
     eq: ['barbell'],
@@ -101,6 +103,7 @@ export const curation = [
   {
     id: 'Leg_Press',
     ru: 'Жим ногами',
+    aliases: ['платформа'],
     P: ['quads'],
     S: ['glutes', 'hamstrings', 'calves'],
     eq: ['machine'],
@@ -182,6 +185,7 @@ export const curation = [
   {
     id: 'Barbell_Deadlift',
     ru: 'Становая тяга',
+    aliases: ['становая', 'deadlift'],
     P: ['lower_back', 'glutes', 'hamstrings'],
     S: ['quads', 'lats', 'mid_back', 'upper_traps', 'forearms', 'calves'],
     eq: ['barbell'],
@@ -204,6 +208,7 @@ export const curation = [
   {
     id: 'Romanian_Deadlift',
     ru: 'Румынская тяга',
+    aliases: ['румынка', 'мёртвая тяга', 'rdl'],
     P: ['hamstrings'],
     S: ['glutes', 'lower_back', 'calves'],
     eq: ['barbell'],
@@ -263,6 +268,7 @@ export const curation = [
   {
     id: 'Dumbbell_Lunges',
     ru: 'Выпады с гантелями',
+    aliases: ['выпады'],
     P: ['quads'],
     S: ['glutes', 'hamstrings', 'calves'],
     eq: ['dumbbell'],
@@ -285,7 +291,8 @@ export const curation = [
   },
   {
     id: 'Split_Squat_with_Dumbbells',
-    ru: 'Сплит-присед с гантелями (задняя нога на опоре)',
+    ru: 'Болгарские выпады с гантелями',
+    aliases: ['болгарский сплит-присед', 'болгарские приседания', 'сплит-присед', 'bulgarian split squat'],
     P: ['quads'],
     S: ['glutes', 'hamstrings'],
     eq: ['dumbbell', 'bench'],
@@ -307,6 +314,7 @@ export const curation = [
   {
     id: 'Dumbbell_Step_Ups',
     ru: 'Зашагивания на платформу с гантелями',
+    aliases: ['степ-ап', 'step up'],
     P: ['quads'],
     S: ['glutes', 'hamstrings', 'calves'],
     eq: ['dumbbell', 'bench'],
@@ -328,6 +336,7 @@ export const curation = [
   {
     id: 'Barbell_Hip_Thrust',
     ru: 'Ягодичный мост со штангой от скамьи (хип-траст)',
+    aliases: ['хип-траст', 'ягодичный мостик', 'hip thrust'],
     P: ['glutes'],
     S: ['hamstrings', 'calves'],
     eq: ['barbell', 'bench'],
@@ -431,6 +440,7 @@ export const curation = [
   {
     id: 'Hyperextensions_Back_Extensions',
     ru: 'Гиперэкстензия',
+    aliases: ['гипер'],
     P: ['lower_back'],
     S: ['glutes', 'hamstrings'],
     eq: ['bench'],
@@ -458,6 +468,7 @@ export const curation = [
   {
     id: 'Barbell_Bench_Press_-_Medium_Grip',
     ru: 'Жим штанги лёжа',
+    aliases: ['жим лёжа', 'bench press'],
     P: ['chest'],
     S: ['front_delts', 'triceps'],
     eq: ['barbell', 'bench'],
@@ -618,6 +629,7 @@ export const curation = [
   {
     id: 'Butterfly',
     ru: 'Сведение рук в тренажёре «бабочка»',
+    aliases: ['пек-дек', 'pec deck'],
     P: ['chest'],
     S: [],
     eq: ['machine'],
@@ -679,6 +691,7 @@ export const curation = [
   {
     id: 'Pullups',
     ru: 'Подтягивания прямым хватом',
+    aliases: ['турник', 'pull-up'],
     P: ['lats'],
     S: ['biceps', 'mid_back'],
     eq: ['pullup_bar'],
@@ -742,6 +755,7 @@ export const curation = [
   {
     id: 'Wide-Grip_Lat_Pulldown',
     ru: 'Тяга верхнего блока широким хватом',
+    aliases: ['вертикальная тяга', 'тяга к груди', 'lat pulldown'],
     P: ['lats'],
     S: ['biceps', 'mid_back', 'rear_delts'],
     eq: ['cable'],
@@ -846,6 +860,7 @@ export const curation = [
   {
     id: 'Seated_Cable_Rows',
     ru: 'Тяга нижнего блока сидя',
+    aliases: ['горизонтальная тяга', 'гребля'],
     P: ['mid_back'],
     S: ['lats', 'biceps', 'rear_delts'],
     eq: ['cable'],
@@ -926,6 +941,7 @@ export const curation = [
   {
     id: 'Standing_Military_Press',
     ru: 'Жим штанги стоя (армейский жим)',
+    aliases: ['жим стоя', 'ohp'],
     P: ['front_delts'],
     S: ['side_delts', 'triceps'],
     eq: ['barbell'],
@@ -1008,6 +1024,7 @@ export const curation = [
   {
     id: 'Side_Lateral_Raise',
     ru: 'Махи гантелями в стороны',
+    aliases: ['махи в стороны', 'разводка в стороны'],
     P: ['side_delts'],
     S: [],
     eq: ['dumbbell'],
@@ -1236,6 +1253,7 @@ export const curation = [
   {
     id: 'Triceps_Pushdown',
     ru: 'Разгибание рук на верхнем блоке',
+    aliases: ['разгибание на блоке', 'pushdown'],
     P: ['triceps'],
     S: [],
     eq: ['cable'],
@@ -1276,6 +1294,7 @@ export const curation = [
   {
     id: 'EZ-Bar_Skullcrusher',
     ru: 'Французский жим с EZ-грифом лёжа',
+    aliases: ['skullcrusher'],
     P: ['triceps'],
     S: ['forearms'],
     eq: ['ez_bar', 'bench'],
@@ -1376,6 +1395,7 @@ export const curation = [
   {
     id: 'Plank',
     ru: 'Планка',
+    aliases: ['plank'],
     P: ['abs'],
     S: [],
     eq: ['bodyweight'],
@@ -1510,6 +1530,7 @@ export const curation = [
   {
     id: 'Farmers_Walk',
     ru: 'Прогулка фермера',
+    aliases: ['фермерская прогулка', 'переноска гантелей'],
     P: ['forearms'],
     S: ['upper_traps', 'abs', 'glutes', 'hamstrings', 'quads', 'lower_back'],
     eq: ['dumbbell', 'other'],

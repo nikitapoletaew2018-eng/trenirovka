@@ -163,6 +163,7 @@ const seed = curation.map((c) => {
     deletedAt: null,
     nameRu: c.ru,
     nameEn: src.name,
+    aliases: c.aliases ?? [],
     primaryMuscles: c.P,
     secondaryMuscles: c.S,
     equipment: c.eq,

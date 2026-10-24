@@ -74,6 +74,8 @@ export interface CommonMistake {
 export interface Exercise extends BaseEntity {
   nameRu: string;
   nameEn: string;
+  /** Синонимы для поиска: народные названия («болгарские выпады», «румынка») */
+  aliases?: string[];
   primaryMuscles: MuscleId[];
   secondaryMuscles: MuscleId[];
   equipment: Equipment[];
@@ -231,6 +233,8 @@ export interface Settings {
   id: 'settings';
   unit: WeightUnit;
   barWeightKg: number;
+  /** Показывать «запас повторов» (RIR/RPE). По умолчанию выключено — большинству не нужно */
+  showEffort: boolean;
   effortScale: EffortScale;
   defaultRestSec: number;
   secondaryMuscleFactor: number;

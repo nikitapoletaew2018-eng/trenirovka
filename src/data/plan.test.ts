@@ -81,3 +81,27 @@ describe('план недели', () => {
     expect((await db.plannedWorkouts.get(a.id))?.status).toBe('moved');
   });
 });
+
+describe('поиск и названия упражнений', () => {
+  it('«болгарские» находит болгарские выпады; «е» и «ё» не различаются; синонимы ищутся', async () => {
+    const { filterExercises } = await import('./exerciseRepo');
+    const names = (q: string) => filterExercises(SEED_EXERCISES, { query: q }).map((e) => e.nameRu);
+    expect(names('болгарск')).toEqual(['Болгарские выпады с гантелями']);
+    expect(names('bulgarian')).toEqual(['Болгарские выпады с гантелями']);
+    expect(names('сплит-присед')).toContain('Болгарские выпады с гантелями');
+    expect(names('жим лежа')).toContain('Жим штанги лёжа');
+    expect(names('румынка')).toEqual(['Румынская тяга']);
+  });
+
+  it('обновление начальной базы v1 → v2: новое название и синонимы, настройки пользователя сохраняются', async () => {
+    await ensureSeed();
+    const bulg = SEED_EXERCISES.find((e) => e.sourceId === 'Split_Squat_with_Dumbbells')!;
+    // как было в версии 1: старое название, без синонимов; пользователь поменял отдых и добавил в избранное
+    await db.exercises.put({ ...bulg, nameRu: 'Сплит-присед с гантелями (задняя нога на опоре)', aliases: undefined, defaultRestSec: 200, isFavorite: true });
+    await db.meta.put({ key: 'seedVersion', value: 1 });
+    await ensureSeed();
+    const after = await db.exercises.get(bulg.id);
+    expect(after).toMatchObject({ nameRu: 'Болгарские выпады с гантелями', defaultRestSec: 200, isFavorite: true });
+    expect(after?.aliases).toContain('болгарский сплит-присед');
+  });
+});

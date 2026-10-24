@@ -15,7 +15,7 @@ import { copyWeek, plannedForWeek } from '../../data/planRepo';
 import { applySuggestions, isDeloadWeek, makeWeekDeload, previewDeload } from '../../data/programRepo';
 import { Empty, Page, Sheet, Why } from '../components';
 import { askConfirm } from '../dialog';
-import { planLine } from '../format';
+import { effortOf, planLine } from '../format';
 import { today, useSettings } from '../hooks';
 import { navigate } from '../router';
 // Графики (Recharts) грузятся отдельным чанком — только при открытии вкладки.
@@ -253,7 +253,8 @@ function ReportView({ snap, week, settings, inProgress, onPlanNext }: { snap: Sn
             </>
           )}
 
-          <h2>Усилие</h2>
+          {(settings.showEffort || r.effort.withRir > 0) && (<>
+          <h2>Запас повторов</h2>
           <div className="card">
             {r.effort.withRir === 0 ? (
               <p className="muted" style={{ margin: 0 }}>
@@ -274,6 +275,7 @@ function ReportView({ snap, week, settings, inProgress, onPlanNext }: { snap: Sn
               настраивается.
             </Why>
           </div>
+          </>)}
 
           {r.records.length > 0 && (
             <>
@@ -446,7 +448,7 @@ function NextWeekView({ snap, week, settings }: { snap: Snapshot; week: string; 
             </div>
             {sg.kind !== 'none' && sg.kind !== 'choose' && (
               <p className="small" style={{ margin: '4px 0' }}>
-                Предложение: <b>{planLine(sg.item, unit, settings.effortScale, ex.trackingType)}</b>
+                Предложение: <b>{planLine(sg.item, unit, effortOf(settings), ex.trackingType)}</b>
                 {sg.item.targetReps != null && ` · цель ${sg.item.targetReps} повт.`}
               </p>
             )}
@@ -545,8 +547,8 @@ export function DeloadSheet({ monday, sourceWeek, settings, onClose }: { monday:
           </b>
           {items.map((it, i) => (
             <p key={i} className="small" style={{ margin: '2px 0' }}>
-              {exById?.get(it.exerciseId)?.nameRu ?? '—'}: {pw.plannedItems[i] ? planLine(pw.plannedItems[i]!, settings.unit, settings.effortScale, exById?.get(it.exerciseId)?.trackingType) : ''} →{' '}
-              <b>{planLine(it, settings.unit, settings.effortScale, exById?.get(it.exerciseId)?.trackingType)}</b>
+              {exById?.get(it.exerciseId)?.nameRu ?? '—'}: {pw.plannedItems[i] ? planLine(pw.plannedItems[i]!, settings.unit, effortOf(settings), exById?.get(it.exerciseId)?.trackingType) : ''} →{' '}
+              <b>{planLine(it, settings.unit, effortOf(settings), exById?.get(it.exerciseId)?.trackingType)}</b>
             </p>
           ))}
         </div>

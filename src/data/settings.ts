@@ -6,6 +6,7 @@ export const DEFAULT_SETTINGS: Settings = {
   id: 'settings',
   unit: 'kg',
   barWeightKg: 20,
+  showEffort: false,
   effortScale: 'rir',
   defaultRestSec: 120,
   secondaryMuscleFactor: 0.5,

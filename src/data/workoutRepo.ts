@@ -12,6 +12,7 @@ import {
   type SetValues,
 } from '../domain/workoutLogic';
 import { db } from './db';
+import { linkWithNext } from '../domain/superset';
 import { nowIso, uuid } from './ids';
 import { getSettings } from './settings';
 import { withUndo, type Recorder } from './undo';
@@ -321,6 +322,19 @@ export async function updateWorkout(
   patch: Partial<Pick<Workout, 'name' | 'notes' | 'wellbeing' | 'bodyWeightKg' | 'startedAt' | 'finishedAt'>>,
 ): Promise<void> {
   await withUndo('Тренировка изменена', (rec) => rec.update(db.workouts, id, { ...patch, updatedAt: nowIso() }));
+}
+
+/** Суперсет со следующим упражнением тренировки (on) или разъединить. Одна операция с «отменить». */
+export async function linkExerciseWithNext(workoutExerciseId: string, on: boolean): Promise<void> {
+  const we = await db.workoutExercises.get(workoutExerciseId);
+  if (!we) return;
+  const list = await workoutExercises(we.workoutId);
+  const i = list.findIndex((x) => x.id === workoutExerciseId);
+  const next = linkWithNext(list.map((x) => x.supersetGroup), i, on);
+  await withUndo(on ? 'Суперсет создан' : 'Суперсет разделён', async (rec) => {
+    for (const [k, x] of list.entries())
+      if ((x.supersetGroup ?? null) !== next[k]) await rec.update(db.workoutExercises, x.id, { supersetGroup: next[k], updatedAt: nowIso() });
+  });
 }
 
 export async function updateWorkoutExercise(

@@ -6,6 +6,11 @@
     "deletedAt": null,
     "nameRu": "Присед со штангой на спине",
     "nameEn": "Barbell Full Squat",
+    "aliases": [
+      "приседания со штангой",
+      "присед",
+      "back squat"
+    ],
     "primaryMuscles": [
       "quads"
     ],
@@ -70,6 +75,10 @@
     "deletedAt": null,
     "nameRu": "Фронтальный присед со штангой",
     "nameEn": "Front Barbell Squat",
+    "aliases": [
+      "фронтальные приседания",
+      "front squat"
+    ],
     "primaryMuscles": [
       "quads"
     ],
@@ -132,6 +141,7 @@
     "deletedAt": null,
     "nameRu": "Гоблет-присед",
     "nameEn": "Goblet Squat",
+    "aliases": [],
     "primaryMuscles": [
       "quads"
     ],
@@ -194,6 +204,7 @@
     "deletedAt": null,
     "nameRu": "Гакк-присед в тренажёре",
     "nameEn": "Hack Squat",
+    "aliases": [],
     "primaryMuscles": [
       "quads"
     ],
@@ -255,6 +266,9 @@
     "deletedAt": null,
     "nameRu": "Жим ногами",
     "nameEn": "Leg Press",
+    "aliases": [
+      "платформа"
+    ],
     "primaryMuscles": [
       "quads"
     ],
@@ -315,6 +329,7 @@
     "deletedAt": null,
     "nameRu": "Разгибание ног в тренажёре",
     "nameEn": "Leg Extensions",
+    "aliases": [],
     "primaryMuscles": [
       "quads"
     ],
@@ -361,6 +376,7 @@
     "deletedAt": null,
     "nameRu": "Сгибание ног лёжа",
     "nameEn": "Lying Leg Curls",
+    "aliases": [],
     "primaryMuscles": [
       "hamstrings"
     ],
@@ -407,6 +423,7 @@
     "deletedAt": null,
     "nameRu": "Сгибание ног сидя",
     "nameEn": "Seated Leg Curl",
+    "aliases": [],
     "primaryMuscles": [
       "hamstrings"
     ],
@@ -453,6 +470,10 @@
     "deletedAt": null,
     "nameRu": "Становая тяга",
     "nameEn": "Barbell Deadlift",
+    "aliases": [
+      "становая",
+      "deadlift"
+    ],
     "primaryMuscles": [
       "lower_back",
       "glutes",
@@ -519,6 +540,11 @@
     "deletedAt": null,
     "nameRu": "Румынская тяга",
     "nameEn": "Romanian Deadlift",
+    "aliases": [
+      "румынка",
+      "мёртвая тяга",
+      "rdl"
+    ],
     "primaryMuscles": [
       "hamstrings"
     ],
@@ -577,6 +603,7 @@
     "deletedAt": null,
     "nameRu": "Тяга сумо",
     "nameEn": "Sumo Deadlift",
+    "aliases": [],
     "primaryMuscles": [
       "hamstrings"
     ],
@@ -639,6 +666,7 @@
     "deletedAt": null,
     "nameRu": "Гуд-морнинг со штангой",
     "nameEn": "Good Morning",
+    "aliases": [],
     "primaryMuscles": [
       "hamstrings"
     ],
@@ -691,6 +719,9 @@
     "deletedAt": null,
     "nameRu": "Выпады с гантелями",
     "nameEn": "Dumbbell Lunges",
+    "aliases": [
+      "выпады"
+    ],
     "primaryMuscles": [
       "quads"
     ],
@@ -749,8 +780,14 @@
     "createdAt": "2026-10-23T00:00:00.000Z",
     "updatedAt": "2026-10-23T00:00:00.000Z",
     "deletedAt": null,
-    "nameRu": "Сплит-присед с гантелями (задняя нога на опоре)",
+    "nameRu": "Болгарские выпады с гантелями",
     "nameEn": "Split Squat with Dumbbells",
+    "aliases": [
+      "болгарский сплит-присед",
+      "болгарские приседания",
+      "сплит-присед",
+      "bulgarian split squat"
+    ],
     "primaryMuscles": [
       "quads"
     ],
@@ -806,6 +843,10 @@
     "deletedAt": null,
     "nameRu": "Зашагивания на платформу с гантелями",
     "nameEn": "Dumbbell Step Ups",
+    "aliases": [
+      "степ-ап",
+      "step up"
+    ],
     "primaryMuscles": [
       "quads"
     ],
@@ -862,6 +903,11 @@
     "deletedAt": null,
     "nameRu": "Ягодичный мост со штангой от скамьи (хип-траст)",
     "nameEn": "Barbell Hip Thrust",
+    "aliases": [
+      "хип-траст",
+      "ягодичный мостик",
+      "hip thrust"
+    ],
     "primaryMuscles": [
       "glutes"
     ],
@@ -916,6 +962,7 @@
     "deletedAt": null,
     "nameRu": "Сведение ног в тренажёре",
     "nameEn": "Thigh Adductor",
+    "aliases": [],
     "primaryMuscles": [
       "adductors"
     ],
@@ -959,6 +1006,7 @@
     "deletedAt": null,
     "nameRu": "Разведение ног в тренажёре",
     "nameEn": "Thigh Abductor",
+    "aliases": [],
     "primaryMuscles": [
       "abductors"
     ],
@@ -1001,6 +1049,7 @@
     "deletedAt": null,
     "nameRu": "Подъём на носки стоя в тренажёре",
     "nameEn": "Standing Calf Raises",
+    "aliases": [],
     "primaryMuscles": [
       "calves"
     ],
@@ -1049,6 +1098,7 @@
     "deletedAt": null,
     "nameRu": "Подъём на носки сидя",
     "nameEn": "Seated Calf Raise",
+    "aliases": [],
     "primaryMuscles": [
       "calves"
     ],
@@ -1096,6 +1146,9 @@
     "deletedAt": null,
     "nameRu": "Гиперэкстензия",
     "nameEn": "Hyperextensions (Back Extensions)",
+    "aliases": [
+      "гипер"
+    ],
     "primaryMuscles": [
       "lower_back"
     ],
@@ -1150,6 +1203,10 @@
     "deletedAt": null,
     "nameRu": "Жим штанги лёжа",
     "nameEn": "Barbell Bench Press - Medium Grip",
+    "aliases": [
+      "жим лёжа",
+      "bench press"
+    ],
     "primaryMuscles": [
       "chest"
     ],
@@ -1211,6 +1268,7 @@
     "deletedAt": null,
     "nameRu": "Жим штанги на наклонной скамье",
     "nameEn": "Barbell Incline Bench Press - Medium Grip",
+    "aliases": [],
     "primaryMuscles": [
       "chest"
     ],
@@ -1267,6 +1325,7 @@
     "deletedAt": null,
     "nameRu": "Жим гантелей лёжа",
     "nameEn": "Dumbbell Bench Press",
+    "aliases": [],
     "primaryMuscles": [
       "chest"
     ],
@@ -1322,6 +1381,7 @@
     "deletedAt": null,
     "nameRu": "Жим гантелей на наклонной скамье",
     "nameEn": "Incline Dumbbell Press",
+    "aliases": [],
     "primaryMuscles": [
       "chest"
     ],
@@ -1377,6 +1437,7 @@
     "deletedAt": null,
     "nameRu": "Жим от груди в рычажном тренажёре",
     "nameEn": "Leverage Chest Press",
+    "aliases": [],
     "primaryMuscles": [
       "chest"
     ],
@@ -1426,6 +1487,7 @@
     "deletedAt": null,
     "nameRu": "Жим под углом в рычажном тренажёре",
     "nameEn": "Leverage Incline Chest Press",
+    "aliases": [],
     "primaryMuscles": [
       "chest"
     ],
@@ -1476,6 +1538,7 @@
     "deletedAt": null,
     "nameRu": "Разведение гантелей лёжа",
     "nameEn": "Dumbbell Flyes",
+    "aliases": [],
     "primaryMuscles": [
       "chest"
     ],
@@ -1523,6 +1586,7 @@
     "deletedAt": null,
     "nameRu": "Сведение рук в кроссовере",
     "nameEn": "Cable Crossover",
+    "aliases": [],
     "primaryMuscles": [
       "chest"
     ],
@@ -1573,6 +1637,10 @@
     "deletedAt": null,
     "nameRu": "Сведение рук в тренажёре «бабочка»",
     "nameEn": "Butterfly",
+    "aliases": [
+      "пек-дек",
+      "pec deck"
+    ],
     "primaryMuscles": [
       "chest"
     ],
@@ -1619,6 +1687,7 @@
     "deletedAt": null,
     "nameRu": "Отжимания от пола",
     "nameEn": "Pushups",
+    "aliases": [],
     "primaryMuscles": [
       "chest"
     ],
@@ -1672,6 +1741,7 @@
     "deletedAt": null,
     "nameRu": "Отжимания на брусьях (акцент на грудь)",
     "nameEn": "Dips - Chest Version",
+    "aliases": [],
     "primaryMuscles": [
       "chest"
     ],
@@ -1724,6 +1794,10 @@
     "deletedAt": null,
     "nameRu": "Подтягивания прямым хватом",
     "nameEn": "Pullups",
+    "aliases": [
+      "турник",
+      "pull-up"
+    ],
     "primaryMuscles": [
       "lats"
     ],
@@ -1777,6 +1851,7 @@
     "deletedAt": null,
     "nameRu": "Подтягивания обратным хватом",
     "nameEn": "Chin-Up",
+    "aliases": [],
     "primaryMuscles": [
       "lats"
     ],
@@ -1832,6 +1907,7 @@
     "deletedAt": null,
     "nameRu": "Подтягивания с резиновой петлёй",
     "nameEn": "Band Assisted Pull-Up",
+    "aliases": [],
     "primaryMuscles": [
       "lats"
     ],
@@ -1880,6 +1956,11 @@
     "deletedAt": null,
     "nameRu": "Тяга верхнего блока широким хватом",
     "nameEn": "Wide-Grip Lat Pulldown",
+    "aliases": [
+      "вертикальная тяга",
+      "тяга к груди",
+      "lat pulldown"
+    ],
     "primaryMuscles": [
       "lats"
     ],
@@ -1933,6 +2014,7 @@
     "deletedAt": null,
     "nameRu": "Тяга верхнего блока узким хватом",
     "nameEn": "Close-Grip Front Lat Pulldown",
+    "aliases": [],
     "primaryMuscles": [
       "lats"
     ],
@@ -1986,6 +2068,7 @@
     "deletedAt": null,
     "nameRu": "Тяга штанги в наклоне",
     "nameEn": "Bent Over Barbell Row",
+    "aliases": [],
     "primaryMuscles": [
       "mid_back"
     ],
@@ -2046,6 +2129,7 @@
     "deletedAt": null,
     "nameRu": "Тяга Т-грифа",
     "nameEn": "T-Bar Row with Handle",
+    "aliases": [],
     "primaryMuscles": [
       "mid_back"
     ],
@@ -2101,6 +2185,7 @@
     "deletedAt": null,
     "nameRu": "Тяга гантели одной рукой в наклоне",
     "nameEn": "One-Arm Dumbbell Row",
+    "aliases": [],
     "primaryMuscles": [
       "mid_back"
     ],
@@ -2156,6 +2241,10 @@
     "deletedAt": null,
     "nameRu": "Тяга нижнего блока сидя",
     "nameEn": "Seated Cable Rows",
+    "aliases": [
+      "горизонтальная тяга",
+      "гребля"
+    ],
     "primaryMuscles": [
       "mid_back"
     ],
@@ -2208,6 +2297,7 @@
     "deletedAt": null,
     "nameRu": "Тяга в рычажном тренажёре",
     "nameEn": "Leverage Iso Row",
+    "aliases": [],
     "primaryMuscles": [
       "lats"
     ],
@@ -2256,6 +2346,7 @@
     "deletedAt": null,
     "nameRu": "Пуловер на верхнем блоке прямыми руками",
     "nameEn": "Straight-Arm Pulldown",
+    "aliases": [],
     "primaryMuscles": [
       "lats"
     ],
@@ -2304,6 +2395,7 @@
     "deletedAt": null,
     "nameRu": "Шраги со штангой",
     "nameEn": "Barbell Shrug",
+    "aliases": [],
     "primaryMuscles": [
       "upper_traps"
     ],
@@ -2351,6 +2443,10 @@
     "deletedAt": null,
     "nameRu": "Жим штанги стоя (армейский жим)",
     "nameEn": "Standing Military Press",
+    "aliases": [
+      "жим стоя",
+      "ohp"
+    ],
     "primaryMuscles": [
       "front_delts"
     ],
@@ -2405,6 +2501,7 @@
     "deletedAt": null,
     "nameRu": "Жим гантелей сидя",
     "nameEn": "Seated Dumbbell Press",
+    "aliases": [],
     "primaryMuscles": [
       "front_delts"
     ],
@@ -2461,6 +2558,7 @@
     "deletedAt": null,
     "nameRu": "Жим Арнольда",
     "nameEn": "Arnold Dumbbell Press",
+    "aliases": [],
     "primaryMuscles": [
       "front_delts"
     ],
@@ -2515,6 +2613,7 @@
     "deletedAt": null,
     "nameRu": "Жим вверх в тренажёре",
     "nameEn": "Machine Shoulder (Military) Press",
+    "aliases": [],
     "primaryMuscles": [
       "front_delts"
     ],
@@ -2564,6 +2663,10 @@
     "deletedAt": null,
     "nameRu": "Махи гантелями в стороны",
     "nameEn": "Side Lateral Raise",
+    "aliases": [
+      "махи в стороны",
+      "разводка в стороны"
+    ],
     "primaryMuscles": [
       "side_delts"
     ],
@@ -2609,6 +2712,7 @@
     "deletedAt": null,
     "nameRu": "Мах одной рукой в сторону на нижнем блоке",
     "nameEn": "Standing Low-Pulley Deltoid Raise",
+    "aliases": [],
     "primaryMuscles": [
       "side_delts"
     ],
@@ -2660,6 +2764,7 @@
     "deletedAt": null,
     "nameRu": "Подъём гантелей перед собой",
     "nameEn": "Front Dumbbell Raise",
+    "aliases": [],
     "primaryMuscles": [
       "front_delts"
     ],
@@ -2703,6 +2808,7 @@
     "deletedAt": null,
     "nameRu": "Тяга каната к лицу",
     "nameEn": "Face Pull",
+    "aliases": [],
     "primaryMuscles": [
       "rear_delts"
     ],
@@ -2753,6 +2859,7 @@
     "deletedAt": null,
     "nameRu": "Обратные разведения гантелей лёжа на наклонной",
     "nameEn": "Reverse Flyes",
+    "aliases": [],
     "primaryMuscles": [
       "rear_delts"
     ],
@@ -2804,6 +2911,7 @@
     "deletedAt": null,
     "nameRu": "Обратные разведения в тренажёре",
     "nameEn": "Reverse Machine Flyes",
+    "aliases": [],
     "primaryMuscles": [
       "rear_delts"
     ],
@@ -2854,6 +2962,7 @@
     "deletedAt": null,
     "nameRu": "Сгибание рук со штангой стоя",
     "nameEn": "Barbell Curl",
+    "aliases": [],
     "primaryMuscles": [
       "biceps"
     ],
@@ -2905,6 +3014,7 @@
     "deletedAt": null,
     "nameRu": "Сгибание рук с гантелями",
     "nameEn": "Dumbbell Bicep Curl",
+    "aliases": [],
     "primaryMuscles": [
       "biceps"
     ],
@@ -2952,6 +3062,7 @@
     "deletedAt": null,
     "nameRu": "Сгибание рук хватом «молот»",
     "nameEn": "Hammer Curls",
+    "aliases": [],
     "primaryMuscles": [
       "biceps"
     ],
@@ -2995,6 +3106,7 @@
     "deletedAt": null,
     "nameRu": "Сгибание рук на скамье Скотта",
     "nameEn": "Preacher Curl",
+    "aliases": [],
     "primaryMuscles": [
       "biceps"
     ],
@@ -3044,6 +3156,7 @@
     "deletedAt": null,
     "nameRu": "Сгибание рук на нижнем блоке",
     "nameEn": "Standing Biceps Cable Curl",
+    "aliases": [],
     "primaryMuscles": [
       "biceps"
     ],
@@ -3089,6 +3202,10 @@
     "deletedAt": null,
     "nameRu": "Разгибание рук на верхнем блоке",
     "nameEn": "Triceps Pushdown",
+    "aliases": [
+      "разгибание на блоке",
+      "pushdown"
+    ],
     "primaryMuscles": [
       "triceps"
     ],
@@ -3135,6 +3252,7 @@
     "deletedAt": null,
     "nameRu": "Разгибание рук на верхнем блоке с канатом",
     "nameEn": "Triceps Pushdown - Rope Attachment",
+    "aliases": [],
     "primaryMuscles": [
       "triceps"
     ],
@@ -3181,6 +3299,9 @@
     "deletedAt": null,
     "nameRu": "Французский жим с EZ-грифом лёжа",
     "nameEn": "EZ-Bar Skullcrusher",
+    "aliases": [
+      "skullcrusher"
+    ],
     "primaryMuscles": [
       "triceps"
     ],
@@ -3229,6 +3350,7 @@
     "deletedAt": null,
     "nameRu": "Разгибание рук из-за головы на нижнем блоке",
     "nameEn": "Cable Rope Overhead Triceps Extension",
+    "aliases": [],
     "primaryMuscles": [
       "triceps"
     ],
@@ -3275,6 +3397,7 @@
     "deletedAt": null,
     "nameRu": "Жим штанги лёжа узким хватом",
     "nameEn": "Close-Grip Barbell Bench Press",
+    "aliases": [],
     "primaryMuscles": [
       "triceps"
     ],
@@ -3328,6 +3451,7 @@
     "deletedAt": null,
     "nameRu": "Отжимания на брусьях (акцент на трицепс)",
     "nameEn": "Dips - Triceps Version",
+    "aliases": [],
     "primaryMuscles": [
       "triceps"
     ],
@@ -3381,6 +3505,7 @@
     "deletedAt": null,
     "nameRu": "Отжимания в тренажёре сидя",
     "nameEn": "Dip Machine",
+    "aliases": [],
     "primaryMuscles": [
       "triceps"
     ],
@@ -3432,6 +3557,9 @@
     "deletedAt": null,
     "nameRu": "Планка",
     "nameEn": "Plank",
+    "aliases": [
+      "plank"
+    ],
     "primaryMuscles": [
       "abs"
     ],
@@ -3477,6 +3605,7 @@
     "deletedAt": null,
     "nameRu": "Скручивания",
     "nameEn": "Crunches",
+    "aliases": [],
     "primaryMuscles": [
       "abs"
     ],
@@ -3524,6 +3653,7 @@
     "deletedAt": null,
     "nameRu": "Скручивания на верхнем блоке стоя на коленях",
     "nameEn": "Cable Crunch",
+    "aliases": [],
     "primaryMuscles": [
       "abs"
     ],
@@ -3571,6 +3701,7 @@
     "deletedAt": null,
     "nameRu": "Подъём ног в висе",
     "nameEn": "Hanging Leg Raise",
+    "aliases": [],
     "primaryMuscles": [
       "abs"
     ],
@@ -3616,6 +3747,7 @@
     "deletedAt": null,
     "nameRu": "Ролик для пресса",
     "nameEn": "Ab Roller",
+    "aliases": [],
     "primaryMuscles": [
       "abs"
     ],
@@ -3667,6 +3799,7 @@
     "deletedAt": null,
     "nameRu": "Жим Паллофа",
     "nameEn": "Pallof Press",
+    "aliases": [],
     "primaryMuscles": [
       "abs"
     ],
@@ -3711,6 +3844,10 @@
     "deletedAt": null,
     "nameRu": "Прогулка фермера",
     "nameEn": "Farmer's Walk",
+    "aliases": [
+      "фермерская прогулка",
+      "переноска гантелей"
+    ],
     "primaryMuscles": [
       "forearms"
     ],

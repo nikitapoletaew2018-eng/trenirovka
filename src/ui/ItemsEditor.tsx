@@ -4,6 +4,7 @@ import { fromDisplayWeight, toDisplayWeight, unitLabel, displayStep } from '../d
 import { Stepper } from './components';
 import { ExercisePicker } from './ExercisePicker';
 import { EFFORT_VALUES } from './format';
+import { isLinkedWithNext, linkWithNext, supersetNumbers } from '../domain/superset';
 import { useExerciseMap } from './hooks';
 
 /** Редактор упражнений плана/шаблона: подходы × диапазон повторов × целевой RIR (+ вес для плана). */
@@ -21,6 +22,12 @@ export function ItemsEditor({
   const exMap = useExerciseMap();
   const [picker, setPicker] = useState(false);
   const unit = settings.unit;
+  const groups = items.map((x) => x.supersetGroup);
+  const numbers = supersetNumbers(groups);
+  const toggleLink = (i: number) => {
+    const next = linkWithNext(groups, i, !isLinkedWithNext(groups, i));
+    onChange(items.map((it, k) => ({ ...it, supersetGroup: next[k] })));
+  };
   const upd = (i: number, patch: Partial<PlannedItem>) => onChange(items.map((it, j) => (j === i ? { ...it, ...patch } : it)));
   const move = (i: number, d: -1 | 1) => {
     const j = i + d;
@@ -36,9 +43,13 @@ export function ItemsEditor({
         const ex = exMap.get(it.exerciseId);
         const timed = ex?.trackingType === 'time' || ex?.trackingType === 'weight_time';
         return (
-          <div key={`${it.exerciseId}-${i}`} className="card">
+          <div key={`${it.exerciseId}-${i}`}>
+          <div className="card">
             <div className="row">
-              <b className="grow">{ex?.nameRu ?? 'Упражнение удалено'}</b>
+              <b className="grow">
+                {it.supersetGroup && <span className="chip" style={{ marginRight: 6 }}>Суперсет {numbers.get(it.supersetGroup)}</span>}
+                {ex?.nameRu ?? 'Упражнение удалено'}
+              </b>
               <button className="icon-btn" aria-label="Выше" disabled={i === 0} onClick={() => move(i, -1)}>
                 ↑
               </button>
@@ -66,9 +77,9 @@ export function ItemsEditor({
               </>)}
             </div>
             <div className="row wrap">
-              {!timed && (
+              {!timed && settings.showEffort && (
               <label className="field grow">
-                <span>Целевой {settings.effortScale === 'rir' ? 'RIR' : 'RPE'}</span>
+                <span>{settings.effortScale === 'rir' ? 'Запас повторов' : 'Целевой RPE'}</span>
                 <select
                   className="input"
                   value={it.targetRir ?? ''}
@@ -96,17 +107,7 @@ export function ItemsEditor({
                   }}
                 />
               </label>
-              <label className="field grow">
-                <span>Суперсет</span>
-                <select className="input" value={it.supersetGroup ?? ''} onChange={(e) => upd(i, { supersetGroup: e.target.value || null })}>
-                  <option value="">Нет</option>
-                  {['A', 'B', 'C', 'D'].map((g) => (
-                    <option key={g} value={g}>
-                      {g}
-                    </option>
-                  ))}
-                </select>
-              </label>
+
             </div>
             {it.targetReps != null && !timed && (
               <p className="small" style={{ margin: '4px 0' }}>
@@ -130,6 +131,12 @@ export function ItemsEditor({
                 />
               </label>
             )}
+          </div>
+          {i < items.length - 1 && (
+            <button type="button" className={`link-toggle ${isLinkedWithNext(groups, i) ? 'on' : ''}`} aria-pressed={isLinkedWithNext(groups, i)} onClick={() => toggleLink(i)}>
+              {isLinkedWithNext(groups, i) ? '⛓ В суперсете со следующим — нажмите, чтобы разделить' : '+ Суперсет со следующим'}
+            </button>
+          )}
           </div>
         );
       })}
