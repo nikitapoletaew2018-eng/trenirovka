@@ -92,6 +92,8 @@ describe('PIN и шифрование', () => {
     expect(row?.plain).toBeNull();
     expect(row?.enc?.ct).toBeTruthy();
     expect(JSON.stringify(row)).not.toContain('2026-10-01');
+    expect(row?.updatedAt).toBe(''); // время правки не выдаёт дату
+    expect(JSON.stringify(row)).not.toMatch(/20dd-dd-dd/);
     expect(lastUndo()).toBeNull(); // открытые копии в стеке отмены стёрты
 
     lockCycle();

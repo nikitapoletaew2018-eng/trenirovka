@@ -71,7 +71,8 @@ async function rowFor(data: CycleData): Promise<CycleRow> {
   const t = nowIso();
   if (key) {
     const { iv, ct } = await encryptJson(key.key, data);
-    return { id: 'data', plain: null, enc: { salt: key.salt, iv, ct, iterations: key.iterations }, updatedAt: t };
+    // Время правки зашифрованного документа не храним: «изменено сегодня» рядом с отметкой косвенно выдаёт дату.
+    return { id: 'data', plain: null, enc: { salt: key.salt, iv, ct, iterations: key.iterations }, updatedAt: '' };
   }
   return { id: 'data', plain: data, enc: null, updatedAt: t };
 }

@@ -15,6 +15,8 @@ import { analysisSettings } from './Progress';
 // Одна серия на график — цвет серии 1 из эталонной палитры (проверен валидатором на фоне #181b21:
 // контраст ≥ 3:1, светлота и насыщенность в допуске). Сетка и оси — приглушённые.
 const SERIES = '#3987e5';
+/** Подписи оси в русском формате: «80,5». */
+const fmtTick = (v: number) => formatNumber(v, 1);
 const GRID = '#323844';
 const AXIS = '#a3aab6';
 
@@ -115,7 +117,7 @@ export function ChartsView({ snap, settings }: { snap: Snapshot; settings: Setti
               <LineChart data={data} margin={{ top: 12, right: 12, bottom: 4, left: -8 }}>
                 <CartesianGrid stroke={GRID} strokeDasharray="0" vertical={false} />
                 <XAxis dataKey="label" tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} minTickGap={16} />
-                <YAxis tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} width={48} domain={['auto', 'auto']} />
+                <YAxis tickFormatter={fmtTick} tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} width={48} domain={['auto', 'auto']} />
                 <Tooltip content={(p) => <ChartTooltip active={p.active} payload={p.payload} label={p.label} unit={unitLabel(unit)} />} cursor={{ stroke: AXIS, strokeWidth: 1 }} />
                 <Line type="linear" dataKey="value" stroke={SERIES} strokeWidth={2} dot={{ r: 4, fill: SERIES, stroke: '#181b21', strokeWidth: 2 }} activeDot={{ r: 6 }} isAnimationActive={false} />
               </LineChart>
@@ -159,7 +161,7 @@ function MiniBars({ data, label, unit }: { data: { label: string; value: number 
         <BarChart data={data} margin={{ top: 12, right: 8, bottom: 4, left: -16 }} barCategoryGap={2}>
           <CartesianGrid stroke={GRID} vertical={false} />
           <XAxis dataKey="label" tick={{ fill: AXIS, fontSize: 10 }} stroke={GRID} tickLine={false} interval={2} />
-          <YAxis tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} allowDecimals={false} width={40} />
+          <YAxis tickFormatter={fmtTick} tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} allowDecimals={false} width={40} />
           <Tooltip content={(p) => <ChartTooltip active={p.active} payload={p.payload} label={p.label} unit={unit} />} cursor={{ fill: 'rgba(255,255,255,0.06)' }} />
           <Bar dataKey="value" fill={SERIES} radius={[4, 4, 0, 0]} isAnimationActive={false} />
         </BarChart>
@@ -178,7 +180,7 @@ export function CycleDayChart({ points, label }: { points: { day: number; value:
         <LineChart data={data} margin={{ top: 12, right: 12, bottom: 4, left: -8 }}>
           <CartesianGrid stroke={GRID} vertical={false} />
           <XAxis dataKey="label" tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} minTickGap={8} />
-          <YAxis tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} width={44} domain={['auto', 'auto']} />
+          <YAxis tickFormatter={fmtTick} tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} width={44} domain={['auto', 'auto']} />
           <Tooltip content={(p) => <ChartTooltip active={p.active} payload={p.payload} label={`день ${String(p.label)}`} unit="" />} cursor={{ stroke: AXIS, strokeWidth: 1 }} />
           <Line type="linear" dataKey="value" stroke={SERIES} strokeWidth={2} dot={{ r: 4, fill: SERIES, stroke: '#181b21', strokeWidth: 2 }} isAnimationActive={false} />
         </LineChart>
@@ -200,7 +202,7 @@ export function WeightChart({ points, unit }: { points: { date: string; weight: 
           <LineChart data={data} margin={{ top: 12, right: 12, bottom: 4, left: -8 }}>
             <CartesianGrid stroke={GRID} vertical={false} />
             <XAxis dataKey="label" tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} minTickGap={16} />
-            <YAxis tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} width={44} domain={['auto', 'auto']} />
+            <YAxis tickFormatter={fmtTick} tick={{ fill: AXIS, fontSize: 11 }} stroke={GRID} tickLine={false} width={44} domain={['auto', 'auto']} />
             <Tooltip content={(p) => <ChartTooltip active={p.active} payload={p.payload} label={p.label} unit={unitLabel(unit)} />} cursor={{ stroke: AXIS, strokeWidth: 1 }} />
             <Line type="linear" dataKey="weight" stroke="transparent" dot={{ r: 4, fill: AXIS, stroke: '#181b21', strokeWidth: 2 }} isAnimationActive={false} />
             <Line type="linear" dataKey="avg7" stroke={SERIES} strokeWidth={2} dot={false} isAnimationActive={false} />

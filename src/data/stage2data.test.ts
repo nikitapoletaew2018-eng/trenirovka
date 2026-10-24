@@ -149,3 +149,18 @@ describe('миграции схемы', () => {
     expect(f.tables.workouts).toEqual([{ id: 'w1' }]);
   });
 });
+
+describe('плановое облегчение (модуль «Цикл»)', () => {
+  it('подставляет облегчённые версии только в незапущенные тренировки, с отменой', async () => {
+    const { lightenPlanned } = await import('./planRepo');
+    const { lightVersion } = await import('../domain/lightVersion');
+    const t = await template('Верх');
+    const pw = await planWorkout(MON, t);
+    await lightenPlanned([{ id: pw.id, items: lightVersion(pw.plannedItems, { setsFactor: 0.6, rirPlus: 2 }) }]);
+    const after = (await plannedForWeek(MON))[0]!;
+    expect(after.plannedItems[0]).toMatchObject({ sets: 2, targetRir: 4 });
+    expect(after.name).toBe('Верх (облегчённая)');
+    await undoLast();
+    expect((await plannedForWeek(MON))[0]!.plannedItems[0]).toMatchObject({ sets: 4, targetRir: 2 });
+  });
+});
