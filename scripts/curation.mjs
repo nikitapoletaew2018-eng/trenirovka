@@ -339,8 +339,8 @@ export const curation = [
   },
   {
     id: 'Barbell_Hip_Thrust',
-    ru: 'Ягодичный мост со штангой от скамьи (хип-траст)',
-    aliases: ['хип-траст', 'ягодичный мостик', 'hip thrust'],
+    ru: 'Хип-траст со штангой (ягодичный мост от скамьи)',
+    aliases: ['хип-траст', 'ягодичный мостик', 'hip thrust', 'ягодичный мост со штангой от скамьи (хип-траст)'],
     P: ['glutes'],
     S: ['hamstrings', 'calves'],
     eq: ['barbell', 'bench'],
@@ -574,8 +574,8 @@ export const curation = [
   },
   {
     id: 'Leverage_Incline_Chest_Press',
-    ru: 'Жим в тренажёре под углом вверх',
-    aliases: ['жим под углом в рычажном тренажёре'],
+    ru: 'Наклонный жим в тренажёре',
+    aliases: ['жим под углом в рычажном тренажёре', 'жим в тренажёре под углом вверх'],
     P: ['chest'],
     S: ['front_delts', 'triceps'],
     eq: ['machine'],
@@ -594,7 +594,8 @@ export const curation = [
   },
   {
     id: 'Dumbbell_Flyes',
-    ru: 'Разведение гантелей лёжа',
+    ru: 'Разводка гантелей лёжа',
+    aliases: ['разведение гантелей лёжа'],
     P: ['chest'],
     S: [],
     eq: ['dumbbell', 'bench'],
@@ -634,8 +635,8 @@ export const curation = [
   },
   {
     id: 'Butterfly',
-    ru: 'Сведение рук в тренажёре «бабочка»',
-    aliases: ['пек-дек', 'pec deck'],
+    ru: 'Бабочка (сведение рук в тренажёре)',
+    aliases: ['пек-дек', 'pec deck', 'сведение рук в тренажёре «бабочка»'],
     P: ['chest'],
     S: [],
     eq: ['machine'],
@@ -675,7 +676,8 @@ export const curation = [
   },
   {
     id: 'Dips_-_Chest_Version',
-    ru: 'Отжимания на брусьях (акцент на грудь)',
+    ru: 'Отжимания на брусьях (на грудь)',
+    aliases: ['отжимания на брусьях (акцент на грудь)'],
     P: ['chest'],
     S: ['front_delts', 'triceps'],
     eq: ['dip_bars'],
@@ -737,7 +739,8 @@ export const curation = [
   },
   {
     id: 'Band_Assisted_Pull-Up',
-    ru: 'Подтягивания с резиновой петлёй',
+    ru: 'Подтягивания с резинкой',
+    aliases: ['подтягивания с резиновой петлёй'],
     P: ['lats'],
     S: ['biceps', 'mid_back'],
     eq: ['pullup_bar', 'band'],
@@ -865,8 +868,8 @@ export const curation = [
   },
   {
     id: 'Seated_Cable_Rows',
-    ru: 'Тяга нижнего блока сидя',
-    aliases: ['горизонтальная тяга', 'гребля'],
+    ru: 'Тяга нижнего блока к поясу',
+    aliases: ['горизонтальная тяга', 'гребля', 'тяга нижнего блока сидя'],
     P: ['mid_back'],
     S: ['lats', 'biceps', 'rear_delts'],
     eq: ['cable'],
@@ -948,8 +951,8 @@ export const curation = [
   // ───────────── Плечи ─────────────
   {
     id: 'Standing_Military_Press',
-    ru: 'Жим штанги стоя (армейский жим)',
-    aliases: ['жим стоя', 'ohp'],
+    ru: 'Армейский жим стоя',
+    aliases: ['жим стоя', 'ohp', 'жим штанги стоя (армейский жим)'],
     P: ['front_delts'],
     S: ['side_delts', 'triceps'],
     eq: ['barbell'],
@@ -1011,7 +1014,8 @@ export const curation = [
   },
   {
     id: 'Machine_Shoulder_Military_Press',
-    ru: 'Жим вверх в тренажёре',
+    ru: 'Жим на плечи в тренажёре',
+    aliases: ['жим вверх в тренажёре'],
     P: ['front_delts'],
     S: ['side_delts', 'triceps'],
     eq: ['machine'],
@@ -1122,8 +1126,8 @@ export const curation = [
   },
   {
     id: 'Reverse_Flyes',
-    ru: 'Разведения гантелей на задние дельты лёжа на наклонной',
-    aliases: ['обратные разведения гантелей лёжа на наклонной'],
+    ru: 'Разводка на задние дельты лёжа на скамье',
+    aliases: ['обратные разведения гантелей лёжа на наклонной', 'разведения гантелей на задние дельты лёжа на наклонной'],
     P: ['rear_delts'],
     S: ['mid_back'],
     eq: ['dumbbell', 'bench'],
@@ -1166,7 +1170,8 @@ export const curation = [
   // ───────────── Руки ─────────────
   {
     id: 'Barbell_Curl',
-    ru: 'Сгибание рук со штангой стоя',
+    ru: 'Подъём штанги на бицепс',
+    aliases: ['сгибание рук со штангой стоя'],
     P: ['biceps'],
     S: ['forearms'],
     eq: ['barbell'],
@@ -1186,7 +1191,8 @@ export const curation = [
   },
   {
     id: 'Dumbbell_Bicep_Curl',
-    ru: 'Сгибание рук с гантелями',
+    ru: 'Подъём гантелей на бицепс',
+    aliases: ['сгибание рук с гантелями'],
     P: ['biceps'],
     S: ['forearms'],
     eq: ['dumbbell'],
@@ -1205,7 +1211,8 @@ export const curation = [
   },
   {
     id: 'Hammer_Curls',
-    ru: 'Сгибание рук хватом «молот»',
+    ru: 'Молотки (подъём гантелей хватом «молот»)',
+    aliases: ['сгибание рук хватом «молот»'],
     P: ['biceps'],
     S: [],
     eq: ['dumbbell'],
@@ -1225,7 +1232,8 @@ export const curation = [
   },
   {
     id: 'Preacher_Curl',
-    ru: 'Сгибание рук на скамье Скотта',
+    ru: 'Подъём на бицепс на скамье Скотта',
+    aliases: ['сгибание рук на скамье скотта'],
     P: ['biceps'],
     S: [],
     eq: ['ez_bar', 'bench'],
@@ -1245,7 +1253,8 @@ export const curation = [
   },
   {
     id: 'Standing_Biceps_Cable_Curl',
-    ru: 'Сгибание рук на нижнем блоке',
+    ru: 'Подъём на бицепс на нижнем блоке',
+    aliases: ['сгибание рук на нижнем блоке'],
     P: ['biceps'],
     S: [],
     eq: ['cable'],
@@ -1264,8 +1273,8 @@ export const curation = [
   },
   {
     id: 'Triceps_Pushdown',
-    ru: 'Разгибание рук на верхнем блоке',
-    aliases: ['разгибание на блоке', 'pushdown'],
+    ru: 'Разгибание рук на блоке (трицепс)',
+    aliases: ['разгибание на блоке', 'pushdown', 'разгибание рук на верхнем блоке'],
     P: ['triceps'],
     S: [],
     eq: ['cable'],
@@ -1285,7 +1294,8 @@ export const curation = [
   },
   {
     id: 'Triceps_Pushdown_-_Rope_Attachment',
-    ru: 'Разгибание рук на верхнем блоке с канатом',
+    ru: 'Разгибание рук на блоке с канатом',
+    aliases: ['разгибание рук на верхнем блоке с канатом'],
     P: ['triceps'],
     S: [],
     eq: ['cable'],
@@ -1325,7 +1335,8 @@ export const curation = [
   },
   {
     id: 'Cable_Rope_Overhead_Triceps_Extension',
-    ru: 'Разгибание рук из-за головы на нижнем блоке',
+    ru: 'Разгибание из-за головы с канатом на блоке',
+    aliases: ['разгибание рук из-за головы на нижнем блоке'],
     P: ['triceps'],
     S: [],
     eq: ['cable'],
@@ -1365,7 +1376,8 @@ export const curation = [
   },
   {
     id: 'Dips_-_Triceps_Version',
-    ru: 'Отжимания на брусьях (акцент на трицепс)',
+    ru: 'Отжимания на брусьях (на трицепс)',
+    aliases: ['отжимания на брусьях (акцент на трицепс)'],
     P: ['triceps'],
     S: ['chest', 'front_delts'],
     eq: ['dip_bars'],
@@ -1384,8 +1396,8 @@ export const curation = [
   },
   {
     id: 'Dip_Machine',
-    ru: 'Жим вниз в тренажёре (брусья сидя)',
-    aliases: ['отжимания в тренажёре сидя'],
+    ru: 'Брусья в тренажёре сидя',
+    aliases: ['отжимания в тренажёре сидя', 'жим вниз в тренажёре (брусья сидя)'],
     P: ['triceps'],
     S: ['chest', 'front_delts'],
     eq: ['machine'],
@@ -1450,7 +1462,8 @@ export const curation = [
   },
   {
     id: 'Cable_Crunch',
-    ru: 'Скручивания на верхнем блоке стоя на коленях',
+    ru: 'Молитва (скручивания на блоке стоя на коленях)',
+    aliases: ['скручивания на верхнем блоке стоя на коленях'],
     P: ['abs'],
     S: [],
     eq: ['cable'],
