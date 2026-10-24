@@ -2,6 +2,9 @@ import Dexie, { type Table } from 'dexie';
 import { databaseName } from './mode';
 import type {
   Exercise,
+  BodyMeasurement,
+  BodyPhoto,
+  CycleData,
   PlannedWorkout,
   Program,
   RestTimer,
@@ -17,7 +20,15 @@ import type {
  * Версия схемы данных. Увеличивается при любом изменении структуры;
  * для каждой версии — шаг миграции Dexie (ниже) и шаг миграции экспорта (backup.ts).
  */
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
+
+/** Документ данных цикла: либо открытый, либо зашифрованный (AES-GCM, ключ из PIN через PBKDF2). */
+export interface CycleRow {
+  id: 'data';
+  plain?: CycleData | null;
+  enc?: { salt: string; iv: string; ct: string; iterations: number } | null;
+  updatedAt: string;
+}
 
 export interface MetaRow {
   key: string;
@@ -36,6 +47,10 @@ export class AppDB extends Dexie {
   restTimer!: Table<RestTimer, string>;
   settings!: Table<Settings, string>;
   meta!: Table<MetaRow, string>;
+  /** Один документ «data»: данные цикла (открытые или зашифрованные). Не входит в экспорт по умолчанию */
+  cycle!: Table<CycleRow, string>;
+  measurements!: Table<BodyMeasurement, string>;
+  photos!: Table<BodyPhoto, string>;
 
   constructor(name = 'trenirovka') {
     super(name);
@@ -54,6 +69,8 @@ export class AppDB extends Dexie {
     });
     // v2 — программы (мезоциклы). Существующие данные не меняются: новые поля необязательные.
     this.version(2).stores({ programs: 'id, updatedAt', weekPlans: 'id, weekStart, programId' });
+    // v3 — модуль «Цикл», замеры тела и фото.
+    this.version(3).stores({ cycle: 'id', measurements: 'id, date, type', photos: 'id, date' });
   }
 }
 
@@ -68,6 +85,7 @@ export const DATA_TABLES = [
   'workoutExercises',
   'sets',
   'settings',
+  'measurements',
 ] as const;
 
 export type DataTable = (typeof DATA_TABLES)[number];

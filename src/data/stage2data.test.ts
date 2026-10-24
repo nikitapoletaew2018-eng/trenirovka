@@ -126,7 +126,7 @@ describe('разминка в тренировке', () => {
 });
 
 describe('миграции схемы', () => {
-  it('база версии 1 открывается как версия 2 без потери данных', async () => {
+  it('база версии 1 открывается как текущая версия без потери данных', async () => {
     const name = `mig-${uuid()}`;
     const v1 = new Dexie(name);
     v1.version(1).stores({ exercises: 'id', templates: 'id', weekPlans: 'id, weekStart', plannedWorkouts: 'id, date', workouts: 'id, startedAt', workoutExercises: 'id, workoutId', sets: 'id, workoutId', restTimer: 'id', settings: 'id', meta: 'key' });
@@ -135,13 +135,17 @@ describe('миграции схемы', () => {
     const v2 = new AppDB(name);
     expect(await v2.workouts.get('w1')).toBeTruthy();
     expect(await v2.programs.count()).toBe(0);
-    expect(v2.verno).toBe(2);
+    expect(await v2.measurements.count()).toBe(0);
+    expect(await v2.cycle.count()).toBe(0);
+    expect(v2.verno).toBe(SCHEMA_VERSION);
   });
 
   it('файл экспорта версии 1 импортируется с миграцией', () => {
     const f = parseExport({ app: 'trenirovka', schemaVersion: 1, exportedAt: 'x', tables: { workouts: [{ id: 'w1' }] } });
     expect(f.schemaVersion).toBe(SCHEMA_VERSION);
     expect(f.tables.programs).toEqual([]);
+    expect(f.tables.measurements).toEqual([]);
+    expect(f.cycle).toBeNull();
     expect(f.tables.workouts).toEqual([{ id: 'w1' }]);
   });
 });

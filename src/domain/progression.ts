@@ -57,10 +57,12 @@ export function suggestionCandidates(planned: PlannedWorkout[], week: ISODate): 
   return [...out.values()];
 }
 
-/** Выполнения упражнения из тренировок (по возрастанию даты), только с рабочими подходами. */
+/** Выполнения упражнения из тренировок (по возрастанию даты), только с рабочими подходами; без облегчённых версий. */
 export function performancesOf(sessions: Session[], exerciseId: string): Performance[] {
   const out: Performance[] = [];
   for (const session of sessions) {
+    // Облегчённые по самочувствию тренировки не считаются «невыполнением» и в прогрессию не идут
+    if (session.workout.isLightVersion) continue;
     for (const se of session.exercises) {
       if (se.ex.id !== exerciseId) continue;
       const ws = workingSetsOf(se);

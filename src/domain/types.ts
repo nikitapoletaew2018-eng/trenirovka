@@ -261,8 +261,78 @@ export interface Settings {
   /** Доступные блины (на одну сторону), кг и lb */
   platesKg: number[];
   platesLb: number[];
+  /** Модуль «Цикл» включён (сами данные — в отдельном документе) */
+  cycleEnabled: boolean;
+  /** Данные цикла зашифрованы PIN-кодом */
+  cyclePinEnabled: boolean;
+  /** Предложение модуля в онбординге закрыто кнопкой «Не нужно» */
+  cycleOfferDismissed: boolean;
+  /** Облегчённая версия: доля подходов (ТЗ: −30–50%) и прибавка к целевому RIR */
+  lightSetsFactor: number;
+  lightRirPlus: number;
+  /** Напоминания: время тренировки по умолчанию и за сколько минут напомнить (для .ics) */
+  reminderTime: string;
+  reminderMinutesBefore: number;
+  /** Напоминание о замерах в приложении: день недели 0–6 или null */
+  measurementReminderWeekday: number | null;
   lastBackupAt?: ISODateTime | null;
   backupReminderDismissedAt?: ISODateTime | null;
   persistGranted?: boolean | null;
   installHintDismissed?: boolean;
+}
+
+// ——— Модуль «Цикл» (ТЗ, раздел 6). Чувствительные данные: хранятся одним документом, опционально зашифрованы ———
+
+export type Contraception = 'none' | 'hormonal' | 'non_hormonal';
+
+export interface CycleSettings {
+  enabled: boolean;
+  /** Гормональная контрацепция — естественные фазы не показываются */
+  contraception?: Contraception | null;
+  /** Беременность — мягкие сигналы об отсутствии менструации не показываются */
+  pregnancy?: boolean;
+  /** Плановое облегчение в прогнозируемые дни менструации (включает сама пользовательница) */
+  plannedLightDays: boolean;
+  /** Упражнения, отмеченные как некомфортные в эти дни */
+  excludedExerciseIds: UUID[];
+}
+
+export interface PeriodEntry {
+  id: UUID;
+  startDate: ISODate;
+  endDate?: ISODate | null;
+  flow?: 'light' | 'medium' | 'heavy' | null;
+}
+
+/** Чек-ин / симптомы дня: боль 0–3, энергия 1–5, сон 1–5 (всё опционально, кроме даты). */
+export interface CheckIn {
+  id: UUID;
+  date: ISODate;
+  energy?: number | null;
+  pain?: number | null;
+  sleep?: number | null;
+}
+
+export interface CycleData {
+  settings: CycleSettings;
+  periods: PeriodEntry[];
+  checkIns: CheckIn[];
+}
+
+// ——— Замеры тела (ТЗ, раздел 7) ———
+
+export type MeasurementType = 'weight' | 'waist' | 'hips' | 'chest' | 'arm' | 'thigh' | 'neck';
+
+export interface BodyMeasurement extends BaseEntity {
+  date: ISODate;
+  type: MeasurementType;
+  /** Вес — кг, обхваты — см */
+  value: number;
+}
+
+export interface BodyPhoto extends BaseEntity {
+  date: ISODate;
+  mime: string;
+  blob: Blob;
+  note?: string;
 }

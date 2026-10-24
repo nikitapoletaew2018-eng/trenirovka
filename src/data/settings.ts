@@ -29,6 +29,16 @@ export const DEFAULT_SETTINGS: Settings = {
   warmupReps: [8, 5, 3],
   platesKg: [25, 20, 15, 10, 5, 2.5, 1.25],
   platesLb: [45, 35, 25, 10, 5, 2.5],
+  // Модуль «Цикл» выключен по умолчанию (ТЗ, 6.4)
+  cycleEnabled: false,
+  cyclePinEnabled: false,
+  cycleOfferDismissed: false,
+  // Облегчённая версия (ТЗ, 6.3): −30–50% подходов → по умолчанию −40%, целевой RIR +2
+  lightSetsFactor: 0.6,
+  lightRirPlus: 2,
+  reminderTime: '18:00',
+  reminderMinutesBefore: 60,
+  measurementReminderWeekday: null,
   lastBackupAt: null,
   backupReminderDismissedAt: null,
   persistGranted: null,
