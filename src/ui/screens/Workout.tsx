@@ -106,7 +106,7 @@ export function WorkoutView({ workoutId, mode }: { workoutId: string; mode: Mode
             className="btn danger block"
             style={{ marginTop: 16 }}
             onClick={() => {
-              if (confirmDelete('тренировку')) void deleteWorkout(workout.id).then(() => navigate('/history'));
+              void confirmDelete('тренировку').then((ok): unknown => ok && deleteWorkout(workout.id).then(() => navigate('/history')));
             }}
           >
             Удалить тренировку
@@ -172,7 +172,7 @@ function WorkoutHeader({ workout, mode, onFinish }: { workout: Workout; mode: Mo
           <button
             className="btn danger block"
             onClick={() => {
-              if (confirmDelete('эту тренировку целиком')) void deleteWorkout(workout.id).then(() => setMenu(false));
+              void confirmDelete('эту тренировку целиком').then((ok): unknown => ok && deleteWorkout(workout.id).then(() => setMenu(false)));
             }}
           >
             Удалить тренировку
@@ -329,10 +329,11 @@ function ExerciseCard({
             <button
               className="btn danger block"
               onClick={() => {
-                if (confirmDelete(`упражнение «${ex.nameRu}» из тренировки`)) {
+                void confirmDelete(`упражнение «${ex.nameRu}» из тренировки`).then((ok) => {
+                  if (!ok) return;
                   setMenu(false);
                   void removeExercise(we.id);
-                }
+                });
               }}
             >
               Удалить из тренировки
@@ -468,10 +469,11 @@ function SetRow({ set, ex, settings, cols, label, mode }: { set: WorkoutSet; ex:
           <button
             className="btn danger block"
             onClick={() => {
-              if (confirmDelete('подход')) {
+              void confirmDelete('подход').then((ok) => {
+                if (!ok) return;
                 setMenu(false);
                 void deleteSet(set.id);
-              }
+              });
             }}
           >
             Удалить подход

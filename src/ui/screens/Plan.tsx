@@ -18,6 +18,7 @@ import {
 import { getActiveWorkout, startWorkout } from '../../data/workoutRepo';
 import { isDeloadWeek } from '../../data/programRepo';
 import { DeloadSheet } from './Progress';
+import { showMessage } from '../dialog';
 import { PlannedLightBanner } from '../cycleUi';
 import { Empty, Page, Sheet, Why, confirmDelete } from '../components';
 import { STATUS_CLASS, STATUS_LABEL } from '../format';
@@ -216,7 +217,7 @@ function ActionsSheet({ pw, todayDate, onClose }: { pw: PlannedWorkout; todayDat
             onClick={() =>
               void getActiveWorkout().then((a) => {
                 if (a) {
-                  window.alert('Сначала завершите текущую тренировку.');
+                  void showMessage('Сначала завершите текущую тренировку.');
                   return;
                 }
                 void startWorkout({ name: pw.name, plannedWorkoutId: pw.id, items: pw.plannedItems }).then(() => navigate('/today'));
@@ -254,7 +255,7 @@ function ActionsSheet({ pw, todayDate, onClose }: { pw: PlannedWorkout; todayDat
             className="btn block"
             onClick={() =>
               void mergeWithNext(pw.id).then((next) => {
-                if (!next) window.alert('Следующей запланированной тренировки нет.');
+                if (!next) void showMessage('Следующей запланированной тренировки нет.');
                 onClose();
               })
             }
@@ -275,7 +276,7 @@ function ActionsSheet({ pw, todayDate, onClose }: { pw: PlannedWorkout; todayDat
         <button
           className="btn danger block"
           onClick={() => {
-            if (confirmDelete('тренировку из плана')) void deletePlanned(pw.id).then(onClose);
+            void confirmDelete('тренировку из плана').then((ok): unknown => ok && deletePlanned(pw.id).then(onClose));
           }}
         >
           Удалить из плана

@@ -107,7 +107,7 @@ export function BodyScreen() {
           <span className="grow small">
             {formatLongDate(x.date)} · {MEASUREMENT_LABEL[x.type]}: <b>{x.type === 'weight' ? formatWeight(x.value, unit) : `${formatNumber(x.value, 1)} см`}</b>
           </span>
-          <button className="icon-btn" aria-label="Удалить замер" onClick={() => confirmDelete('замер') && void deleteMeasurement(x.id)}>
+          <button className="icon-btn" aria-label="Удалить замер" onClick={() => void confirmDelete('замер').then((ok): unknown => ok && deleteMeasurement(x.id))}>
             ✕
           </button>
         </div>
@@ -160,7 +160,7 @@ function PhotoTile({ p }: { p: BodyPhoto }) {
       {url && <img src={url} alt={`Фото от ${formatLongDate(p.date)}`} />}
       <figcaption className="row">
         <span className="grow small">{formatDayMonth(p.date)}</span>
-        <button className="icon-btn" aria-label="Удалить фото" onClick={() => confirmDelete('фото') && void deletePhoto(p.id)}>
+        <button className="icon-btn" aria-label="Удалить фото" onClick={() => void confirmDelete('фото').then((ok): unknown => ok && deletePhoto(p.id))}>
           ✕
         </button>
       </figcaption>

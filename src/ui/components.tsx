@@ -244,6 +244,4 @@ export function Seg<T extends string>({
   );
 }
 
-export function confirmDelete(what: string): boolean {
-  return window.confirm(`Удалить ${what}?`);
-}
+export { confirmDelete } from './dialog';

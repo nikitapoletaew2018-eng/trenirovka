@@ -34,6 +34,7 @@ import {
   updateCycleSettings,
 } from '../../data/cycleRepo';
 import { Empty, Page, Sheet, Why, confirmDelete } from '../components';
+import { askConfirm } from '../dialog';
 import { CheckInFields, useCycle } from '../cycleUi';
 import { ExerciseRow, ExercisePicker } from '../ExercisePicker';
 import { today, useExerciseMap, useSettings } from '../hooks';
@@ -304,7 +305,7 @@ function DaySheet({ data, date, onClose }: { data: CycleData; date: string; onCl
           <button
             className="why"
             onClick={() => {
-              if (confirmDelete('эту запись')) void deletePeriod(p.id).then(onClose);
+              void confirmDelete('эту запись').then((ok): unknown => ok && deletePeriod(p.id).then(onClose));
             }}
           >
             удалить
@@ -478,8 +479,10 @@ function CycleSettingsCard({ data }: { data: CycleData }) {
       <button
         className="btn danger block"
         onClick={() => {
-          if (window.confirm('Удалить ВСЕ данные цикла (отметки, симптомы, настройки модуля) без возможности восстановления? Тренировки останутся.'))
-            void deleteAllCycleData();
+          void askConfirm('Удалить ВСЕ данные цикла (отметки, симптомы, настройки модуля) без возможности восстановления? Тренировки останутся.', {
+            confirmLabel: 'Удалить всё',
+            danger: true,
+          }).then((ok): unknown => ok && deleteAllCycleData());
         }}
       >
         Удалить все данные цикла

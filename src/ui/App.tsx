@@ -4,6 +4,7 @@ import { getActiveWorkout } from '../data/workoutRepo';
 import { db } from '../data/db';
 import { deleteDemo, exitDemo, isDemoMode } from '../data/demo';
 import { UndoSnackbar } from './components';
+import { DialogHost, askConfirm } from './dialog';
 import { match, useRoute } from './router';
 import { HistoryScreen } from './screens/History';
 import { ExerciseDetail, LibraryScreen, NewExerciseScreen } from './screens/Library';
@@ -103,7 +104,9 @@ function DemoBanner() {
       <button
         className="btn sm danger"
         onClick={() => {
-          if (window.confirm('Удалить демо-базу целиком? Реальные данные не затрагиваются.')) void deleteDemo(db).then(() => window.location.reload());
+          void askConfirm('Удалить демо-базу целиком? Реальные данные не затрагиваются.', { confirmLabel: 'Удалить демо', danger: true }).then(
+            (ok): unknown => ok && deleteDemo(db).then(() => window.location.reload()),
+          );
         }}
       >
         Удалить демо
@@ -124,6 +127,7 @@ export function App() {
         <UndoSnackbar />
         {active && <RestBar />}
       </div>
+      <DialogHost />
       <nav className="tabbar" aria-label="Разделы">
         {TABS.map((t) => (
           <a

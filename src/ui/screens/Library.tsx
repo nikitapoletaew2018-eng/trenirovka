@@ -170,7 +170,7 @@ export function ExerciseDetail({ id }: { id: string }) {
           <button
             className="btn danger grow"
             onClick={() => {
-              if (confirmDelete(`упражнение «${ex.nameRu}»`)) void deleteCustomExercise(ex.id).then(() => navigate('/library'));
+              void confirmDelete(`упражнение «${ex.nameRu}»`).then((ok): unknown => ok && deleteCustomExercise(ex.id).then(() => navigate('/library')));
             }}
           >
             Удалить

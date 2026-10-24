@@ -14,6 +14,7 @@ import { loadSnapshot, type Snapshot } from '../../data/analyticsRepo';
 import { copyWeek, plannedForWeek } from '../../data/planRepo';
 import { applySuggestions, isDeloadWeek, makeWeekDeload, previewDeload } from '../../data/programRepo';
 import { Empty, Page, Sheet, Why } from '../components';
+import { askConfirm } from '../dialog';
 import { planLine } from '../format';
 import { today, useSettings } from '../hooks';
 import { navigate } from '../router';
@@ -409,7 +410,7 @@ function NextWeekView({ snap, week, settings }: { snap: Snapshot; week: string; 
       return it ? [{ exerciseId: sg.exerciseId, item: it }] : [];
     });
     if (nextPlanned.length === 0) {
-      if (!window.confirm(`На неделю ${formatDayMonth(next)} плана нет. Скопировать план этой недели и применить предложения?`)) return;
+      if (!(await askConfirm(`На неделю ${formatDayMonth(next)} плана нет. Скопировать план этой недели и применить предложения?`, { confirmLabel: 'Скопировать и применить' }))) return;
       await copyWeek(week, next);
     }
     const n = await applySuggestions(next, accepted);

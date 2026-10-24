@@ -111,7 +111,7 @@ export function TemplateEditor({ id }: { id: string }) {
         <button
           className="btn danger block"
           onClick={() => {
-            if (confirmDelete(`шаблон «${draft.name}»`)) void deleteTemplate(id).then(() => navigate('/templates'));
+            void confirmDelete(`шаблон «${draft.name}»`).then((ok): unknown => ok && deleteTemplate(id).then(() => navigate('/templates')));
           }}
         >
           Удалить шаблон

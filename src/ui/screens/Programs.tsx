@@ -163,7 +163,7 @@ export function ProgramEditor({ id }: { id: string }) {
         <button
           className="btn danger block"
           onClick={() => {
-            if (confirmDelete(`программу «${draft.name}» (шаблоны и уже поставленные тренировки останутся)`)) void deleteProgram(id).then(() => navigate('/programs'));
+            void confirmDelete(`программу «${draft.name}» (шаблоны и уже поставленные тренировки останутся)`).then((ok): unknown => ok && deleteProgram(id).then(() => navigate('/programs')));
           }}
         >
           Удалить программу

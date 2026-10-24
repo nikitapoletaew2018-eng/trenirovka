@@ -11,6 +11,7 @@ import { useSettings } from '../hooks';
 import { navigate } from '../router';
 import { requestPersistence, saveBackup } from '../protect';
 import { canVibrate, requestNotifications, wakeLockSupported } from '../signals';
+import { askConfirm } from '../dialog';
 import { DEMO_DB_NAME, REAL_DB_NAME, demoAvailable, enterDemo, isDemoMode } from '../../data/demo';
 import { today } from '../hooks';
 
@@ -53,7 +54,7 @@ export function SettingsScreen() {
   const onImport = async (file: File) => {
     try {
       const parsed = parseExport(JSON.parse(await file.text()) as unknown);
-      if (!window.confirm('Импорт заменит все текущие данные данными из файла. Продолжить?')) return;
+      if (!(await askConfirm('Импорт заменит все текущие данные данными из файла. Продолжить?', { confirmLabel: 'Импортировать', danger: true }))) return;
       await importData(parsed);
       await ensureSeed();
       clearUndo();
@@ -180,13 +181,14 @@ export function SettingsScreen() {
         <button
           className="btn danger block"
           onClick={() => {
-            if (!window.confirm('Удалить ВСЕ данные приложения на этом устройстве? Сначала сделайте бэкап.')) return;
-            void clearAllData()
+            void askConfirm('Удалить ВСЕ данные приложения на этом устройстве? Сначала сделайте бэкап.', { confirmLabel: 'Удалить всё', danger: true }).then(
+              (ok): unknown => ok && clearAllData()
               .then(() => ensureSeed())
               .then(() => {
                 clearUndo();
                 setMsg('Все данные удалены.');
-              });
+              }),
+            );
           }}
         >
           Удалить все данные
